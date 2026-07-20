@@ -117,6 +117,7 @@
             box-shadow: 0 0 15px rgba(16, 185, 129, 0.15);
         }
 
+        /* Ngôn ngữ Switcher Styles */
         .lang-switcher {
             display: flex;
             align-items: center;
@@ -257,7 +258,14 @@
             z-index: 0;
         }
 
-        .nav-item i, .nav-item span {
+        .nav-item i {
+            font-size: 16px;
+            transition: all 0.3s ease;
+            z-index: 1;
+            position: relative;
+        }
+
+        .nav-item span {
             z-index: 1;
             position: relative;
         }
@@ -381,6 +389,28 @@
             margin-bottom: 22px;
         }
 
+        .card-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 240, 255, 0.08), transparent);
+            transition: 0.6s;
+        }
+
+        .card-box:hover::before {
+            left: 100%;
+        }
+
+        .card-box:hover {
+            border-color: rgba(0, 240, 255, 0.4);
+            background: linear-gradient(145deg, rgba(0, 240, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 240, 255, 0.1);
+        }
+
         .card-icon {
             width: 52px;
             height: 52px;
@@ -394,6 +424,14 @@
             margin-bottom: 18px;
             border: 1px solid rgba(0, 240, 255, 0.3);
             box-shadow: 0 0 15px rgba(0, 240, 255, 0.15);
+            transition: all 0.3s ease;
+        }
+
+        .card-box:hover .card-icon {
+            transform: scale(1.1) rotate(5deg);
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+            color: #03060c;
+            box-shadow: 0 0 25px var(--accent-cyan);
         }
 
         .card-box h3 {
@@ -401,6 +439,7 @@
             font-weight: 700;
             margin-bottom: 10px;
             color: var(--text-main);
+            letter-spacing: -0.3px;
         }
 
         .card-box p {
@@ -504,6 +543,13 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .tag-pill:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.05);
+            transform: translateY(-2px);
         }
 
         .tag-pill.free {
@@ -518,10 +564,26 @@
             background: rgba(245, 158, 11, 0.05);
         }
 
+        .tag-pill.supported {
+            border-color: rgba(0, 240, 255, 0.4);
+            color: var(--accent-cyan);
+            background: rgba(0, 240, 255, 0.08);
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.1);
+        }
+
+        .tag-pill.unsupported {
+            border-color: rgba(100, 116, 139, 0.3);
+            color: var(--accent-gray);
+            background: rgba(255, 255, 255, 0.01);
+            opacity: 0.8;
+        }
+
         .tag-pill.dimmed {
             border-color: rgba(100, 116, 139, 0.2);
             color: rgba(100, 116, 139, 0.7);
+            background: rgba(255, 255, 255, 0.005);
             opacity: 0.45;
+            filter: grayscale(0.8);
         }
 
         .key-box-wrapper {
@@ -531,18 +593,25 @@
             padding: 24px;
             text-align: center;
             margin-bottom: 24px;
+            display: none;
             box-shadow: inset 0 0 20px rgba(139, 92, 246, 0.15), 0 10px 30px rgba(0,0,0,0.4);
+            animation: keyBoxAppear 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes keyBoxAppear {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
         }
 
         .key-text {
             font-family: monospace;
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 800;
             color: var(--accent-cyan);
             letter-spacing: 2px;
             word-break: break-all;
             text-shadow: 0 0 15px rgba(0, 240, 255, 0.6);
-            margin: 10px 0;
+            margin-top: 6px;
         }
 
         .toast {
@@ -568,6 +637,45 @@
             transform: translateY(0);
             opacity: 1;
         }
+
+        @media (max-width: 1024px) {
+            .discord-top-btn {
+                margin-right: 0;
+                width: 100%;
+                justify-content: center;
+            }
+            .horizontal-nav-panel {
+                justify-content: center;
+            }
+            .grid-2, .grid-3 {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .navbar {
+                padding: 16px 20px;
+                flex-direction: column;
+                gap: 15px;
+            }
+            .nav-right-group {
+                width: 100%;
+                justify-content: space-between;
+            }
+            .app-container {
+                padding: 20px 15px;
+            }
+            .main-content {
+                padding: 24px 20px;
+            }
+            .code-banner {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .btn-action {
+                width: 100%;
+            }
+        }
     </style>
 </head>
 <body>
@@ -582,8 +690,9 @@
         <div class="nav-right-group">
             <div class="nav-status">
                 <span class="status-dot"></span>
-                <span>UNDETECTED & ONLINE</span>
+                <span data-i18n="status_online">UNDETECTED & ONLINE</span>
             </div>
+            <!-- Bộ chuyển đổi ngôn ngữ -->
             <div class="lang-switcher">
                 <button class="lang-btn active" id="lang-vi" onclick="switchLanguage('vi')">VI</button>
                 <button class="lang-btn" id="lang-en" onclick="switchLanguage('en')">EN</button>
@@ -592,26 +701,27 @@
     </header>
 
     <div class="app-container">
+        
         <!-- THANH MENU NGANG -->
         <nav class="horizontal-nav-panel">
             <a href="https://discord.gg/GP2npV45u5" target="_blank" class="discord-top-btn">
                 <i class="fa-brands fa-discord"></i>
-                <span>Cộng Đồng Discord</span>
+                <span data-i18n="discord_community">Cộng Đồng Discord</span>
             </a>
 
             <div class="nav-item active" onclick="switchTab('project', this)">
                 <i class="fa-solid fa-layer-group"></i>
-                <span>Thông Tin Dự Án</span>
+                <span data-i18n="nav_project">Thông Tin Dự Án</span>
             </div>
             
             <div class="nav-item" onclick="switchTab('support', this)">
                 <i class="fa-solid fa-microchip"></i>
-                <span>Hỗ Trợ System</span>
+                <span data-i18n="nav_support">Hỗ Trợ System</span>
             </div>
             
             <div class="nav-item" onclick="switchTab('getkey', this)">
                 <i class="fa-solid fa-key"></i>
-                <span>Hệ Thống Key Cố Định</span>
+                <span data-i18n="nav_key">Hệ Thống Key</span>
             </div>
         </nav>
 
@@ -621,35 +731,63 @@
             <!-- TAB 1: THÔNG TIN DỰ ÁN -->
             <section id="tab-project" class="tab-pane active">
                 <div class="page-header">
-                    <h1 class="page-title">Thông Tin Dự Án & Định Hướng</h1>
-                    <p class="page-desc">FishHub được phát triển chuyên sâu độc lập nhằm mang lại hiệu năng cao và độ ổn định lâu dài.</p>
+                    <h1 class="page-title" data-i18n="proj_title">Thông Tin Dự Án & Định Hướng</h1>
+                    <p class="page-desc" data-i18n="proj_desc">FishHub được phát triển chuyên sâu độc lập nhằm mang lại hiệu năng cao và độ ổn định lâu dài.</p>
                 </div>
 
                 <div class="code-banner">
                     <div class="code-banner-text">
-                        <h3>Script Loader Chính Thức</h3>
-                        <p>Sao chép đoạn mã ngắn gọn bên dưới để thực thi trực tiếp trên Executor của bạn.</p>
+                        <h3 data-i18n="loader_title">Script Loader Chính Thức</h3>
+                        <p data-i18n="loader_desc">Sao chép đoạn mã ngắn gọn bên dưới để thực thi trực tiếp trên Executor của bạn.</p>
                     </div>
                     <button class="btn-action btn-cyan" onclick="copyScript()">
-                        <i class="fa-solid fa-code"></i> SAO CHÉP SCRIPT
+                        <i class="fa-solid fa-code"></i> <span data-i18n="btn_copyscript">SAO CHÉP SCRIPT</span>
                     </button>
                 </div>
 
                 <div class="grid-3">
                     <div class="card-box" style="margin-bottom: 0;">
                         <div class="card-icon"><i class="fa-solid fa-code-merge"></i></div>
-                        <h3>Chất Lượng Độc Lập</h3>
-                        <p>Phát triển cá nhân hóa giúp từng dòng code được kiểm duyệt kỹ lưỡng, hạn chế tối đa lỗi vặt.</p>
+                        <h3 data-i18n="feat1_title">Chất Lượng Độc Lập</h3>
+                        <p data-i18n="feat1_desc">Phát triển cá nhân hóa giúp từng dòng code được kiểm duyệt kỹ lưỡng, hạn chế tối đa lỗi vặt.</p>
                     </div>
                     <div class="card-box" style="margin-bottom: 0;">
                         <div class="card-icon"><i class="fa-solid fa-shield-halved"></i></div>
-                        <h3>Bảo Mật Bền Vững</h3>
-                        <p>Tập trung tối ưu hóa các phương thức an toàn để bảo vệ tài khoản người dùng xuyên suốt.</p>
+                        <h3 data-i18n="feat2_title">Bảo Mật Bền Vững</h3>
+                        <p data-i18n="feat2_desc">Tập trung tối ưu hóa các phương thức an toàn để bảo vệ tài khoản người dùng xuyên suốt.</p>
                     </div>
                     <div class="card-box" style="margin-bottom: 0;">
                         <div class="card-icon"><i class="fa-solid fa-compass-drafting"></i></div>
-                        <h3>Lộ Trình Dài Hạn</h3>
-                        <p>Cập nhật chậm mà chắc, mỗi bản patch ra mắt đều đem lại trải nghiệm hoàn thiện tuyệt đối.</p>
+                        <h3 data-i18n="feat3_title">Lộ Trình Dài Hạn</h3>
+                        <p data-i18n="feat3_desc">Cập nhật chậm mà chắc, mỗi bản patch ra mắt đều đem lại trải nghiệm hoàn thiện tuyệt đối.</p>
+                    </div>
+                </div>
+
+                <div class="card-box" style="margin-top: 25px;">
+                    <div class="card-icon" style="width: 44px; height: 44px; font-size: 18px; margin-bottom: 14px;"><i class="fa-solid fa-timeline"></i></div>
+                    <h3 data-i18n="roadmap_title">Định Hướng Phát Triển Tương Lai (Roadmap)</h3>
+                    <p style="margin-bottom: 14px;" data-i18n="roadmap_desc">Do phát triển độc lập, các tính năng mới sẽ được nghiên cứu và tích hợp theo từng giai đoạn quan trọng.</p>
+                    <div class="tag-badge-container">
+                        <span class="tag-pill active"><i class="fa-solid fa-spinner"></i> <span data-i18n="phase1">Giai đoạn 1: Tối ưu hoá toàn diện code cũ</span></span>
+                        <span class="tag-pill"><i class="fa-solid fa-clock"></i> <span data-i18n="phase2">Giai đoạn 2: Bổ sung thêm tính năng game mới</span></span>
+                        <span class="tag-pill"><i class="fa-solid fa-clock"></i> <span data-i18n="phase3">Giai đoạn 3: Nâng cấp hệ thống UI mượt mà hơn</span></span>
+                    </div>
+                </div>
+
+                <div class="card-box" style="background: linear-gradient(145deg, rgba(88, 101, 242, 0.07) 0%, rgba(255, 255, 255, 0.01) 100%); border-color: rgba(88, 101, 242, 0.25); margin-bottom: 0;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
+                        <div style="display: flex; gap: 18px; align-items: center;">
+                            <div class="card-icon" style="background: rgba(88, 101, 242, 0.15); color: #5865F2; border-color: rgba(88, 101, 242, 0.3); margin-bottom: 0;">
+                                <i class="fa-brands fa-discord"></i>
+                            </div>
+                            <div>
+                                <h3 style="margin-bottom: 4px;" data-i18n="join_title">Đồng Hành Cùng Nhà Phát Triển</h3>
+                                <p style="font-size: 13.5px; color: var(--text-sub);" data-i18n="join_desc">Góp ý tính năng hoặc báo lỗi trực tiếp qua Discord để giúp dự án hoàn thiện từng ngày.</p>
+                            </div>
+                        </div>
+                        <a href="https://discord.gg/GP2npV45u5" target="_blank" class="btn-action btn-discord">
+                            <i class="fa-brands fa-discord"></i> <span data-i18n="btn_join">THAM GIA NGAY</span>
+                        </a>
                     </div>
                 </div>
             </section>
@@ -657,142 +795,384 @@
             <!-- TAB 2: SUPPORT -->
             <section id="tab-support" class="tab-pane">
                 <div class="page-header">
-                    <h1 class="page-title">Hệ Thống Trạng Thái Hỗ Trợ Script</h1>
-                    <p class="page-desc">Theo dõi danh sách các tựa game và executor đã được tích hợp script.</p>
+                    <h1 class="page-title" data-i18n="sup_title">Hệ Thống Trạng Thái Hỗ Trợ Script</h1>
+                    <p class="page-desc" data-i18n="sup_desc">Theo dõi danh sách các tựa game và executor đã được tích hợp script hoặc đang nằm trong kế hoạch phát triển.</p>
                 </div>
 
                 <div class="grid-2">
+                    <!-- Windows Executors -->
                     <div class="card-box" style="margin-bottom: 0;">
                         <div class="card-icon" style="background: rgba(0, 240, 255, 0.15); color: var(--accent-cyan);"><i class="fa-solid fa-desktop"></i></div>
-                        <h3>Nền Tảng Windows (PC)</h3>
-                        <p style="margin-bottom: 14px;">Trạng thái tương thích đầy đủ của Hub trên máy tính.</p>
+                        <h3 data-i18n="win_exec_title">Nền Tảng Windows (PC)</h3>
+                        <p style="margin-bottom: 14px;" data-i18n="win_exec_desc">Trạng thái tương thích đầy đủ của Hub trên máy tính.</p>
                         <div class="tag-badge-container">
-                            <span class="tag-pill free"><i class="fa-solid fa-check-circle"></i> Real (Miễn Phí)</span>
-                            <span class="tag-pill free"><i class="fa-solid fa-check-circle"></i> Madium (Miễn Phí)</span>
-                            <span class="tag-pill paid"><i class="fa-solid fa-crown"></i> Wave Client (Trả Phí)</span>
-                            <span class="tag-pill paid"><i class="fa-solid fa-crown"></i> Synapse Z (Trả Phí)</span>
+                            <span class="tag-pill dimmed"><i class="fa-solid fa-triangle-exclamation"></i> Solara (<span data-i18n="unstable">Không ổn định</span>)</span>
+                            <span class="tag-pill dimmed"><i class="fa-solid fa-triangle-exclamation"></i> Xeno (<span data-i18n="unstable">Không ổn định</span>)</span>
+                            <span class="tag-pill free"><i class="fa-solid fa-check-circle"></i> Real (<span data-i18n="tag_free">Miễn Phí</span>)</span>
+                            <span class="tag-pill free"><i class="fa-solid fa-check-circle"></i> Madium (<span data-i18n="tag_free">Miễn Phí</span>)</span>
+                            <span class="tag-pill free"><i class="fa-solid fa-check-circle"></i> Vortex (<span data-i18n="tag_free">Miễn Phí</span>)</span>
+                            <span class="tag-pill free"><i class="fa-solid fa-check-circle"></i> Velocity (<span data-i18n="tag_free">Miễn Phí</span>)</span>
+                            <span class="tag-pill paid"><i class="fa-solid fa-crown"></i> Potassium (<span data-i18n="tag_paid">Trả Phí</span>)</span>
+                            <span class="tag-pill paid"><i class="fa-solid fa-crown"></i> Volt (<span data-i18n="tag_paid">Trả Phí</span>)</span>
+                            <span class="tag-pill paid"><i class="fa-solid fa-crown"></i> Cosmic (<span data-i18n="tag_paid">Trả Phí</span>)</span>
+                            <span class="tag-pill paid"><i class="fa-solid fa-crown"></i> Wave Client (<span data-i18n="tag_paid">Trả Phí</span>)</span>
+                            <span class="tag-pill paid"><i class="fa-solid fa-crown"></i> Synapse Z (<span data-i18n="tag_paid">Trả Phí</span>)</span>
+                            <span class="tag-pill paid"><i class="fa-solid fa-crown"></i> MacSploit (<span data-i18n="tag_paid">Trả Phí</span>)</span>
                         </div>
                     </div>
 
+                    <!-- Mobile Executors -->
                     <div class="card-box" style="margin-bottom: 0;">
                         <div class="card-icon" style="background: rgba(139, 92, 246, 0.15); color: var(--accent-purple);"><i class="fa-solid fa-mobile-screen-button"></i></div>
-                        <h3>Nền Tảng Điện Thoại (Mobile)</h3>
-                        <p style="margin-bottom: 14px;">Trạng thái tương thích trên Android / iOS.</p>
+                        <h3 data-i18n="mob_exec_title">Nền Tảng Điện Thoại (Mobile)</h3>
+                        <p style="margin-bottom: 14px;" data-i18n="mob_exec_desc">Trạng thái tương thích trên Android / iOS.</p>
                         <div class="tag-badge-container">
-                            <span class="tag-pill free"><i class="fa-solid fa-check-circle"></i> Delta Executor (Miễn Phí)</span>
-                            <span class="tag-pill free"><i class="fa-solid fa-check-circle"></i> Codex (Miễn Phí)</span>
-                            <span class="tag-pill free"><i class="fa-solid fa-check-circle"></i> Arceus X (Miễn Phí)</span>
+                            <span class="tag-pill free"><i class="fa-solid fa-check-circle"></i> Delta Executor (<span data-i18n="tag_free">Miễn Phí</span>)</span>
+                            <span class="tag-pill free"><i class="fa-solid fa-check-circle"></i> Codex (<span data-i18n="tag_free">Miễn Phí</span>)</span>
+                            <span class="tag-pill free"><i class="fa-solid fa-check-circle"></i> Arceus X (<span data-i18n="tag_free">Miễn Phí</span>)</span>
+                            <span class="tag-pill free"><i class="fa-solid fa-check-circle"></i> Fluxus Mobile (<span data-i18n="tag_free">Miễn Phí</span>)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TỰA GAME ROBLOX -->
+                <div class="card-box" style="margin-bottom: 0;">
+                    <div class="card-icon" style="width: 44px; height: 44px; font-size: 18px; margin-bottom: 14px;"><i class="fa-solid fa-gamepad"></i></div>
+                    <h3 data-i18n="game_status_title">Trạng Thái Script Theo Từng Tựa Game Roblox</h3>
+                    <p style="margin-bottom: 18px;" data-i18n="game_status_desc">Do đang trong giai đoạn xây dựng và chưa tạo script hoàn chỉnh, hiện tại tất cả các tựa game đều đang ở trạng thái Chưa Hỗ Trợ và sẽ được cập nhật sớm trong thời gian tới.</p>
+                    
+                    <div style="display: flex; flex-direction: column; gap: 16px;">
+                        <div style="background: rgba(255,255,255,0.02); padding: 16px 20px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.05);">
+                            <strong style="color: var(--accent-cyan); font-size: 14.5px; display: block; margin-bottom: 10px; font-family: 'Orbitron', sans-serif;">
+                                <i class="fa-solid fa-fire"></i> <span data-i18n="cat_anime">Thể Loại Anime / Nhập Vai (RPG)</span>
+                            </strong>
+                            <div class="tag-badge-container" style="margin-top: 0;">
+                                <span class="tag-pill unsupported"><i class="fa-solid fa-clock"></i> Blox Fruits (<span data-i18n="not_supported">Chưa Hỗ Trợ</span>)</span>
+                                <span class="tag-pill unsupported"><i class="fa-solid fa-clock"></i> Fisch (<span data-i18n="not_supported">Chưa Hỗ Trợ</span>)</span>
+                                <span class="tag-pill unsupported"><i class="fa-solid fa-clock"></i> King Legacy (<span data-i18n="not_supported">Chưa Hỗ Trợ</span>)</span>
+                                <span class="tag-pill unsupported"><i class="fa-solid fa-clock"></i> Anime Defenders (<span data-i18n="not_supported">Chưa Hỗ Trợ</span>)</span>
+                                <span class="tag-pill unsupported"><i class="fa-solid fa-clock"></i> All Star Tower Defense (<span data-i18n="not_supported">Chưa Hỗ Trợ</span>)</span>
+                                <span class="tag-pill unsupported"><i class="fa-solid fa-clock"></i> Peroxide & Type Soul (<span data-i18n="not_supported">Chưa Hỗ Trợ</span>)</span>
+                            </div>
+                        </div>
+
+                        <div style="background: rgba(255,255,255,0.02); padding: 16px 20px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.05);">
+                            <strong style="color: var(--accent-purple); font-size: 14.5px; display: block; margin-bottom: 10px; font-family: 'Orbitron', sans-serif;">
+                                <i class="fa-solid fa-coins"></i> <span data-i18n="cat_sim">Thể Loại Simulator & Sưu Tầm</span>
+                            </strong>
+                            <div class="tag-badge-container" style="margin-top: 0;">
+                                <span class="tag-pill unsupported"><i class="fa-solid fa-clock"></i> Pet Simulator 99 (<span data-i18n="not_supported">Chưa Hỗ Trợ</span>)</span>
+                                <span class="tag-pill unsupported"><i class="fa-solid fa-clock"></i> Bee Swarm Simulator (<span data-i18n="not_supported">Chưa Hỗ Trợ</span>)</span>
+                                <span class="tag-pill unsupported"><i class="fa-solid fa-clock"></i> Blade Ball (<span data-i18n="not_supported">Chưa Hỗ Trợ</span>)</span>
+                                <span class="tag-pill unsupported"><i class="fa-solid fa-clock"></i> Toilet Tower Defense (<span data-i18n="not_supported">Chưa Hỗ Trợ</span>)</span>
+                                <span class="tag-pill unsupported"><i class="fa-solid fa-clock"></i> Driving Empire (<span data-i18n="not_supported">Chưa Hỗ Trợ</span>)</span>
+                            </div>
+                        </div>
+
+                        <div style="background: rgba(255,255,255,0.02); padding: 16px 20px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.05);">
+                            <strong style="color: var(--accent-green); font-size: 14.5px; display: block; margin-bottom: 10px; font-family: 'Orbitron', sans-serif;">
+                                <i class="fa-solid fa-shield-sword"></i> <span data-i18n="cat_action">Thể Loại Hành Động, PvP & Kinh Dị</span>
+                            </strong>
+                            <div class="tag-badge-container" style="margin-top: 0;">
+                                <span class="tag-pill unsupported"><i class="fa-solid fa-clock"></i> Arsenal (<span data-i18n="not_supported">Chưa Hỗ Trợ</span>)</span>
+                                <span class="tag-pill unsupported"><i class="fa-solid fa-clock"></i> Murder Mystery 2 - MM2 (<span data-i18n="not_supported">Chưa Hỗ Trợ</span>)</span>
+                                <span class="tag-pill unsupported"><i class="fa-solid fa-clock"></i> DOORS (<span data-i18n="not_supported">Chưa Hỗ Trợ</span>)</span>
+                                <span class="tag-pill unsupported"><i class="fa-solid fa-clock"></i> Slap Battles (<span data-i18n="not_supported">Chưa Hỗ Trợ</span>)</span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- TAB 3: HỆ THỐNG KEY CỐ ĐỊNH -->
+            <!-- TAB 3: GET KEY -->
             <section id="tab-getkey" class="tab-pane">
                 <div class="page-header">
-                    <h1 class="page-title">Hệ Thống Key Cố Định</h1>
-                    <p class="page-desc">Sử dụng key công khai cố định bên dưới để truy cập nhanh chóng vào Script Hub.</p>
+                    <h1 class="page-title" data-i18n="key_page_title">Cấp Key Kích Hoạt</h1>
+                    <p class="page-desc" data-i18n="key_page_desc">Tạo Key truy cập sử dụng miễn phí trong vòng 24 Giờ.</p>
                 </div>
 
-                <div class="key-box-wrapper">
-                    <p style="color: var(--text-sub); font-size: 14px;">Key Sử Dụng Miễn Phí Của Bạn:</p>
-                    <div class="key-text" id="fixed-key">FishHub-Free-2026</div>
-                    <button class="btn-action btn-purple" onclick="copyFixedKey()" style="margin-top: 10px;">
-                        <i class="fa-solid fa-copy"></i> SAO CHÉP KEY CỐ ĐỊNH
+                <div id="keyWrapper" class="key-box-wrapper">
+                    <div style="font-size: 12.5px; color: var(--text-sub); margin-bottom: 8px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;" data-i18n="key_label">KEY KÍCH HOẠT CỦA BẠN:</div>
+                    <div id="keyDisplay" class="key-text">FISHHUB-XXXXXX-24H</div>
+                </div>
+
+                <div class="card-box" style="text-align: center; padding: 36px 24px; margin-bottom: 22px;">
+                    <div class="card-icon" style="margin: 0 auto 18px auto; width: 64px; height: 64px; font-size: 26px; border-radius: 18px;">
+                        <i class="fa-solid fa-key"></i>
+                    </div>
+                    <h3 style="font-size: 19px; margin-bottom: 10px;" data-i18n="key_box_title">Nhấn vào nút bên dưới để tạo Key</h3>
+                    <p style="font-size: 14px; color: var(--text-sub); max-width: 480px; margin: 0 auto 24px auto;" data-i18n="key_box_desc">
+                        Key sẽ tự động sao chép vào bộ nhớ tạm để bạn chỉ cần dán thẳng vào bảng Script trong game.
+                    </p>
+                    <button class="btn-action btn-purple" id="btnGetKey" onclick="handleGetKey()">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> <span data-i18n="btn_genkey">GENERATE KEY (24H)</span>
                     </button>
                 </div>
+
+                <div class="card-box" style="margin-bottom: 0;">
+                    <div class="card-icon" style="width: 44px; height: 44px; font-size: 18px; margin-bottom: 14px;"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                    <h3 data-i18n="note_title">Lưu Ý Quan Trọng Về Key</h3>
+                    <p style="line-height: 1.6; font-size: 13.5px; color: var(--text-sub);" data-i18n="note_desc">
+                        Tuyệt đối không chia sẻ mã key cá nhân của bạn cho người khác để tránh trường hợp key bị vượt quá số lượt giới hạn thiết bị kết nối. Nếu gặp lỗi phát sinh trong quá trình lấy key, hãy ghé ngay kênh Discord của chúng tôi để được trợ giúp nhanh chóng.
+                    </p>
+                </div>
             </section>
+
         </main>
     </div>
 
-    <div class="toast" id="toast">Đã sao chép vào bộ nhớ tạm!</div>
+    <div id="toast" class="toast">✅ Đã copy vào bộ nhớ!</div>
 
     <script>
-        // Chuyển Tab
-        function switchTab(tabId, element) {
-            document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active'));
-            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
-            
-            document.getElementById('tab-' + tabId).classList.add('active');
-            element.classList.add('active');
+        const SCRIPT_URL = 'loadstring(game:HttpGet("https://raw.githubusercontent.com/Cachuoine/DHL/refs/heads/main/FishHub.lua"))()';
+
+        // Bộ từ điển ngôn ngữ đa dạng
+        const langData = {
+            vi: {
+                status_online: "UNDETECTED & ONLINE",
+                discord_community: "Cộng Đồng Discord",
+                nav_project: "Thông Tin Dự Án",
+                nav_support: "Hỗ Trợ System",
+                nav_key: "Hệ Thống Key",
+                proj_title: "Thông Tin Dự Án & Định Hướng",
+                proj_desc: "FishHub được phát triển chuyên sâu độc lập nhằm mang lại hiệu năng cao và độ ổn định lâu dài.",
+                loader_title: "Script Loader Chính Thức",
+                loader_desc: "Sao chép đoạn mã ngắn gọn bên dưới để thực thi trực tiếp trên Executor của bạn.",
+                btn_copyscript: "SAO CHÉP SCRIPT",
+                feat1_title: "Chất Lượng Độc Lập",
+                feat1_desc: "Phát triển cá nhân hóa giúp từng dòng code được kiểm duyệt kỹ lưỡng, hạn chế tối đa lỗi vặt.",
+                feat2_title: "Bảo Mật Bền Vững",
+                feat2_desc: "Tập trung tối ưu hóa các phương thức an toàn để bảo vệ tài khoản người dùng xuyên suốt.",
+                feat3_title: "Lộ Trình Dài Hạn",
+                feat3_desc: "Cập nhật chậm mà chắc, mỗi bản patch ra mắt đều đem lại trải nghiệm hoàn thiện tuyệt đối.",
+                roadmap_title: "Định Hướng Phát Triển Tương Lai (Roadmap)",
+                roadmap_desc: "Do phát triển độc lập, các tính năng mới sẽ được nghiên cứu và tích hợp theo từng giai đoạn quan trọng.",
+                phase1: "Giai đoạn 1: Tối ưu hoá toàn diện code cũ",
+                phase2: "Giai đoạn 2: Bổ sung thêm tính năng game mới",
+                phase3: "Giai đoạn 3: Nâng cấp hệ thống UI mượt mà hơn",
+                join_title: "Đồng Hành Cùng Nhà Phát Triển",
+                join_desc: "Góp ý tính năng hoặc báo lỗi trực tiếp qua Discord để giúp dự án hoàn thiện từng ngày.",
+                btn_join: "THAM GIA NGAY",
+                sup_title: "Hệ Thống Trạng Thái Hỗ Trợ Script",
+                sup_desc: "Theo dõi danh sách các tựa game và executor đã được tích hợp script hoặc đang nằm trong kế hoạch phát triển.",
+                win_exec_title: "Nền Tảng Windows (PC)",
+                win_exec_desc: "Trạng thái tương thích đầy đủ của Hub trên máy tính.",
+                mob_exec_title: "Nền Tảng Điện Thoại (Mobile)",
+                mob_exec_desc: "Trạng thái tương thích trên Android / iOS.",
+                unstable: "Không ổn định",
+                tag_free: "Miễn Phí",
+                tag_paid: "Trả Phí",
+                game_status_title: "Trạng Thái Script Theo Từng Tựa Game Roblox",
+                game_status_desc: "Do đang trong giai đoạn xây dựng và chưa tạo script hoàn chỉnh, hiện tại tất cả các tựa game đều đang ở trạng thái Chưa Hỗ Trợ và sẽ được cập nhật sớm trong thời gian tới.",
+                cat_anime: "Thể Loại Anime / Nhập Vai (RPG)",
+                cat_sim: "Thể Loại Simulator & Sưu Tầm",
+                cat_action: "Thể Loại Hành Động, PvP & Kinh Dị",
+                not_supported: "Chưa Hỗ Trợ",
+                key_page_title: "Cấp Key Kích Hoạt",
+                key_page_desc: "Tạo Key truy cập sử dụng miễn phí trong vòng 24 Giờ.",
+                key_label: "KEY KÍCH HOẠT CỦA BẠN:",
+                key_box_title: "Nhấn vào nút bên dưới để tạo Key",
+                key_box_desc: "Key sẽ tự động sao chép vào bộ nhớ tạm để bạn chỉ cần dán thẳng vào bảng Script trong game.",
+                btn_genkey: "GENERATE KEY (24H)",
+                note_title: "Lưu Ý Quan Trọng Về Key",
+                note_desc: "Tuyệt đối không chia sẻ mã key cá nhân của bạn cho người khác để tránh trường hợp key bị vượt quá số lượt giới hạn thiết bị kết nối. Nếu gặp lỗi phát sinh trong quá trình lấy key, hãy ghé ngay kênh Discord của chúng tôi để được trợ giúp nhanh chóng.",
+                toast_copy: "✅ Đã sao chép Script Loader!",
+                toast_key: "🔑 Key đã được tạo & tự động copy!"
+            },
+            en: {
+                status_online: "UNDETECTED & ONLINE",
+                discord_community: "Discord Community",
+                nav_project: "Project Info",
+                nav_support: "System Support",
+                nav_key: "Key System",
+                proj_title: "Project Information & Roadmap",
+                proj_desc: "FishHub is independently developed to deliver high performance and long-term stability.",
+                loader_title: "Official Script Loader",
+                loader_desc: "Copy the short snippet below to execute directly on your executor.",
+                btn_copyscript: "COPY SCRIPT",
+                feat1_title: "Independent Quality",
+                feat1_desc: "Personalized development ensures every line of code is carefully reviewed to minimize bugs.",
+                feat2_title: "Sustainable Security",
+                feat2_desc: "Focusing on optimized safety methods to protect user accounts thoroughly.",
+                feat3_title: "Long-term Roadmap",
+                feat3_desc: "Slow and steady updates, every patch brings an absolute polished experience.",
+                roadmap_title: "Future Development Roadmap",
+                roadmap_desc: "As an independent project, new features will be researched and integrated step-by-step.",
+                phase1: "Phase 1: Comprehensive optimization of old code",
+                phase2: "Phase 2: Adding new game features",
+                phase3: "Phase 3: Upgrading to a smoother UI system",
+                join_title: "Accompany The Developer",
+                join_desc: "Suggest features or report bugs directly via Discord to help the project improve daily.",
+                btn_join: "JOIN NOW",
+                sup_title: "Script Support Status System",
+                sup_desc: "Track the list of games and executors that have integrated scripts or are planned for development.",
+                win_exec_title: "Windows Platform (PC)",
+                win_exec_desc: "Full compatibility status of the Hub on PC.",
+                mob_exec_title: "Mobile Platform",
+                mob_exec_desc: "Compatibility status on Android / iOS.",
+                unstable: "Unstable",
+                tag_free: "Free",
+                tag_paid: "Paid",
+                game_status_title: "Script Status By Roblox Game",
+                game_status_desc: "Currently under construction without full scripts yet; all games are currently Unsupported and will be updated soon.",
+                cat_anime: "Anime / RPG Category",
+                cat_sim: "Simulator & Collection",
+                cat_action: "Action, PvP & Horror Category",
+                not_supported: "Unsupported",
+                key_page_title: "Activation Key System",
+                key_page_desc: "Generate an access key for free usage within 24 Hours.",
+                key_label: "YOUR ACTIVATION KEY:",
+                key_box_title: "Click the button below to generate a Key",
+                key_box_desc: "The key will be automatically copied to your clipboard so you can paste it directly into the game.",
+                btn_genkey: "GENERATE KEY (24H)",
+                note_title: "Important Key Notes",
+                note_desc: "Do not share your personal key code with others to avoid exceeding the connected device limit. If you encounter any issues getting a key, visit our Discord channel for quick assistance.",
+                toast_copy: "✅ Script Loader Copied!",
+                toast_key: "🔑 Key generated & automatically copied!"
+            }
+        };
+
+        let currentLang = 'vi';
+
+        function switchLanguage(lang) {
+            currentLang = lang;
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('lang-' + lang).classList.add('active');
+
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (langData[lang][key]) {
+                    el.innerText = langData[lang][key];
+                }
+            });
         }
 
-        // Thông báo Toast
-        function showToast(message) {
-            const toast = document.getElementById('toast');
-            toast.textContent = message;
-            toast.classList.add('show');
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 2500);
-        }
-
-        // Copy Script
-        function copyScript() {
-            const scriptContent = `loadstring(game:HttpGet("https://your-raw-script-url.lua"))()`;
-            navigator.clipboard.writeText(scriptContent);
-            showToast('Đã sao chép Script Loader!');
-        }
-
-        // Copy Key Cố Định
-        function copyFixedKey() {
-            const key = document.getElementById('fixed-key').textContent;
-            navigator.clipboard.writeText(key);
-            showToast('Đã sao chép Key: FishHub-Free-2026');
-        }
-
-        // Canvas Hiệu ứng nền
         const canvas = document.getElementById('bg-canvas');
         const ctx = canvas.getContext('2d');
+        let width, height;
         let particles = [];
 
         function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
-
-        for (let i = 0; i < 40; i++) {
-            particles.push({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
-                radius: Math.random() * 2 + 1,
-                vx: (Math.random() - 0.5) * 0.5,
-                vy: (Math.random() - 0.5) * 0.5
-            });
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
         }
 
-        function drawParticles() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = 'rgba(0, 240, 255, 0.4)';
-            ctx.strokeStyle = 'rgba(0, 240, 255, 0.08)';
+        class Particle {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.vx = (Math.random() - 0.5) * 0.6;
+                this.vy = (Math.random() - 0.5) * 0.6;
+                this.radius = Math.random() * 1.8 + 0.8;
+                this.color = Math.random() > 0.5 ? 'rgba(0, 240, 255, ' : 'rgba(139, 92, 246, ';
+                this.alpha = Math.random() * 0.5 + 0.2;
+            }
 
-            particles.forEach((p, index) => {
-                p.x += p.vx;
-                p.y += p.vy;
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
 
-                if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
-                if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+                if (this.x < 0 || this.x > width) this.vx *= -1;
+                if (this.y < 0 || this.y > height) this.vy *= -1;
+            }
 
+            draw() {
                 ctx.beginPath();
-                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = this.color + this.alpha + ')';
                 ctx.fill();
+            }
+        }
 
-                for (let j = index + 1; j < particles.length; j++) {
-                    let p2 = particles[j];
-                    let dist = Math.hypot(p.x - p2.x, p.y - p2.y);
+        function initParticles() {
+            particles = [];
+            const count = Math.floor((width * height) / 15000);
+            for (let i = 0; i < count; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function animateCanvas() {
+            ctx.clearRect(0, 0, width, height);
+
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+
                     if (dist < 120) {
                         ctx.beginPath();
-                        ctx.moveTo(p.x, p.y);
-                        ctx.lineTo(p2.x, p2.y);
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.strokeStyle = `rgba(0, 240, 255, ${0.15 * (1 - dist / 120)})`;
+                        ctx.lineWidth = 0.6;
                         ctx.stroke();
                     }
                 }
-            });
-            requestAnimationFrame(drawParticles);
+            }
+            requestAnimationFrame(animateCanvas);
         }
-        drawParticles();
+
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+            initParticles();
+        });
+
+        resizeCanvas();
+        initParticles();
+        animateCanvas();
+
+        function switchTab(tabId, element) {
+            document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+
+            document.getElementById('tab-' + tabId).classList.add('active');
+            element.classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function copyScript() {
+            navigator.clipboard.writeText(SCRIPT_URL).then(() => {
+                showToast(langData[currentLang].toast_copy);
+            });
+        }
+
+        function handleGetKey() {
+            const btn = document.getElementById('btnGetKey');
+            const wrapper = document.getElementById('keyWrapper');
+            const display = document.getElementById('keyDisplay');
+
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> GENERATING...';
+            btn.style.opacity = '0.7';
+
+            setTimeout(() => {
+                const code = Math.random().toString(36).substring(2, 8).toUpperCase();
+                const key = `FISHHUB-${code}-24H`;
+
+                display.innerText = key;
+                wrapper.style.display = 'block';
+
+                navigator.clipboard.writeText(key);
+
+                btn.innerHTML = '<i class="fa-solid fa-check"></i> KEY CREATED & COPIED!';
+                btn.style.opacity = '1';
+
+                showToast(langData[currentLang].toast_key);
+            }, 800);
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.innerText = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2600);
+        }
     </script>
 </body>
 </html>
