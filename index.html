@@ -30,7 +30,7 @@
 
         #particleCanvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 2; pointer-events: none; }
 
-        /* ================= PC NAVBAR (Mặc định cho máy tính) ================= */
+        /* ================= NAVBAR CHUNG ================= */
         .navbar {
             position: fixed; top: 0; left: 0; width: 100%; height: 75px;
             background: rgba(8, 6, 18, 0.85); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
@@ -71,7 +71,7 @@
         .action-btn:hover { background: #00f0ff; color: #000; border-color: #00f0ff; box-shadow: 0 0 20px rgba(0,240,255,0.8); }
         .lang-btn { background: rgba(20, 15, 35, 0.9); border: 1px solid rgba(139, 92, 246, 0.4); }
 
-        /* MOBILE BOTTOM NAVBAR (Ẩn trên PC, hiển thị riêng trên điện thoại) */
+        /* MOBILE BOTTOM NAVBAR */
         .mobile-bottom-nav {
             display: none; position: fixed; bottom: 0; left: 0; width: 100%; height: 65px;
             background: rgba(8, 6, 18, 0.95); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
@@ -222,11 +222,19 @@
         .toast.show { top: 95px; }
 
         /* ======================================================== */
-        /* MEDIA QUERIES: TỐI ƯU ĐẶC BIỆT RIÊNG CHO ĐIỆN THOẠI (<= 768px) */
+        /* MEDIA QUERIES: GIỮ LẠI THANH TRÊN CÙNG + TỐI ƯU MOBILE */
         /* ======================================================== */
         @media screen and (max-width: 768px) {
-            /* Ẩn navbar trên cùng của PC */
+            /* Giữ lại navbar trên cùng trên di động nhưng thu gọn chiều cao cho đẹp */
             .navbar {
+                height: 60px;
+                padding: 0 15px;
+            }
+            .logo-brand {
+                font-size: 18px;
+            }
+            /* Ẩn các nút tab ở giữa thanh trên trên mobile (vì đã chuyển xuống bottom nav) */
+            .navbar .nav-center {
                 display: none;
             }
             /* Hiển thị bottom navigation bar riêng cho điện thoại */
@@ -234,8 +242,8 @@
                 display: flex;
             }
             body {
-                padding-top: 20px;
-                padding-bottom: 95px; /* Chừa không gian cho bottom nav */
+                padding-top: 75px;  /* Đủ không gian cho thanh logo phía trên */
+                padding-bottom: 85px; /* Đủ không gian cho thanh bottom nav phía dưới */
             }
             .glass-panel {
                 width: 95%;
@@ -243,10 +251,10 @@
                 border-radius: 22px;
             }
             .link-group-grid {
-                grid-template-columns: repeat(2, 1fr); /* 2 cột trên di động cho cân đối */
+                grid-template-columns: repeat(2, 1fr);
             }
             .exec-grid {
-                grid-template-columns: 1fr; /* 1 cột cho danh sách executor trên di động */
+                grid-template-columns: 1fr;
             }
             .ticker-container {
                 width: 95%;
@@ -271,11 +279,12 @@
 
     <div class="toast" id="toast"><i class="fa-solid fa-check"></i> <span id="toast-msg">Success!</span></div>
 
-    <!-- PC NAVBAR (Chỉ hiện trên máy tính) -->
+    <!-- NAVBAR (Hiển thị xuyên suốt trên cả PC và Điện thoại) -->
     <nav class="navbar">
         <div class="nav-left">
             <div class="logo-brand"><i class="fa-solid fa-anchor"></i> FishHub</div>
         </div>
+        <!-- Chỉ hiện trên PC, tự động ẩn trên di động để nhường chỗ cho Bottom Bar -->
         <div class="nav-center">
             <button class="tab-btn active" onclick="switchTab('home')"><i class="fa-solid fa-house"></i> <span data-i18n="nav_home">Home</span></button>
             <button class="tab-btn" onclick="switchTab('script')"><i class="fa-solid fa-code"></i> <span data-i18n="nav_script">Script Hub</span></button>
@@ -288,7 +297,7 @@
         </div>
     </nav>
 
-    <!-- MOBILE BOTTOM NAVIGATION BAR (Thanh điều hướng riêng cho điện thoại) -->
+    <!-- MOBILE BOTTOM NAVIGATION BAR (Thanh điều hướng dưới màn hình cho điện thoại) -->
     <div class="mobile-bottom-nav">
         <button class="mob-tab active" onclick="switchTab('home')"><i class="fa-solid fa-house"></i> <span data-i18n="nav_home">Home</span></button>
         <button class="mob-tab" onclick="switchTab('script')"><i class="fa-solid fa-code"></i> <span data-i18n="nav_script">Script</span></button>
@@ -557,7 +566,6 @@
             
             document.getElementById('tab-' + tabId).classList.add('active');
             
-            // Đồng bộ trạng thái active cho cả 2 menu PC và Mobile
             const pcButtons = document.querySelectorAll('.tab-btn');
             const mobButtons = document.querySelectorAll('.mob-tab');
             const indexMap = { 'home': 0, 'script': 1, 'getkey': 2, 'games': 3, 'executors': 4 };
