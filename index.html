@@ -72,7 +72,7 @@
         .action-btn:hover { background: #00f0ff; color: #000; border-color: #00f0ff; box-shadow: 0 0 25px rgba(0,240,255,0.9); transform: translateY(-3px) scale(1.05); }
         .lang-btn { background: rgba(20, 15, 35, 0.9); border: 1px solid rgba(139, 92, 246, 0.4); }
 
-        /* THANH MARQUEE CHẠY NGOÀI UI (JS MƯỢT TUYỆT ĐỐI) */
+        /* THANH MARQUEE CHẠY NGOÀI UI */
         .ticker-container {
             position: relative; z-index: 10; width: 92%; max-width: 740px;
             overflow: hidden; background: rgba(8, 6, 18, 0.75); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
@@ -160,16 +160,14 @@
         .social-link-box.github:hover { background: rgba(255,255,255,0.1); border-color: #fff; box-shadow: 0 0 25px rgba(255,255,255,0.4); transform: translateY(-5px) scale(1.05); }
         .social-link-box.github:hover i { color: #fff; transform: scale(1.2); }
         
-        /* YouTube Vô Hiệu Hóa */
         .social-link-box.youtube-disabled { opacity: 0.45; cursor: not-allowed; }
         .social-link-box.youtube-disabled:hover { transform: none; box-shadow: none; border-color: rgba(255,255,255,0.08); background: rgba(255,255,255,0.03); }
         .social-link-box.youtube-disabled:hover i { transform: none; color: inherit; }
 
-        /* Facebook */
         .social-link-box.facebook:hover { background: rgba(24, 119, 242, 0.15); border-color: #1877F2; box-shadow: 0 0 25px rgba(24,119,242,0.5); transform: translateY(-5px) scale(1.05); }
         .social-link-box.facebook:hover i { color: #1877F2; transform: scale(1.2); }
 
-        /* THANH DOCK LIÊN KẾT NỔI Ở NỀN GIAO DIỆN */
+        /* THANH DOCK LIÊN KẾT NỔI */
         .floating-social-dock {
             position: fixed; bottom: 15px; left: 50%; transform: translateX(-50%);
             display: flex; gap: 14px; z-index: 45;
@@ -269,12 +267,62 @@
         /* Toast Notification */
         .toast { position: fixed; top: -70px; left: 50%; transform: translateX(-50%); background: linear-gradient(90deg, #10b981, #059669); color: white; padding: 12px 24px; border-radius: 24px; font-size: 13px; font-weight: 700; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index: 100; box-shadow: 0 0 25px rgba(16, 185, 129, 0.7); }
         .toast.show { top: 95px; }
+
+        /* ======================================================== */
+        /* MEDIA QUERIES - TỐI ƯU HÓA CHO ĐIỆN THOẠI (MÀN HÌNH DƯỚI 768px) */
+        /* ======================================================== */
+        @media screen and (max-width: 768px) {
+            .navbar {
+                padding: 0 15px;
+                height: auto;
+                min-height: 70px;
+                flex-direction: column;
+                gap: 8px;
+                padding-bottom: 8px;
+            }
+            .nav-center {
+                gap: 5px;
+                overflow-x: auto;
+                width: 100%;
+                padding-bottom: 4px;
+                justify-content: flex-start;
+            }
+            .nav-center::-webkit-scrollbar {
+                display: none;
+            }
+            body {
+                padding-top: 135px;
+            }
+            .glass-panel {
+                width: 95%;
+                padding: 22px 16px;
+                border-radius: 20px;
+            }
+            .link-group-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .exec-grid {
+                grid-template-columns: 1fr;
+            }
+            .ticker-container {
+                width: 95%;
+            }
+            .home-stats-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 8px;
+            }
+            .stat-card {
+                padding: 10px;
+            }
+            .stat-card .num {
+                font-size: 15px;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="aurora-bg"></div>
     <div class="grid-overlay"></div>
-    <!-- CANVAS HIỆU ỨNG CÁC HẠT LIÊN KẾT -->
     <canvas id="particleCanvas"></canvas>
 
     <div class="toast" id="toast"><i class="fa-solid fa-check"></i> <span id="toast-msg">Success!</span></div>
@@ -605,7 +653,6 @@
             .then(() => showToast(currentLang === 'en' ? 'Script Copied Successfully!' : 'Đã sao chép Script thành công!'));
         }
 
-        // HỆ THỐNG MARQUEE JS MƯỢT TUYỆT ĐỐI
         let tickerAnimId;
         function initMarquee() {
             const track = document.getElementById('tickerTrack');
@@ -644,7 +691,6 @@
             tickerAnimId = requestAnimationFrame(step);
         }
 
-        // HỆ THỐNG HẠT LIÊN KẾT NỀN (PARTICLE NETWORK)
         const canvas = document.getElementById('particleCanvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
