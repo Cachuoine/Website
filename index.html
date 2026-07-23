@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FishHub - Official Key & Hub System</title>
+    <title>FishHub - Ultimate Key & Hub System</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -32,52 +32,50 @@
             100% { background-position: 0% 50%; }
         }
         body {
-            background: linear-gradient(-45deg, #030712, #0f172a, #1e1b4b, #311042);
+            background: linear-gradient(-45deg, #020617, #090d16, #170f2c, #290c36);
             background-size: 400% 400%;
-            animation: gradientBG 18s ease infinite;
+            animation: gradientBG 20s ease infinite;
             color: #f8fafc;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             overflow-x: hidden;
         }
         
-        /* Glass panel siêu trong suốt */
         .glass-panel {
-            background: rgba(15, 23, 42, 0.2);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(139, 92, 246, 0.3);
+            background: rgba(15, 23, 42, 0.4);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(168, 85, 247, 0.3);
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .galaxy-glow:hover {
-            transform: translateY(-6px) scale(1.015);
-            border-color: rgba(168, 85, 247, 0.9);
-            box-shadow: 0 0 50px rgba(139, 92, 246, 0.4), 0 0 30px rgba(56, 189, 248, 0.3), inset 0 0 20px rgba(255, 255, 255, 0.15);
+            border-color: rgba(192, 132, 252, 0.9);
+            box-shadow: 0 0 50px rgba(139, 92, 246, 0.45), 0 0 25px rgba(56, 189, 248, 0.3), inset 0 0 20px rgba(255, 255, 255, 0.15);
         }
 
         .icon-hover {
             transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.3s ease;
         }
         .group:hover .icon-hover {
-            transform: scale(1.35) rotate(15deg);
-            color: #c084fc;
+            transform: scale(1.3) rotate(12deg);
+            color: #d8b4fe;
         }
 
         .glowing-circle {
             position: absolute;
             border-radius: 50%;
-            filter: blur(90px);
+            filter: blur(120px);
             opacity: 0.25;
             pointer-events: none;
-            animation: floatCircle 8s ease-in-out infinite alternate;
+            animation: floatCircle 10s ease-in-out infinite alternate;
         }
         @keyframes floatCircle {
             0% { transform: translateY(0px) scale(1); }
-            100% { transform: translateY(-40px) scale(1.2); }
+            100% { transform: translateY(-60px) scale(1.2); }
         }
 
         .pulse-green {
-            width: 10px;
-            height: 10px;
+            width: 8px;
+            height: 8px;
             background-color: #22c55e;
             border-radius: 50%;
             display: inline-block;
@@ -90,8 +88,8 @@
             100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
         }
         .pulse-purple {
-            width: 10px;
-            height: 10px;
+            width: 8px;
+            height: 8px;
             background-color: #a855f7;
             border-radius: 50%;
             display: inline-block;
@@ -107,15 +105,15 @@
         .wave-container {
             position: relative;
             overflow: hidden;
-            background: linear-gradient(135deg, rgba(147, 51, 234, 0.1), rgba(2, 132, 199, 0.1), rgba(255, 255, 255, 0.02));
-            backdrop-filter: blur(10px);
+            background: linear-gradient(135deg, rgba(147, 51, 234, 0.12), rgba(2, 132, 199, 0.12), rgba(255, 255, 255, 0.02));
+            backdrop-filter: blur(16px);
             border-radius: 1rem;
             border: 1px solid rgba(168, 85, 247, 0.3);
         }
         .waves {
             position: relative;
             width: 100%;
-            height: 60px;
+            height: 50px;
             margin-bottom: -7px;
         }
         .parallax > use {
@@ -129,55 +127,63 @@
             0% { transform: translate3d(-90px,0,0); }
             100% { transform: translate3d(85px,0,0); }
         }
+
+        pre::-webkit-scrollbar {
+            display: none;
+        }
+        pre {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col relative pb-28 md:pb-12">
 
     <canvas id="bgCanvas" class="fixed inset-0 pointer-events-none z-0"></canvas>
 
-    <div class="glowing-circle bg-purple-600 w-96 h-96 top-10 left-10"></div>
-    <div class="glowing-circle bg-sky-400 w-96 h-96 top-1/2 right-10"></div>
-    <div class="glowing-circle bg-blue-600 w-80 h-80 bottom-10 left-1/3"></div>
+    <div class="glowing-circle bg-purple-600 w-[30rem] h-[30rem] top-10 left-10"></div>
+    <div class="glowing-circle bg-sky-500 w-[30rem] h-[30rem] top-1/2 right-10"></div>
+    <div class="glowing-circle bg-indigo-600 w-96 h-96 bottom-10 left-1/3"></div>
 
-    <header class="w-full py-4 px-6 glass-panel sticky top-0 z-50 flex justify-between items-center border-b border-purple-900/20">
+    <header class="w-full py-4 px-6 glass-panel sticky top-0 z-50 flex justify-between items-center border-b border-purple-900/30 shadow-2xl">
         <div class="flex items-center space-x-3 group cursor-pointer" onclick="switchTab('home')">
-            <span class="text-2xl icon-hover">⚓</span>
-            <span class="text-xl font-bold bg-gradient-to-r from-sky-400 via-purple-300 to-white bg-clip-text text-transparent">FishHub</span>
-            <div class="flex items-center space-x-1.5 ml-2">
+            <span class="text-3xl icon-hover">⚓</span>
+            <span class="text-2xl font-black bg-gradient-to-r from-sky-400 via-purple-300 to-white bg-clip-text text-transparent drop-shadow-md">FishHub</span>
+            <div class="flex items-center space-x-1.5 ml-2 bg-slate-900/60 px-3 py-1 rounded-full border border-green-500/30">
                 <span class="pulse-green"></span>
-                <span class="text-xs text-green-400 font-medium">Working</span>
+                <span class="text-[11px] text-green-400 font-bold tracking-wider">ONLINE</span>
             </div>
         </div>
 
-        <div class="hidden md:flex items-center space-x-2 bg-slate-900/20 backdrop-blur-md p-1 rounded-xl border border-purple-500/20">
-            <button type="button" onclick="switchTab('home')" id="navHomeBtn" class="px-5 py-1.5 rounded-lg bg-gradient-to-r from-purple-600 to-sky-600 text-white text-sm font-semibold transition-all flex items-center space-x-2 shadow-md">
+        <div class="hidden md:flex items-center space-x-2 bg-slate-900/40 backdrop-blur-md p-1.5 rounded-xl border border-purple-500/30 shadow-inner">
+            <button type="button" onclick="switchTab('home')" id="navHomeBtn" class="px-5 py-2 rounded-lg bg-gradient-to-r from-purple-600 to-sky-600 text-white text-sm font-bold transition-all flex items-center space-x-2 shadow-lg scale-105">
                 <i class="fa-solid fa-house icon-hover"></i>
                 <span data-en="Home" data-vi="Trang chủ">Home</span>
             </button>
-            <button type="button" onclick="switchTab('info')" id="navInfoBtn" class="px-5 py-1.5 rounded-lg text-slate-300 hover:text-white text-sm font-semibold transition-all flex items-center space-x-2 group">
+            <button type="button" onclick="switchTab('info')" id="navInfoBtn" class="px-5 py-2 rounded-lg text-slate-300 hover:text-white text-sm font-bold transition-all flex items-center space-x-2 group">
                 <i class="fa-solid fa-circle-info icon-hover"></i>
                 <span data-en="Info" data-vi="Thông tin">Info</span>
             </button>
         </div>
 
         <div class="flex items-center space-x-3">
-            <button type="button" onclick="toggleLanguage()" id="langBtn" class="px-3 py-1.5 rounded-lg bg-slate-800/30 hover:bg-slate-700/50 text-sm font-semibold transition-all border border-purple-500/20 flex items-center space-x-2 text-sky-200 backdrop-blur-sm">
+            <button type="button" onclick="toggleLanguage()" id="langBtn" class="px-3.5 py-2 rounded-xl bg-slate-800/60 hover:bg-slate-700/80 text-sm font-bold transition-all border border-purple-500/30 flex items-center space-x-2 text-sky-200 backdrop-blur-md shadow-md">
                 <i class="fa-solid fa-globe icon-hover"></i>
                 <span id="langText">EN</span>
             </button>
-            <a href="https://discord.gg/2tTJxRk2ct" target="_blank" class="px-4 py-1.5 rounded-lg bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-sm font-semibold transition-all hidden sm:flex items-center space-x-2 text-white group galaxy-glow">
+            <a href="https://discord.gg/2tTJxRk2ct" target="_blank" class="px-4 py-2 rounded-xl bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-sm font-bold transition-all hidden sm:flex items-center space-x-2 text-white group galaxy-glow shadow-lg">
                 <i class="fa-brands fa-discord icon-hover"></i>
                 <span>Discord</span>
             </a>
         </div>
     </header>
 
-    <div class="fixed bottom-0 left-0 right-0 z-50 md:hidden glass-panel py-3 px-8 flex justify-around items-center border-t border-purple-900/30 bg-slate-950/40 backdrop-blur-xl shadow-2xl">
-        <button type="button" onclick="switchTab('home')" id="mobileBottomHomeBtn" class="flex flex-col items-center space-y-1 text-purple-400 font-semibold text-xs transition-all active:scale-95">
+    <div class="fixed bottom-0 left-0 right-0 z-50 md:hidden glass-panel py-3 px-8 flex justify-around items-center border-t border-purple-900/40 bg-slate-950/80 backdrop-blur-2xl shadow-2xl">
+        <button type="button" onclick="switchTab('home')" id="mobileBottomHomeBtn" class="flex flex-col items-center space-y-1 text-purple-400 font-bold text-xs transition-all active:scale-95">
             <i class="fa-solid fa-house text-xl"></i>
             <span data-en="Home" data-vi="Trang chủ">Home</span>
         </button>
-        <button type="button" onclick="switchTab('info')" id="mobileBottomInfoBtn" class="flex flex-col items-center space-y-1 text-slate-400 font-semibold text-xs transition-all active:scale-95">
+        <button type="button" onclick="switchTab('info')" id="mobileBottomInfoBtn" class="flex flex-col items-center space-y-1 text-slate-400 font-bold text-xs transition-all active:scale-95">
             <i class="fa-solid fa-circle-info text-xl"></i>
             <span data-en="Info" data-vi="Thông tin">Info</span>
         </button>
@@ -185,10 +191,10 @@
 
     <main class="flex-grow container mx-auto px-4 py-8 max-w-5xl space-y-8 z-10">
 
-        <div class="wave-container p-6 text-center shadow-2xl galaxy-glow">
-            <div class="relative z-10 space-y-2">
-                <h2 class="text-2xl sm:text-3xl font-extrabold bg-gradient-to-r from-white via-sky-300 to-purple-400 bg-clip-text text-transparent" data-en="Welcome to FishHub Universal" data-vi="Chào mừng đến với FishHub Universal">Welcome to FishHub Universal</h2>
-                <p class="text-xs sm:text-sm text-sky-100/90" data-en="The ultimate gaming experience with elite performance & security." data-vi="Trải nghiệm gaming đỉnh cao với hiệu năng và bảo mật tối ưu.">The ultimate gaming experience with elite performance & security.</p>
+        <div class="wave-container p-8 text-center shadow-2xl galaxy-glow">
+            <div class="relative z-10 space-y-3">
+                <h2 class="text-3xl sm:text-4xl font-black bg-gradient-to-r from-white via-sky-300 to-purple-400 bg-clip-text text-transparent drop-shadow-lg" data-en="Welcome to FishHub Universal" data-vi="Chào mừng đến với FishHub Universal">Welcome to FishHub Universal</h2>
+                <p class="text-sm sm:text-base text-sky-100/90 font-medium" data-en="The ultimate gaming experience with elite performance & security." data-vi="Trải nghiệm gaming đỉnh cao với hiệu năng và bảo mật tối ưu.">The ultimate gaming experience with elite performance & security.</p>
             </div>
             <svg class="waves mt-4" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
                 <defs>
@@ -203,266 +209,267 @@
             </svg>
         </div>
 
+        <!-- ================= HOME TAB ĐẦY ĐỦ 100% ================= -->
         <div id="homeTab" class="space-y-10">
-            <section class="glass-panel galaxy-glow rounded-2xl p-6 sm:p-8 shadow-2xl relative overflow-hidden">
-                <div class="absolute -right-10 -bottom-10 w-60 h-60 bg-purple-500/10 rounded-full blur-3xl pointer-events-none"></div>
+            <section class="glass-panel galaxy-glow rounded-3xl p-6 sm:p-10 shadow-2xl relative overflow-hidden">
+                <div class="absolute -right-10 -bottom-10 w-72 h-72 bg-purple-500/15 rounded-full blur-3xl pointer-events-none"></div>
                 
-                <div class="text-center space-y-3 mb-6">
-                    <h1 class="text-2xl sm:text-3xl font-bold text-white flex items-center justify-center space-x-2 group">
+                <div class="text-center space-y-3 mb-8">
+                    <h1 class="text-2xl sm:text-4xl font-extrabold text-white flex items-center justify-center space-x-3 group">
                         <i class="fa-solid fa-key icon-hover text-purple-400"></i>
                         <span data-en="FishHub Key System" data-vi="Hệ thống Key FishHub">FishHub Key System</span>
                     </h1>
-                    <p class="text-slate-300 text-sm" data-en="Complete human verification to generate your access key." data-vi="Hoàn thành xác thực con người để tạo key truy cập của bạn.">Complete human verification to generate your access key.</p>
+                    <p class="text-slate-300 text-sm sm:text-base" data-en="Complete human verification to generate your access key." data-vi="Hoàn thành xác thực con người để tạo key truy cập của bạn.">Complete human verification to generate your access key.</p>
                 </div>
 
-                <div class="max-w-xl mx-auto space-y-4">
+                <div class="max-w-xl mx-auto space-y-5">
                     <div class="flex flex-col sm:flex-row gap-3">
-                        <input type="text" id="keyOutputBox" readonly placeholder="Click generate button below..." class="flex-grow px-4 py-3 rounded-xl bg-slate-900/25 backdrop-blur-md border border-purple-500/30 text-purple-100 placeholder-slate-400 focus:outline-none focus:border-purple-400 font-mono text-sm shadow-inner" data-en-placeholder="Click generate button below..." data-vi-placeholder="Nhấn nút tạo bên dưới...">
-                        <button type="button" onclick="copyKey()" id="copyKeyBtn" class="px-6 py-3 rounded-xl bg-slate-800/30 hover:bg-slate-700/50 font-semibold transition-all flex items-center justify-center space-x-2 text-white group galaxy-glow border border-purple-500/20 backdrop-blur-sm">
+                        <input type="text" id="keyOutputBox" readonly placeholder="Click generate button below..." class="flex-grow px-5 py-4 rounded-2xl bg-slate-900/50 backdrop-blur-md border border-purple-500/40 text-purple-100 placeholder-slate-400 focus:outline-none focus:border-purple-400 font-mono text-sm shadow-inner" data-en-placeholder="Click generate button below..." data-vi-placeholder="Nhấn nút tạo bên dưới...">
+                        <button type="button" onclick="copyKey()" id="copyKeyBtn" class="px-7 py-4 rounded-2xl bg-slate-800/60 hover:bg-slate-700/80 font-bold transition-all flex items-center justify-center space-x-2 text-white group galaxy-glow border border-purple-500/30 backdrop-blur-md shadow-lg">
                             <i class="fa-solid fa-copy icon-hover"></i>
                             <span data-en="Copy" data-vi="Sao chép">Copy</span>
                         </button>
                     </div>
 
                     <div class="pt-2 text-center">
-                        <button type="button" onclick="generateKeyWithCaptcha()" id="generateBtn" class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-gradient-to-r from-purple-600 via-sky-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 font-bold transition-all shadow-xl flex items-center justify-center space-x-2 mx-auto text-white group galaxy-glow">
-                            <i class="fa-solid fa-shield-halved icon-hover"></i>
+                        <button type="button" onclick="generateKeyWithCaptcha()" id="generateBtn" class="w-full sm:w-auto px-10 py-4 rounded-2xl bg-gradient-to-r from-purple-600 via-sky-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 font-extrabold transition-all shadow-2xl flex items-center justify-center space-x-3 mx-auto text-white group galaxy-glow text-base disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100">
+                            <i class="fa-solid fa-shield-halved icon-hover text-lg"></i>
                             <span data-en="Generate Key (Human Verification)" data-vi="Tạo Key (Xác thực con người)">Generate Key (Human Verification)</span>
                         </button>
                     </div>
                 </div>
             </section>
 
-            <section class="glass-panel galaxy-glow rounded-2xl p-6 sm:p-8 shadow-2xl space-y-4">
-                <div class="flex items-center space-x-3 group">
-                    <div class="p-3 rounded-xl bg-purple-950/30 text-purple-400 border border-purple-500/30">
-                        <i class="fa-solid fa-code text-xl icon-hover"></i>
+            <section class="glass-panel galaxy-glow rounded-3xl p-6 sm:p-8 shadow-2xl space-y-5">
+                <div class="flex items-center space-x-4 group">
+                    <div class="p-3.5 rounded-2xl bg-purple-950/60 text-purple-400 border border-purple-500/40 shadow-inner">
+                        <i class="fa-solid fa-code text-2xl icon-hover"></i>
                     </div>
                     <div>
-                        <h2 class="text-xl font-bold text-white" data-en="FishHub Script Loader" data-vi="Mã Script FishHub">FishHub Script Loader</h2>
-                        <p class="text-xs text-slate-300" data-en="Copy and run this script in your executor." data-vi="Sao chép và chạy script này trong executor của bạn.">Copy and run this script in your executor.</p>
+                        <h2 class="text-xl sm:text-2xl font-bold text-white" data-en="FishHub Script Loader" data-vi="Mã Script FishHub">FishHub Script Loader</h2>
+                        <p class="text-xs sm:text-sm text-slate-300" data-en="Copy and run this script in your executor." data-vi="Sao chép và chạy script này trong executor của bạn.">Copy and run this script in your executor.</p>
                     </div>
                 </div>
 
                 <div class="relative">
-                    <pre class="p-4 rounded-xl bg-slate-950/30 backdrop-blur-md border border-purple-500/30 text-sky-200 font-mono text-xs sm:text-sm overflow-x-auto shadow-inner"><code>loadstring(game:HttpGet("https://raw.githubusercontent.com/Cachuoine/DHL/refs/heads/main/FishHub.lua"))()</code></pre>
-                    <button type="button" onclick="copyScript()" class="absolute top-3 right-3 px-3 py-1.5 rounded-lg bg-purple-700/60 hover:bg-purple-600 text-xs font-semibold transition-all flex items-center space-x-1.5 text-white group galaxy-glow backdrop-blur-sm">
+                    <pre class="p-5 rounded-2xl bg-slate-950/60 backdrop-blur-md border border-purple-500/40 text-sky-200 font-mono text-xs sm:text-sm overflow-x-auto shadow-inner"><code>loadstring(game:HttpGet("https://raw.githubusercontent.com/Cachuoine/DaoHuyLam/refs/heads/main/FishHubCollection.lua"))()</code></pre>
+                    <button type="button" onclick="copyScript()" class="absolute top-3.5 right-3.5 px-4 py-2 rounded-xl bg-purple-600/80 hover:bg-purple-500 text-xs font-bold transition-all flex items-center space-x-2 text-white group galaxy-glow backdrop-blur-md shadow-lg">
                         <i class="fa-solid fa-clone icon-hover"></i>
                         <span data-en="Copy Script" data-vi="Sao chép Script">Copy Script</span>
                     </button>
                 </div>
             </section>
 
-            <section class="glass-panel galaxy-glow rounded-2xl p-6 sm:p-8 shadow-2xl space-y-6">
-                <div class="flex items-center space-x-3 group">
-                    <div class="p-3 rounded-xl bg-purple-950/30 text-purple-400 border border-purple-500/30">
-                        <i class="fa-solid fa-gamepad text-xl icon-hover"></i>
+            <section class="glass-panel galaxy-glow rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6">
+                <div class="flex items-center space-x-4 group">
+                    <div class="p-3.5 rounded-2xl bg-purple-950/60 text-purple-400 border border-purple-500/40 shadow-inner">
+                        <i class="fa-solid fa-gamepad text-2xl icon-hover"></i>
                     </div>
                     <div>
-                        <h2 class="text-xl font-bold text-white" data-en="Supported Roblox Games" data-vi="Danh sách trò chơi Roblox">Supported Roblox Games</h2>
-                        <p class="text-xs text-slate-300" data-en="Explore supported games categorized below." data-vi="Khám phá các trò chơi được phân loại bên dưới.">Explore supported games categorized below.</p>
+                        <h2 class="text-xl sm:text-2xl font-bold text-white" data-en="Supported Roblox Games" data-vi="Danh sách trò chơi Roblox">Supported Roblox Games</h2>
+                        <p class="text-xs sm:text-sm text-slate-300" data-en="Explore supported games categorized below." data-vi="Khám phá các trò chơi được phân loại bên dưới.">Explore supported games categorized below.</p>
                     </div>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="bg-slate-900/20 backdrop-blur-md border border-purple-500/20 rounded-xl p-4 space-y-3 group galaxy-glow">
-                        <h3 class="font-bold text-sky-300 flex items-center space-x-2">
-                            <i class="fa-solid fa-fire text-amber-400 icon-hover"></i>
+                    <div class="bg-slate-900/30 backdrop-blur-md border border-purple-500/30 rounded-2xl p-5 space-y-4 group galaxy-glow">
+                        <h3 class="font-bold text-sky-300 text-base flex items-center space-x-2.5">
+                            <i class="fa-solid fa-fire text-amber-400 icon-hover text-lg"></i>
                             <span>RPG & Anime</span>
                         </h3>
-                        <ul class="space-y-2 text-sm text-slate-200">
-                            <li class="flex justify-between items-center bg-slate-800/20 px-3 py-2 rounded-lg border border-purple-500/10">
-                                <div class="flex items-center space-x-2">
+                        <ul class="space-y-2.5 text-sm text-slate-200">
+                            <li class="flex justify-between items-center bg-slate-800/40 px-3.5 py-2.5 rounded-xl border border-purple-500/15">
+                                <div class="flex items-center space-x-2.5">
                                     <span class="pulse-green"></span>
-                                    <span>Blox Fruits</span>
+                                    <span class="font-medium">Blox Fruits</span>
                                 </div>
-                                <span class="text-xs text-green-400 font-semibold" data-en="Working" data-vi="Hoạt động">Working</span>
+                                <span class="text-xs text-green-400 font-bold" data-en="Working" data-vi="Hoạt động">Working</span>
                             </li>
-                            <li class="flex justify-between items-center bg-slate-800/20 px-3 py-2 rounded-lg border border-purple-500/10">
-                                <div class="flex items-center space-x-2">
+                            <li class="flex justify-between items-center bg-slate-800/40 px-3.5 py-2.5 rounded-xl border border-purple-500/15">
+                                <div class="flex items-center space-x-2.5">
                                     <span class="pulse-green"></span>
-                                    <span>Evomon</span>
+                                    <span class="font-medium">Evomon</span>
                                 </div>
-                                <span class="text-xs text-green-400 font-semibold" data-en="Working" data-vi="Hoạt động">Working</span>
+                                <span class="text-xs text-green-400 font-bold" data-en="Working" data-vi="Hoạt động">Working</span>
                             </li>
-                            <li class="flex justify-between items-center bg-slate-800/20 px-3 py-2 rounded-lg border border-purple-500/10">
-                                <div class="flex items-center space-x-2">
+                            <li class="flex justify-between items-center bg-slate-800/40 px-3.5 py-2.5 rounded-xl border border-purple-500/15">
+                                <div class="flex items-center space-x-2.5">
                                     <span class="pulse-purple"></span>
-                                    <span>Haze</span>
+                                    <span class="font-medium">Haze</span>
                                 </div>
-                                <span class="text-xs px-2 py-0.5 rounded bg-purple-950/50 text-purple-300 border border-purple-800/40" data-en="Coming Soon" data-vi="Sắp ra mắt">Coming Soon</span>
+                                <span class="text-xs px-3 py-1 rounded-full bg-purple-950/80 text-purple-300 border border-purple-800/50 font-bold" data-en="Coming Soon" data-vi="Sắp ra mắt">Coming Soon</span>
                             </li>
                         </ul>
                     </div>
 
-                    <div class="bg-slate-900/20 backdrop-blur-md border border-purple-500/20 rounded-xl p-4 space-y-3 group galaxy-glow">
-                        <h3 class="font-bold text-sky-300 flex items-center space-x-2">
-                            <i class="fa-solid fa-seedling text-emerald-400 icon-hover"></i>
+                    <div class="bg-slate-900/30 backdrop-blur-md border border-purple-500/30 rounded-2xl p-5 space-y-4 group galaxy-glow">
+                        <h3 class="font-bold text-sky-300 text-base flex items-center space-x-2.5">
+                            <i class="fa-solid fa-seedling text-emerald-400 icon-hover text-lg"></i>
                             <span>Farming Games</span>
                         </h3>
-                        <ul class="space-y-2 text-sm text-slate-200">
-                            <li class="flex justify-between items-center bg-slate-800/20 px-3 py-2 rounded-lg border border-purple-500/10">
-                                <div class="flex items-center space-x-2">
+                        <ul class="space-y-2.5 text-sm text-slate-200">
+                            <li class="flex justify-between items-center bg-slate-800/40 px-3.5 py-2.5 rounded-xl border border-purple-500/15">
+                                <div class="flex items-center space-x-2.5">
                                     <span class="pulse-purple"></span>
-                                    <span>Grow a Garden 2</span>
+                                    <span class="font-medium">Grow a Garden 2</span>
                                 </div>
-                                <span class="text-xs px-2 py-0.5 rounded bg-purple-950/50 text-purple-300 border border-purple-800/40" data-en="Coming Soon" data-vi="Sắp ra mắt">Coming Soon</span>
+                                <span class="text-xs px-3 py-1 rounded-full bg-purple-950/80 text-purple-300 border border-purple-800/50 font-bold" data-en="Coming Soon" data-vi="Sắp ra mắt">Coming Soon</span>
                             </li>
                         </ul>
                     </div>
 
-                    <div class="bg-slate-900/20 backdrop-blur-md border border-purple-500/20 rounded-xl p-4 space-y-3 group galaxy-glow">
-                        <h3 class="font-bold text-sky-300 flex items-center space-x-2">
-                            <i class="fa-solid fa-chess-board text-emerald-400 icon-hover"></i>
+                    <div class="bg-slate-900/30 backdrop-blur-md border border-purple-500/30 rounded-2xl p-5 space-y-4 group galaxy-glow">
+                        <h3 class="font-bold text-sky-300 text-base flex items-center space-x-2.5">
+                            <i class="fa-solid fa-chess-board text-emerald-400 icon-hover text-lg"></i>
                             <span>Survival & Tycoon</span>
                         </h3>
-                        <ul class="space-y-2 text-sm text-slate-200">
-                            <li class="flex justify-between items-center bg-slate-800/20 px-3 py-2 rounded-lg border border-purple-500/10">
-                                <div class="flex items-center space-x-2">
+                        <ul class="space-y-2.5 text-sm text-slate-200">
+                            <li class="flex justify-between items-center bg-slate-800/40 px-3.5 py-2.5 rounded-xl border border-purple-500/15">
+                                <div class="flex items-center space-x-2.5">
                                     <span class="pulse-purple"></span>
-                                    <span>99 night in the forest</span>
+                                    <span class="font-medium">99 night in the forest</span>
                                 </div>
-                                <span class="text-xs px-2 py-0.5 rounded bg-purple-950/50 text-purple-300 border border-purple-800/40" data-en="Coming Soon" data-vi="Sắp ra mắt">Coming Soon</span>
+                                <span class="text-xs px-3 py-1 rounded-full bg-purple-950/80 text-purple-300 border border-purple-800/50 font-bold" data-en="Coming Soon" data-vi="Sắp ra mắt">Coming Soon</span>
                             </li>
                         </ul>
                     </div>
 
-                    <div class="bg-slate-900/20 backdrop-blur-md border border-purple-500/20 rounded-xl p-4 space-y-3 group galaxy-glow">
-                        <h3 class="font-bold text-sky-300 flex items-center space-x-2">
-                            <i class="fa-solid fa-fish-fins text-cyan-400 icon-hover"></i>
+                    <div class="bg-slate-900/30 backdrop-blur-md border border-purple-500/30 rounded-2xl p-5 space-y-4 group galaxy-glow">
+                        <h3 class="font-bold text-sky-300 text-base flex items-center space-x-2.5">
+                            <i class="fa-solid fa-fish-fins text-cyan-400 icon-hover text-lg"></i>
                             <span>Fishing Games</span>
                         </h3>
-                        <ul class="space-y-2 text-sm text-slate-200">
-                            <li class="flex justify-between items-center bg-slate-800/20 px-3 py-2 rounded-lg border border-purple-500/10">
-                                <div class="flex items-center space-x-2">
+                        <ul class="space-y-2.5 text-sm text-slate-200">
+                            <li class="flex justify-between items-center bg-slate-800/40 px-3.5 py-2.5 rounded-xl border border-purple-500/15">
+                                <div class="flex items-center space-x-2.5">
                                     <span class="pulse-purple"></span>
-                                    <span>Fish</span>
+                                    <span class="font-medium">Fish</span>
                                 </div>
-                                <span class="text-xs px-2 py-0.5 rounded bg-purple-950/50 text-purple-300 border border-purple-800/40" data-en="Coming Soon" data-vi="Sắp ra mắt">Coming Soon</span>
+                                <span class="text-xs px-3 py-1 rounded-full bg-purple-950/80 text-purple-300 border border-purple-800/50 font-bold" data-en="Coming Soon" data-vi="Sắp ra mắt">Coming Soon</span>
                             </li>
                         </ul>
                     </div>
 
-                    <div class="bg-slate-900/20 backdrop-blur-md border border-purple-500/20 rounded-xl p-4 space-y-3 group galaxy-glow">
-                        <h3 class="font-bold text-sky-300 flex items-center space-x-2">
-                            <i class="fa-solid fa-crosshairs text-red-400 icon-hover"></i>
+                    <div class="bg-slate-900/30 backdrop-blur-md border border-purple-500/30 rounded-2xl p-5 space-y-4 group galaxy-glow">
+                        <h3 class="font-bold text-sky-300 text-base flex items-center space-x-2.5">
+                            <i class="fa-solid fa-crosshairs text-red-400 icon-hover text-lg"></i>
                             <span>Shooting Games</span>
                         </h3>
-                        <ul class="space-y-2 text-sm text-slate-200">
-                            <li class="flex justify-between items-center bg-slate-800/20 px-3 py-2 rounded-lg border border-purple-500/10">
-                                <div class="flex items-center space-x-2">
+                        <ul class="space-y-2.5 text-sm text-slate-200">
+                            <li class="flex justify-between items-center bg-slate-800/40 px-3.5 py-2.5 rounded-xl border border-purple-500/15">
+                                <div class="flex items-center space-x-2.5">
                                     <span class="pulse-purple"></span>
-                                    <span>Rivals</span>
+                                    <span class="font-medium">Rivals</span>
                                 </div>
-                                <span class="text-xs px-2 py-0.5 rounded bg-purple-950/50 text-purple-300 border border-purple-800/40" data-en="Coming Soon" data-vi="Sắp ra mắt">Coming Soon</span>
+                                <span class="text-xs px-3 py-1 rounded-full bg-purple-950/80 text-purple-300 border border-purple-800/50 font-bold" data-en="Coming Soon" data-vi="Sắp ra mắt">Coming Soon</span>
                             </li>
                         </ul>
                     </div>
                 </div>
             </section>
 
-            <section class="glass-panel galaxy-glow rounded-2xl p-6 sm:p-8 shadow-2xl space-y-6">
-                <div class="flex items-center space-x-3 group">
-                    <div class="p-3 rounded-xl bg-purple-950/30 text-purple-400 border border-purple-500/30">
-                        <i class="fa-solid fa-terminal text-xl icon-hover"></i>
+            <section class="glass-panel galaxy-glow rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6">
+                <div class="flex items-center space-x-4 group">
+                    <div class="p-3.5 rounded-2xl bg-purple-950/60 text-purple-400 border border-purple-500/40 shadow-inner">
+                        <i class="fa-solid fa-terminal text-2xl icon-hover"></i>
                     </div>
                     <div>
-                        <h2 class="text-xl font-bold text-white" data-en="Recommended Executors" data-vi="Trình thực thi được đề xuất">Recommended Executors</h2>
-                        <p class="text-xs text-slate-300" data-en="Tested and verified executors across platforms." data-vi="Các executor đã được kiểm tra trên các nền tảng.">Tested and verified executors across platforms.</p>
+                        <h2 class="text-xl sm:text-2xl font-bold text-white" data-en="Recommended Executors" data-vi="Trình thực thi được đề xuất">Recommended Executors</h2>
+                        <p class="text-xs sm:text-sm text-slate-300" data-en="Tested and verified executors across platforms." data-vi="Các executor đã được kiểm tra trên các nền tảng.">Tested and verified executors across platforms.</p>
                     </div>
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <div class="bg-slate-900/20 backdrop-blur-md border border-purple-500/20 rounded-xl p-4 space-y-3 group galaxy-glow">
+                    <div class="bg-slate-900/30 backdrop-blur-md border border-purple-500/30 rounded-2xl p-5 space-y-4 group galaxy-glow">
                         <div class="flex items-center justify-between">
-                            <h3 class="font-bold text-purple-300 flex items-center space-x-2">
+                            <h3 class="font-bold text-purple-300 text-base flex items-center space-x-2">
                                 <i class="fa-solid fa-crown text-amber-400 icon-hover"></i>
                                 <span data-en="Windows Paid" data-vi="Windows Trả Phí">Windows Paid</span>
                             </h3>
                             <span class="pulse-green"></span>
                         </div>
-                        <ul class="space-y-1.5 text-xs text-slate-200">
-                            <li class="flex justify-between items-center bg-slate-800/20 px-2.5 py-1.5 rounded-lg border border-purple-500/10"><span>Wave</span><span class="text-xs text-green-400 font-semibold" data-en="Working" data-vi="Hoạt động">Working</span></li>
-                            <li class="flex justify-between items-center bg-slate-800/20 px-2.5 py-1.5 rounded-lg border border-purple-500/10"><span>Potassium</span><span class="text-xs text-green-400 font-semibold" data-en="Working" data-vi="Hoạt động">Working</span></li>
-                            <li class="flex justify-between items-center bg-slate-800/20 px-2.5 py-1.5 rounded-lg border border-purple-500/10"><span>Volt</span><span class="text-xs text-green-400 font-semibold" data-en="Working" data-vi="Hoạt động">Working</span></li>
-                            <li class="flex justify-between items-center bg-slate-800/20 px-2.5 py-1.5 rounded-lg border border-purple-500/10"><span>Cosmic</span><span class="text-xs text-green-400 font-semibold" data-en="Working" data-vi="Hoạt động">Working</span></li>
-                            <li class="flex justify-between items-center bg-slate-800/20 px-2.5 py-1.5 rounded-lg border border-purple-500/10"><span>Sirhurt</span><span class="text-xs text-green-400 font-semibold" data-en="Working" data-vi="Hoạt động">Working</span></li>
-                            <li class="flex justify-between items-center bg-slate-800/20 px-2.5 py-1.5 rounded-lg border border-purple-500/10"><span>Seliware</span><span class="text-xs text-green-400 font-semibold" data-en="Working" data-vi="Hoạt động">Working</span></li>
-                            <li class="flex justify-between items-center bg-slate-800/20 px-2.5 py-1.5 rounded-lg border border-purple-500/10"><span>Synapse Z</span><span class="text-xs text-green-400 font-semibold" data-en="Working" data-vi="Hoạt động">Working</span></li>
+                        <ul class="space-y-2 text-xs text-slate-200">
+                            <li class="flex justify-between items-center bg-slate-800/40 px-3 py-2 rounded-xl border border-purple-500/15"><span class="font-medium">Wave</span><span class="text-green-400 font-bold" data-en="Working" data-vi="Hoạt động">Working</span></li>
+                            <li class="flex justify-between items-center bg-slate-800/40 px-3 py-2 rounded-xl border border-purple-500/15"><span class="font-medium">Potassium</span><span class="text-green-400 font-bold" data-en="Working" data-vi="Hoạt động">Working</span></li>
+                            <li class="flex justify-between items-center bg-slate-800/40 px-3 py-2 rounded-xl border border-purple-500/15"><span class="font-medium">Volt</span><span class="text-green-400 font-bold" data-en="Working" data-vi="Hoạt động">Working</span></li>
+                            <li class="flex justify-between items-center bg-slate-800/40 px-3 py-2 rounded-xl border border-purple-500/15"><span class="font-medium">Cosmic</span><span class="text-green-400 font-bold" data-en="Working" data-vi="Hoạt động">Working</span></li>
+                            <li class="flex justify-between items-center bg-slate-800/40 px-3 py-2 rounded-xl border border-purple-500/15"><span class="font-medium">Sirhurt</span><span class="text-green-400 font-bold" data-en="Working" data-vi="Hoạt động">Working</span></li>
+                            <li class="flex justify-between items-center bg-slate-800/40 px-3 py-2 rounded-xl border border-purple-500/15"><span class="font-medium">Seliware</span><span class="text-green-400 font-bold" data-en="Working" data-vi="Hoạt động">Working</span></li>
+                            <li class="flex justify-between items-center bg-slate-800/40 px-3 py-2 rounded-xl border border-purple-500/15"><span class="font-medium">Synapse Z</span><span class="text-green-400 font-bold" data-en="Working" data-vi="Hoạt động">Working</span></li>
                         </ul>
                     </div>
 
-                    <div class="bg-slate-900/20 backdrop-blur-md border border-purple-500/20 rounded-xl p-4 space-y-3 group galaxy-glow">
+                    <div class="bg-slate-900/30 backdrop-blur-md border border-purple-500/30 rounded-2xl p-5 space-y-4 group galaxy-glow">
                         <div class="flex items-center justify-between">
-                            <h3 class="font-bold text-sky-300 flex items-center space-x-2">
+                            <h3 class="font-bold text-sky-300 text-base flex items-center space-x-2">
                                 <i class="fa-solid fa-gift text-sky-400 icon-hover"></i>
                                 <span data-en="Windows Free" data-vi="Windows Miễn Phí">Windows Free</span>
                             </h3>
                             <span class="pulse-green"></span>
                         </div>
-                        <ul class="space-y-1.5 text-xs text-slate-200">
-                            <li class="flex justify-between items-center bg-slate-800/20 px-2.5 py-1.5 rounded-lg border border-purple-500/10"><span>Vortex</span><span class="text-xs text-green-400 font-semibold" data-en="Working" data-vi="Hoạt động">Working</span></li>
-                            <li class="flex justify-between items-center bg-slate-800/20 px-2.5 py-1.5 rounded-lg border border-purple-500/10"><span>Velocity</span><span class="text-xs text-green-400 font-semibold" data-en="Working" data-vi="Hoạt động">Working</span></li>
-                            <li class="flex justify-between items-center bg-slate-800/20 px-2.5 py-1.5 rounded-lg border border-purple-500/10"><span>Madium</span><span class="text-xs text-green-400 font-semibold" data-en="Working" data-vi="Hoạt động">Working</span></li>
-                            <li class="flex justify-between items-center bg-slate-800/20 px-2.5 py-1.5 rounded-lg border border-purple-500/10"><span>Real</span><span class="text-xs text-green-400 font-semibold" data-en="Working" data-vi="Hoạt động">Working</span></li>
-                            <li class="flex justify-between items-center bg-slate-800/20 px-2.5 py-1.5 rounded-lg border border-purple-500/10"><span>Ronix</span><span class="text-xs text-green-400 font-semibold" data-en="Working" data-vi="Hoạt động">Working</span></li>
-                            <li class="flex justify-between items-center bg-slate-800/20 px-2.5 py-1.5 rounded-lg border border-purple-500/10"><span>Xeno</span><span class="text-xs text-red-400 font-semibold" data-en="Not Working" data-vi="Không hoạt động">Not Working</span></li>
-                            <li class="flex justify-between items-center bg-slate-800/20 px-2.5 py-1.5 rounded-lg border border-purple-500/10"><span>Solara</span><span class="text-xs text-red-400 font-semibold" data-en="Not Working" data-vi="Không hoạt động">Not Working</span></li>
+                        <ul class="space-y-2 text-xs text-slate-200">
+                            <li class="flex justify-between items-center bg-slate-800/40 px-3 py-2 rounded-xl border border-purple-500/15"><span class="font-medium">Vortex</span><span class="text-green-400 font-bold" data-en="Working" data-vi="Hoạt động">Working</span></li>
+                            <li class="flex justify-between items-center bg-slate-800/40 px-3 py-2 rounded-xl border border-purple-500/15"><span class="font-medium">Velocity</span><span class="text-green-400 font-bold" data-en="Working" data-vi="Hoạt động">Working</span></li>
+                            <li class="flex justify-between items-center bg-slate-800/40 px-3 py-2 rounded-xl border border-purple-500/15"><span class="font-medium">Madium</span><span class="text-green-400 font-bold" data-en="Working" data-vi="Hoạt động">Working</span></li>
+                            <li class="flex justify-between items-center bg-slate-800/40 px-3 py-2 rounded-xl border border-purple-500/15"><span class="font-medium">Real</span><span class="text-green-400 font-bold" data-en="Working" data-vi="Hoạt động">Working</span></li>
+                            <li class="flex justify-between items-center bg-slate-800/40 px-3 py-2 rounded-xl border border-purple-500/15"><span class="font-medium">Ronix</span><span class="text-green-400 font-bold" data-en="Working" data-vi="Hoạt động">Working</span></li>
+                            <li class="flex justify-between items-center bg-slate-800/40 px-3 py-2 rounded-xl border border-purple-500/15"><span class="font-medium">Xeno</span><span class="text-red-400 font-bold" data-en="Not Working" data-vi="Không hoạt động">Not Working</span></li>
+                            <li class="flex justify-between items-center bg-slate-800/40 px-3 py-2 rounded-xl border border-purple-500/15"><span class="font-medium">Solara</span><span class="text-red-400 font-bold" data-en="Not Working" data-vi="Không hoạt động">Not Working</span></li>
                         </ul>
                     </div>
 
-                    <div class="bg-slate-900/20 backdrop-blur-md border border-purple-500/20 rounded-xl p-4 space-y-3 group galaxy-glow">
+                    <div class="bg-slate-900/30 backdrop-blur-md border border-purple-500/30 rounded-2xl p-5 space-y-4 group galaxy-glow">
                         <div class="flex items-center justify-between">
-                            <h3 class="font-bold text-sky-300 flex items-center space-x-2">
+                            <h3 class="font-bold text-sky-300 text-base flex items-center space-x-2">
                                 <i class="fa-brands fa-apple text-sky-400 icon-hover"></i>
                                 <span data-en="macOS Executors" data-vi="Executor macOS">macOS Executors</span>
                             </h3>
                             <span class="pulse-green"></span>
                         </div>
-                        <ul class="space-y-2 text-sm text-slate-200">
-                            <li class="flex justify-between items-center bg-slate-800/20 px-3 py-2 rounded-lg border border-purple-500/10">
-                                <span>Macsploit</span>
-                                <span class="text-xs text-green-400 font-semibold" data-en="Working" data-vi="Hoạt động">Working</span>
+                        <ul class="space-y-2.5 text-sm text-slate-200">
+                            <li class="flex justify-between items-center bg-slate-800/40 px-3.5 py-2.5 rounded-xl border border-purple-500/15">
+                                <span class="font-medium">Macsploit</span>
+                                <span class="text-xs text-green-400 font-bold" data-en="Working" data-vi="Hoạt động">Working</span>
                             </li>
-                            <li class="flex justify-between items-center bg-slate-800/20 px-3 py-2 rounded-lg border border-purple-500/10">
-                                <span>Opiumware</span>
-                                <span class="text-xs text-green-400 font-semibold" data-en="Working" data-vi="Hoạt động">Working</span>
+                            <li class="flex justify-between items-center bg-slate-800/40 px-3.5 py-2.5 rounded-xl border border-purple-500/15">
+                                <span class="font-medium">Opiumware</span>
+                                <span class="text-xs text-green-400 font-bold" data-en="Working" data-vi="Hoạt động">Working</span>
                             </li>
-                            <li class="flex justify-between items-center bg-slate-800/20 px-3 py-2 rounded-lg border border-purple-500/10">
-                                <span>Ronix</span>
-                                <span class="text-xs text-green-400 font-semibold" data-en="Working" data-vi="Hoạt động">Working</span>
+                            <li class="flex justify-between items-center bg-slate-800/40 px-3.5 py-2.5 rounded-xl border border-purple-500/15">
+                                <span class="font-medium">Ronix</span>
+                                <span class="text-xs text-green-400 font-bold" data-en="Working" data-vi="Hoạt động">Working</span>
                             </li>
                         </ul>
                     </div>
 
-                    <div class="bg-slate-900/20 backdrop-blur-md border border-purple-500/20 rounded-xl p-4 space-y-3 group galaxy-glow">
+                    <div class="bg-slate-900/30 backdrop-blur-md border border-purple-500/30 rounded-2xl p-5 space-y-4 group galaxy-glow">
                         <div class="flex items-center justify-between">
-                            <h3 class="font-bold text-sky-300 flex items-center space-x-2">
+                            <h3 class="font-bold text-sky-300 text-base flex items-center space-x-2">
                                 <i class="fa-solid fa-mobile-screen-button text-purple-400 icon-hover"></i>
                                 <span data-en="Mobile Executors" data-vi="Executor Điện thoại">Mobile Executors</span>
                             </h3>
                             <span class="pulse-green"></span>
                         </div>
-                        <ul class="space-y-2 text-sm text-slate-200">
-                            <li class="flex justify-between items-center bg-slate-800/20 px-3 py-2 rounded-lg border border-purple-500/10">
-                                <span>Delta (Mobile)</span>
-                                <span class="text-xs text-green-400 font-semibold" data-en="Working" data-vi="Hoạt động">Working</span>
+                        <ul class="space-y-2.5 text-sm text-slate-200">
+                            <li class="flex justify-between items-center bg-slate-800/40 px-3.5 py-2.5 rounded-xl border border-purple-500/15">
+                                <span class="font-medium">Delta (Mobile)</span>
+                                <span class="text-xs text-green-400 font-bold" data-en="Working" data-vi="Hoạt động">Working</span>
                             </li>
-                            <li class="flex justify-between items-center bg-slate-800/20 px-3 py-2 rounded-lg border border-purple-500/10">
-                                <span>Codex (Mobile)</span>
-                                <span class="text-xs text-green-400 font-semibold" data-en="Working" data-vi="Hoạt động">Working</span>
+                            <li class="flex justify-between items-center bg-slate-800/40 px-3.5 py-2.5 rounded-xl border border-purple-500/15">
+                                <span class="font-medium">Codex (Mobile)</span>
+                                <span class="text-xs text-green-400 font-bold" data-en="Working" data-vi="Hoạt động">Working</span>
                             </li>
-                            <li class="flex justify-between items-center bg-slate-800/20 px-3 py-2 rounded-lg border border-purple-500/10">
-                                <span>Arceus X</span>
-                                <span class="text-xs text-green-400 font-semibold" data-en="Working" data-vi="Hoạt động">Working</span>
+                            <li class="flex justify-between items-center bg-slate-800/40 px-3.5 py-2.5 rounded-xl border border-purple-500/15">
+                                <span class="font-medium">Arceus X</span>
+                                <span class="text-xs text-green-400 font-bold" data-en="Working" data-vi="Hoạt động">Working</span>
                             </li>
-                            <li class="flex justify-between items-center bg-slate-800/20 px-3 py-2 rounded-lg border border-purple-500/10">
-                                <span>Ronix</span>
-                                <span class="text-xs text-green-400 font-semibold" data-en="Working" data-vi="Hoạt động">Working</span>
+                            <li class="flex justify-between items-center bg-slate-800/40 px-3.5 py-2.5 rounded-xl border border-purple-500/15">
+                                <span class="font-medium">Ronix</span>
+                                <span class="text-xs text-green-400 font-bold" data-en="Working" data-vi="Hoạt động">Working</span>
                             </li>
-                            <li class="flex justify-between items-center bg-slate-800/20 px-3 py-2 rounded-lg border border-purple-500/10">
-                                <span>Vega X</span>
-                                <span class="text-xs text-green-400 font-semibold" data-en="Working" data-vi="Hoạt động">Working</span>
+                            <li class="flex justify-between items-center bg-slate-800/40 px-3.5 py-2.5 rounded-xl border border-purple-500/15">
+                                <span class="font-medium">Vega X</span>
+                                <span class="text-xs text-green-400 font-bold" data-en="Working" data-vi="Hoạt động">Working</span>
                             </li>
                         </ul>
                     </div>
@@ -470,68 +477,155 @@
             </section>
         </div>
 
+        <!-- ================= INFO TAB ĐÃ ĐƯỢC TRANG TRÍ ĐỈNH CAO ================= -->
         <div id="infoTab" class="space-y-8 hidden">
-            <section class="glass-panel galaxy-glow rounded-2xl p-6 sm:p-8 shadow-2xl space-y-6">
-                <div class="flex items-center space-x-3 group">
-                    <div class="p-3 rounded-xl bg-purple-950/30 text-purple-400 border border-purple-500/30">
-                        <i class="fa-solid fa-circle-info text-xl icon-hover"></i>
+            <!-- Thẻ Hồ Sơ Developer Siêu Đẹp -->
+            <section class="glass-panel galaxy-glow rounded-3xl p-6 sm:p-10 shadow-2xl relative overflow-hidden">
+                <div class="absolute -right-12 -top-12 w-80 h-80 bg-purple-600/15 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="absolute -left-12 -bottom-12 w-80 h-80 bg-sky-500/15 rounded-full blur-3xl pointer-events-none"></div>
+
+                <div class="relative z-15 flex flex-col md:flex-row items-center md:items-start gap-6 pb-8 border-b border-purple-900/40">
+                    <div class="relative group">
+                        <div class="absolute -inset-1 bg-gradient-to-r from-purple-600 to-sky-500 rounded-3xl blur opacity-75 group-hover:opacity-100 transition duration-500 group-hover:scale-105"></div>
+                        <div class="relative w-24 h-24 sm:w-28 sm:h-28 rounded-2xl bg-slate-950 flex items-center justify-center text-white font-black text-3xl sm:text-4xl shadow-2xl border border-purple-500/50">
+                            <span class="bg-gradient-to-br from-purple-400 to-sky-300 bg-clip-text text-transparent">DHL</span>
+                        </div>
+                        <div class="absolute -bottom-2 -right-2 bg-purple-600 text-white p-2 rounded-xl border border-purple-400 shadow-lg">
+                            <i class="fa-solid fa-code text-xs"></i>
+                        </div>
                     </div>
-                    <div>
-                        <h2 class="text-xl font-bold text-white" data-en="Project Information & Developer" data-vi="Thông tin dự án & Lập trình viên">Project Information & Developer</h2>
-                        <p class="text-xs text-slate-300" data-en="Details about FishHub creation and maintenance." data-vi="Chi tiết về quá trình phát triển và bảo trì FishHub.">Details about FishHub creation and maintenance.</p>
+
+                    <div class="text-center md:text-left space-y-2 flex-grow">
+                        <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
+                            <div>
+                                <h3 class="text-2xl sm:text-3xl font-black text-white flex items-center justify-center md:justify-start space-x-2">
+                                    <span data-en="DaoHuyLam" data-vi="DaoHuyLam">DaoHuyLam</span>
+                                    <span class="text-xs px-3 py-1 rounded-full bg-purple-950/80 text-purple-300 border border-purple-500/40 font-bold" data-en="Solo Developer" data-vi="Lập trình viên độc lập">Solo Developer</span>
+                                </h3>
+                                <p class="text-sm font-semibold text-sky-400 mt-1" data-en="Lead Developer, Maintainer & Founder of FishHub" data-vi="Lập trình viên trưởng, Người vận hành & Sáng lập FishHub">Lead Developer, Maintainer & Founder of FishHub</p>
+                            </div>
+                            <div class="flex justify-center space-x-2">
+                                <a href="https://github.com/Cachuoine" target="_blank" class="w-10 h-10 rounded-xl bg-slate-900/80 border border-purple-500/40 flex items-center justify-center text-sky-300 hover:text-white hover:border-sky-400 hover:scale-110 transition-all shadow-md">
+                                    <i class="fa-brands fa-github"></i>
+                                </a>
+                                <a href="https://www.facebook.com/dao.huy.lam.09/" target="_blank" class="w-10 h-10 rounded-xl bg-slate-900/80 border border-purple-500/40 flex items-center justify-center text-blue-400 hover:text-white hover:border-blue-400 hover:scale-110 transition-all shadow-md">
+                                    <i class="fa-brands fa-facebook-f"></i>
+                                </a>
+                                <a href="https://discord.gg/2tTJxRk2ct" target="_blank" class="w-10 h-10 rounded-xl bg-slate-900/80 border border-purple-500/40 flex items-center justify-center text-purple-300 hover:text-white hover:border-purple-400 hover:scale-110 transition-all shadow-md">
+                                    <i class="fa-brands fa-discord"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <p class="text-xs sm:text-sm text-slate-300 leading-relaxed pt-2" data-en="Passionate about reverse engineering, Roblox Lua scripting, and building optimized tools for the gaming community." data-vi="Đam mê dịch ngược mã nguồn, viết script Lua cho Roblox và xây dựng các công cụ tối ưu cho cộng đồng game thủ.">
+                            Passionate about reverse engineering, Roblox Lua scripting, and building optimized tools for the gaming community.
+                        </p>
                     </div>
                 </div>
 
-                <div class="space-y-5 text-sm text-slate-200 bg-slate-950/20 backdrop-blur-md p-6 rounded-xl border border-purple-500/20">
-                    <div class="flex items-center space-x-3 pb-3 border-b border-purple-900/30">
-                        <div class="w-12 h-12 rounded-full bg-gradient-to-r from-purple-600 via-sky-600 to-blue-600 flex items-center justify-center text-white font-bold text-lg shadow-lg">
-                            DHL
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-purple-300 text-base" data-en="Created by DaoHuyLam" data-vi="Được tạo bởi DaoHuyLam">Created by DaoHuyLam</h3>
-                            <p class="text-xs text-slate-400" data-en="Lead Developer & Maintainer" data-vi="Lập trình viên chính & Người vận hành">Lead Developer & Maintainer</p>
-                        </div>
+                <!-- Thống kê thông tin dạng thẻ badge nổi bật -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-6">
+                    <div class="bg-slate-900/40 border border-purple-500/20 rounded-2xl p-4 text-center group galaxy-glow">
+                        <div class="text-purple-400 text-xl font-black mb-1">100%</div>
+                        <div class="text-xs text-slate-400 font-medium" data-en="Solo Project" data-vi="Dự án cá nhân">Solo Project</div>
                     </div>
-
-                    <div class="space-y-3">
-                        <p data-en="FishHub is developed entirely as a solo project by DaoHuyLam. Because it is managed by a single person, major feature updates, bug fixes, and new game additions may take some time to roll out. Your patience and support are greatly appreciated" data-vi="FishHub được phát triển hoàn toàn là một dự án cá nhân (solo project) bởi DaoHuyLam. Do chỉ có một mình tự thực hiện mọi khâu, nên việc cập nhật các tính năng lớn, sửa lỗi và thêm game mới có thể sẽ mất khá nhiều thời gian. Mong mọi người thông cảm và tiếp tục ủng hộ!">
-                            FishHub is developed entirely as a solo project by DaoHuyLam. Because it is managed by a single person, major feature updates, bug fixes, and new game additions may take some time to roll out. Your patience and support are greatly appreciated
-                        </p>
-                        
-                        <h4 class="font-bold text-purple-300 pt-2" data-en="System & Support Notes:" data-vi="Lưu ý về hệ thống & Hỗ trợ:">System & Support Notes:</h4>
-                        <ul class="list-disc list-inside space-y-2 text-slate-300">
-                            <li data-en="Key System: Key is valid for 24 hours per generation." data-vi="Hệ thống Key: Mỗi key tạo ra có hiệu lực trong vòng 24 giờ.">Key System: Key is valid for 24 hours per generation.</li>
-                            <li data-en="Security: Built-in checking system to protect user environments." data-vi="Bảo mật: Hệ thống kiểm tra môi trường tích hợp giúp bảo vệ người dùng.">Security: Built-in checking system to protect user environments.</li>
-                            <li data-en="Community: Join Discord for error reporting and update announcements." data-vi="Cộng đồng: Tham gia Discord để báo lỗi và nhận thông báo cập nhật sớm nhất.">Community: Join Discord for error reporting and update announcements.</li>
-                        </ul>
+                    <div class="bg-slate-900/40 border border-purple-500/20 rounded-2xl p-4 text-center group galaxy-glow">
+                        <div class="text-sky-400 text-xl font-black mb-1">24 Hours</div>
+                        <div class="text-xs text-slate-400 font-medium" data-en="Key Validity" data-vi="Thời hạn Key">Key Validity</div>
+                    </div>
+                    <div class="bg-slate-900/40 border border-purple-500/20 rounded-2xl p-4 text-center group galaxy-glow">
+                        <div class="text-emerald-400 text-xl font-black mb-1">Secure</div>
+                        <div class="text-xs text-slate-400 font-medium" data-en="Environment Check" data-vi="Kiểm tra môi trường">Environment Check</div>
+                    </div>
+                    <div class="bg-slate-900/40 border border-purple-500/20 rounded-2xl p-4 text-center group galaxy-glow">
+                        <div class="text-amber-400 text-xl font-black mb-1">Active</div>
+                        <div class="text-xs text-slate-400 font-medium" data-en="Support Community" data-vi="Cộng đồng hỗ trợ">Support Community</div>
                     </div>
                 </div>
             </section>
+
+            <!-- Phần Chi Tiết Dự Án & Ghi Chú Hệ Thống -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Về dự án -->
+                <section class="glass-panel galaxy-glow rounded-3xl p-6 sm:p-8 shadow-2xl space-y-4 flex flex-col justify-between">
+                    <div class="space-y-4">
+                        <div class="flex items-center space-x-3">
+                            <div class="p-3 rounded-2xl bg-purple-950/60 text-purple-400 border border-purple-500/40 shadow-inner">
+                                <i class="fa-solid fa-bullseye text-xl icon-hover"></i>
+                            </div>
+                            <h3 class="text-lg sm:text-xl font-bold text-white" data-en="About FishHub" data-vi="Về FishHub">About FishHub</h3>
+                        </div>
+                        <p class="text-sm text-slate-300 leading-relaxed" data-en="FishHub is developed entirely as a solo project by DaoHuyLam. Because it is managed by a single person, major feature updates, bug fixes, and new game additions may take some time to roll out. Your patience and support are greatly appreciated!" data-vi="FishHub được phát triển hoàn toàn là một dự án cá nhân (solo project) bởi DaoHuyLam. Do chỉ có một mình tự thực hiện mọi khâu, nên việc cập nhật các tính năng lớn, sửa lỗi và thêm game mới có thể sẽ mất khá nhiều thời gian. Mong mọi người thông cảm và tiếp tục ủng hộ!">
+                            FishHub is developed entirely as a solo project by DaoHuyLam. Because it is managed by a single person, major feature updates, bug fixes, and new game additions may take some time to roll out. Your patience and support are greatly appreciated!
+                        </p>
+                    </div>
+                    <div class="pt-4 border-t border-purple-900/40">
+                        <a href="https://discord.gg/2tTJxRk2ct" target="_blank" class="w-full py-3 rounded-xl bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-sm font-bold transition-all flex items-center justify-center space-x-2 text-white shadow-lg">
+                            <i class="fa-brands fa-discord"></i>
+                            <span data-en="Join Community Discord" data-vi="Tham gia Discord cộng đồng">Join Community Discord</span>
+                        </a>
+                    </div>
+                </section>
+
+                <!-- Ghi chú hệ thống -->
+                <section class="glass-panel galaxy-glow rounded-3xl p-6 sm:p-8 shadow-2xl space-y-4">
+                    <div class="flex items-center space-x-3">
+                        <div class="p-3 rounded-2xl bg-sky-950/60 text-sky-400 border border-sky-500/40 shadow-inner">
+                            <i class="fa-solid fa-shield-cat text-xl icon-hover"></i>
+                        </div>
+                        <h3 class="text-lg sm:text-xl font-bold text-white" data-en="System & Support Notes" data-vi="Lưu ý hệ thống & Hỗ trợ">System & Support Notes</h3>
+                    </div>
+                    
+                    <ul class="space-y-3 text-sm text-slate-300">
+                        <li class="flex items-start space-x-3 bg-slate-900/40 p-3 rounded-xl border border-purple-500/15">
+                            <i class="fa-solid fa-key text-purple-400 mt-1"></i>
+                            <div>
+                                <strong class="text-white" data-en="Key System:" data-vi="Hệ thống Key:">Key System:</strong>
+                                <span data-en=" Key is valid for 24 hours per generation." data-vi=" Mỗi key tạo ra có hiệu lực trong vòng 24 giờ."> Key is valid for 24 hours per generation.</span>
+                            </div>
+                        </li>
+                        <li class="flex items-start space-x-3 bg-slate-900/40 p-3 rounded-xl border border-purple-500/15">
+                            <i class="fa-solid fa-lock text-sky-400 mt-1"></i>
+                            <div>
+                                <strong class="text-white" data-en="Security:" data-vi="Bảo mật:">Security:</strong>
+                                <span data-en=" Built-in checking system to protect user environments." data-vi=" Hệ thống kiểm tra môi trường tích hợp giúp bảo vệ người dùng."> Built-in checking system to protect user environments.</span>
+                            </div>
+                        </li>
+                        <li class="flex items-start space-x-3 bg-slate-900/40 p-3 rounded-xl border border-purple-500/15">
+                            <i class="fa-solid fa-comments text-emerald-400 mt-1"></i>
+                            <div>
+                                <strong class="text-white" data-en="Community:" data-vi="Cộng đồng:">Community:</strong>
+                                <span data-en=" Join Discord for error reporting and update announcements." data-vi=" Tham gia Discord để báo lỗi và nhận thông báo cập nhật sớm nhất."> Join Discord for error reporting and update announcements.</span>
+                            </div>
+                        </li>
+                    </ul>
+                </section>
+            </div>
         </div>
 
     </main>
 
-    <section class="max-w-md mx-auto my-6 text-center space-y-3 z-20 relative px-4">
-        <h3 class="text-sm font-semibold text-slate-300" data-en="Connect with Us" data-vi="Kết nối với chúng tôi">Connect with Us</h3>
-        <div class="flex justify-center items-center space-x-4">
-            <a href="https://discord.gg/2tTJxRk2ct" target="_blank" title="Discord" class="w-12 h-12 rounded-full bg-slate-900/40 border border-purple-500/30 flex items-center justify-center text-purple-300 hover:text-white hover:border-purple-400 hover:scale-110 transition-all duration-300 shadow-lg galaxy-glow">
-                <i class="fa-brands fa-discord text-xl"></i>
+    <section class="max-w-md mx-auto my-8 text-center space-y-4 z-20 relative px-4">
+        <h3 class="text-sm font-bold text-slate-300 tracking-wider uppercase" data-en="Connect with Us" data-vi="Kết nối với chúng tôi">Connect with Us</h3>
+        <div class="flex justify-center items-center space-x-5">
+            <a href="https://discord.gg/2tTJxRk2ct" target="_blank" title="Discord" class="w-14 h-14 rounded-2xl bg-slate-900/60 border border-purple-500/40 flex items-center justify-center text-purple-300 hover:text-white hover:border-purple-400 hover:scale-125 transition-all duration-300 shadow-xl galaxy-glow">
+                <i class="fa-brands fa-discord text-2xl"></i>
             </a>
-            <a href="https://github.com/Cachuoine" target="_blank" title="GitHub" class="w-12 h-12 rounded-full bg-slate-900/40 border border-purple-500/30 flex items-center justify-center text-sky-300 hover:text-white hover:border-sky-400 hover:scale-110 transition-all duration-300 shadow-lg galaxy-glow">
-                <i class="fa-brands fa-github text-xl"></i>
+            <a href="https://github.com/Cachuoine" target="_blank" title="GitHub" class="w-14 h-14 rounded-2xl bg-slate-900/60 border border-purple-500/40 flex items-center justify-center text-sky-300 hover:text-white hover:border-sky-400 hover:scale-125 transition-all duration-300 shadow-xl galaxy-glow">
+                <i class="fa-brands fa-github text-2xl"></i>
             </a>
-            <a href="https://www.facebook.com/dao.huy.lam.09/" target="_blank" title="Facebook" class="w-12 h-12 rounded-full bg-slate-900/40 border border-purple-500/30 flex items-center justify-center text-blue-400 hover:text-white hover:border-blue-400 hover:scale-110 transition-all duration-300 shadow-lg galaxy-glow">
-                <i class="fa-brands fa-facebook-f text-xl"></i>
+            <a href="https://www.facebook.com/dao.huy.lam.09/" target="_blank" title="Facebook" class="w-14 h-14 rounded-2xl bg-slate-900/60 border border-purple-500/40 flex items-center justify-center text-blue-400 hover:text-white hover:border-blue-400 hover:scale-125 transition-all duration-300 shadow-xl galaxy-glow">
+                <i class="fa-brands fa-facebook-f text-2xl"></i>
             </a>
         </div>
     </section>
 
-    <footer class="w-full py-6 text-center text-xs text-slate-400 border-t border-purple-900/25 glass-panel z-15">
+    <footer class="w-full py-6 text-center text-xs sm:text-sm text-slate-400 border-t border-purple-900/30 glass-panel z-15 font-medium">
         <p>&copy; 2026 FishHub Online. Created by DaoHuyLam. All rights reserved.</p>
     </footer>
 
     <script>
-        // --- CANVAS BACKGROUND ANIMATION ---
+        const FIREBASE_URL = "https://fishhub-35d18-default-rtdb.firebaseio.com";
+
         const canvas = document.getElementById('bgCanvas');
         const ctx = canvas.getContext('2d');
         
@@ -543,7 +637,7 @@
             height = canvas.height = window.innerHeight;
         });
 
-        let mouse = { x: null, y: null, radius: 150 };
+        let mouse = { x: null, y: null };
         window.addEventListener('mousemove', (e) => {
             mouse.x = e.clientX;
             mouse.y = e.clientY;
@@ -553,37 +647,34 @@
             mouse.y = null;
         });
 
-        // 1. Twinkling Stars Background
         const stars = [];
-        const starCount = Math.floor((width * height) / 12000);
+        const starCount = Math.floor((width * height) / 9000);
         for (let i = 0; i < starCount; i++) {
             stars.push({
                 x: Math.random() * width,
                 y: Math.random() * height,
-                radius: Math.random() * 1.5 + 0.5,
+                radius: Math.random() * 1.8 + 0.4,
                 alpha: Math.random(),
-                alphaChange: (Math.random() * 0.02 + 0.005) * (Math.random() < 0.5 ? 1 : -1)
+                alphaChange: (Math.random() * 0.015 + 0.003) * (Math.random() < 0.5 ? 1 : -1)
             });
         }
 
-        // 2. Connected Network Particles
         const particles = [];
-        const particleCount = Math.floor((width * height) / 18000);
+        const particleCount = Math.floor((width * height) / 14000);
         for (let i = 0; i < particleCount; i++) {
             particles.push({
                 x: Math.random() * width,
                 y: Math.random() * height,
                 vx: (Math.random() - 0.5) * 0.6,
                 vy: (Math.random() - 0.5) * 0.6,
-                radius: Math.random() * 2 + 1
+                radius: Math.random() * 2 + 0.8
             });
         }
 
-        // 3. Meteors / Shooting Stars
         const meteors = [];
         function createMeteor() {
             meteors.push({
-                x: Math.random() * width * 1.5,
+                x: Math.random() * width * 1.4,
                 y: -50,
                 length: Math.random() * 100 + 50,
                 speed: Math.random() * 7 + 4,
@@ -594,7 +685,6 @@
         function animateCanvas() {
             ctx.clearRect(0, 0, width, height);
 
-            // A. Draw Twinkling Stars
             for (let i = 0; i < stars.length; i++) {
                 let s = stars[i];
                 s.alpha += s.alphaChange;
@@ -607,7 +697,6 @@
                 ctx.fill();
             }
 
-            // B. Draw Interactive Mouse Glow Aura
             if (mouse.x !== null && mouse.y !== null) {
                 let mouseGradient = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, 180);
                 mouseGradient.addColorStop(0, 'rgba(168, 85, 247, 0.2)');
@@ -619,7 +708,6 @@
                 ctx.fill();
             }
 
-            // C. Draw Network Particles & Connect Lines
             ctx.fillStyle = 'rgba(168, 85, 247, 0.8)';
             for (let i = 0; i < particles.length; i++) {
                 let p = particles[i];
@@ -642,7 +730,7 @@
                     let dist = Math.sqrt(dx * dx + dy * dy);
                     if (dist < 130) {
                         ctx.strokeStyle = `rgba(139, 92, 246, ${0.25 * (1 - dist / 130)})`;
-                        ctx.lineWidth = 1;
+                        ctx.lineWidth = 0.9;
                         ctx.beginPath();
                         ctx.moveTo(p.x, p.y);
                         ctx.lineTo(p2.x, p2.y);
@@ -656,7 +744,7 @@
                     let mdist = Math.sqrt(mdx * mdx + mdy * mdy);
                     if (mdist < 150) {
                         ctx.strokeStyle = `rgba(56, 189, 248, ${0.4 * (1 - mdist / 150)})`;
-                        ctx.lineWidth = 1;
+                        ctx.lineWidth = 0.9;
                         ctx.beginPath();
                         ctx.moveTo(p.x, p.y);
                         ctx.lineTo(mouse.x, mouse.y);
@@ -665,8 +753,7 @@
                 }
             }
 
-            // D. Draw Meteors
-            if (Math.random() < 0.04 && meteors.length < 4) {
+            if (Math.random() < 0.035 && meteors.length < 3) {
                 createMeteor();
             }
 
@@ -674,7 +761,7 @@
                 let m = meteors[i];
                 m.x -= m.speed;
                 m.y += m.speed;
-                m.opacity -= 0.006;
+                m.opacity -= 0.004;
 
                 if (m.opacity <= 0 || m.y > height + 100) {
                     meteors.splice(i, 1);
@@ -686,7 +773,7 @@
                 gradient.addColorStop(0, `rgba(255, 255, 255, ${m.opacity})`);
                 gradient.addColorStop(1, 'rgba(56, 189, 248, 0)');
                 ctx.strokeStyle = gradient;
-                ctx.lineWidth = 2;
+                ctx.lineWidth = 1.8;
                 ctx.beginPath();
                 ctx.moveTo(m.x, m.y);
                 ctx.lineTo(m.x + m.length, m.y - m.length);
@@ -698,8 +785,6 @@
         }
         animateCanvas();
 
-
-        // --- UI APPLICATION LOGIC ---
         let currentLang = 'en';
 
         function switchTab(tabName) {
@@ -718,20 +803,20 @@
                 homeTab.classList.remove('hidden');
                 infoTab.classList.add('hidden');
                 
-                if(navHomeBtn) navHomeBtn.className = "px-5 py-1.5 rounded-lg bg-gradient-to-r from-purple-600 to-sky-600 text-white text-sm font-semibold transition-all flex items-center space-x-2 shadow-md";
-                if(navInfoBtn) navInfoBtn.className = "px-5 py-1.5 rounded-lg text-slate-300 hover:text-white text-sm font-semibold transition-all flex items-center space-x-2 group";
+                if(navHomeBtn) navHomeBtn.className = "px-5 py-2 rounded-lg bg-gradient-to-r from-purple-600 to-sky-600 text-white text-sm font-bold transition-all flex items-center space-x-2 shadow-lg scale-105";
+                if(navInfoBtn) navInfoBtn.className = "px-5 py-2 rounded-lg text-slate-300 hover:text-white text-sm font-bold transition-all flex items-center space-x-2 group";
 
-                if(mobileBottomHomeBtn) mobileBottomHomeBtn.className = "flex flex-col items-center space-y-1 text-purple-400 font-semibold text-xs transition-all active:scale-95";
-                if(mobileBottomInfoBtn) mobileBottomInfoBtn.className = "flex flex-col items-center space-y-1 text-slate-400 font-semibold text-xs transition-all active:scale-95";
+                if(mobileBottomHomeBtn) mobileBottomHomeBtn.className = "flex flex-col items-center space-y-1 text-purple-400 font-bold text-xs transition-all active:scale-95";
+                if(mobileBottomInfoBtn) mobileBottomInfoBtn.className = "flex flex-col items-center space-y-1 text-slate-400 font-bold text-xs transition-all active:scale-95";
             } else {
                 homeTab.classList.add('hidden');
                 infoTab.classList.remove('hidden');
                 
-                if(navHomeBtn) navHomeBtn.className = "px-5 py-1.5 rounded-lg text-slate-300 hover:text-white text-sm font-semibold transition-all flex items-center space-x-2 group";
-                if(navInfoBtn) navInfoBtn.className = "px-5 py-1.5 rounded-lg bg-gradient-to-r from-purple-600 to-sky-600 text-white text-sm font-semibold transition-all flex items-center space-x-2 shadow-md";
+                if(navHomeBtn) navHomeBtn.className = "px-5 py-2 rounded-lg text-slate-300 hover:text-white text-sm font-bold transition-all flex items-center space-x-2 group";
+                if(navInfoBtn) navInfoBtn.className = "px-5 py-2 rounded-lg bg-gradient-to-r from-purple-600 to-sky-600 text-white text-sm font-bold transition-all flex items-center space-x-2 shadow-lg scale-105";
 
-                if(mobileBottomHomeBtn) mobileBottomHomeBtn.className = "flex flex-col items-center space-y-1 text-slate-400 font-semibold text-xs transition-all active:scale-95";
-                if(mobileBottomInfoBtn) mobileBottomInfoBtn.className = "flex flex-col items-center space-y-1 text-purple-400 font-semibold text-xs transition-all active:scale-95";
+                if(mobileBottomHomeBtn) mobileBottomHomeBtn.className = "flex flex-col items-center space-y-1 text-slate-400 font-bold text-xs transition-all active:scale-95";
+                if(mobileBottomInfoBtn) mobileBottomInfoBtn.className = "flex flex-col items-center space-y-1 text-purple-400 font-bold text-xs transition-all active:scale-95";
             }
         }
 
@@ -754,27 +839,103 @@
             });
         }
 
-        function generateKeyWithCaptcha() {
+        function checkKeyCooldown() {
             const btn = document.getElementById('generateBtn');
+            const inputBox = document.getElementById('keyOutputBox');
+            const lastGenerated = localStorage.getItem('fishhub_last_key_time');
+            const savedKey = localStorage.getItem('fishhub_current_key');
+
+            if (savedKey && inputBox) {
+                inputBox.value = savedKey;
+            }
+
+            if (lastGenerated) {
+                const now = new Date().getTime();
+                const timeLeft = (24 * 60 * 60 * 1000) - (now - parseInt(lastGenerated));
+
+                if (timeLeft > 0) {
+                    startCountdown(timeLeft);
+                } else {
+                    localStorage.removeItem('fishhub_last_key_time');
+                }
+            }
+        }
+
+        function startCountdown(duration) {
+            const btn = document.getElementById('generateBtn');
+            if (!btn) return;
+
+            btn.disabled = true;
+
+            const timer = setInterval(() => {
+                duration -= 1000;
+                
+                if (duration <= 0) {
+                    clearInterval(timer);
+                    btn.disabled = false;
+                    btn.innerHTML = `<i class="fa-solid fa-shield-halved icon-hover text-lg"></i> <span data-en="Generate Key (Human Verification)" data-vi="Tạo Key (Xác thực con người)">Generate Key (Human Verification)</span>`;
+                    localStorage.removeItem('fishhub_last_key_time');
+                    return;
+                }
+
+                const hours = Math.floor((duration % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((duration % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((duration % (1000 * 60)) / 1000);
+
+                const timeString = `${hours}h ${minutes}m ${seconds}s`;
+                const waitText = currentLang === 'en' ? `Wait ${timeString}` : `Chờ ${timeString}`;
+                btn.innerHTML = `<i class="fa-solid fa-clock fa-spin icon-hover text-lg"></i> <span>${waitText}</span>`;
+            }, 1000);
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            checkKeyCooldown();
+        });
+
+        async function generateKeyWithCaptcha() {
+            const btn = document.getElementById('generateBtn');
+            const inputBox = document.getElementById('keyOutputBox');
             if(!btn) return;
             
-            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin icon-hover"></i> <span data-en="Verifying Human..." data-vi="Đang xác thực...">Verifying Human...</span>`;
+            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin icon-hover"></i> <span data-en="Verifying & Saving..." data-vi="Đang xác thực & Lưu...">Verifying & Saving...</span>`;
             
-            setTimeout(() => {
-                const randomCode = Math.random().toString(36).substring(2, 8).toUpperCase() + "-" + Math.floor(1000 + Math.random() * 9000);
-                const generatedKey = "FishHub-" + randomCode;
-                
-                const inputBox = document.getElementById('keyOutputBox');
-                if(inputBox) inputBox.value = generatedKey;
-                
-                btn.innerHTML = `<i class="fa-solid fa-check icon-hover"></i> <span data-en="Key Generated Successfully!" data-vi="Tạo Key Thành Công!">Key Generated Successfully!</span>`;
-                
-                navigator.clipboard.writeText(generatedKey);
-                
-                setTimeout(() => {
-                    btn.innerHTML = `<i class="fa-solid fa-shield-halved icon-hover"></i> <span data-en="Generate Key (Human Verification)" data-vi="Tạo Key (Xác thực con người)">Generate Key (Human Verification)</span>`;
-                }, 2500);
-            }, 1200);
+            const randomCode = Math.random().toString(36).substring(2, 8).toUpperCase() + "-" + Math.floor(1000 + Math.random() * 9000);
+            const generatedKey = "FishHub-" + randomCode;
+            const expiryTime = new Date().getTime() + (24 * 60 * 60 * 1000);
+
+            try {
+                let response = await fetch(`${FIREBASE_URL}/keys.json`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ key: generatedKey, expiry: expiryTime })
+                });
+
+                let data = await response.json();
+
+                if (response.ok && data.name) {
+                    if(inputBox) inputBox.value = generatedKey;
+                    
+                    const currentTime = new Date().getTime();
+                    localStorage.setItem('fishhub_last_key_time', currentTime);
+                    localStorage.setItem('fishhub_current_key', generatedKey);
+
+                    btn.innerHTML = `<i class="fa-solid fa-check icon-hover"></i> <span data-en="Key Generated Successfully!" data-vi="Tạo Key Thành Công!">Key Generated Successfully!</span>`;
+                    navigator.clipboard.writeText(generatedKey);
+                    
+                    setTimeout(() => {
+                        startCountdown(24 * 60 * 60 * 1000);
+                    }, 2000);
+                } else {
+                    alert("Lỗi lưu trữ dữ liệu lên Firebase!");
+                    btn.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> <span>Thử lại</span>`;
+                    btn.disabled = false;
+                }
+            } catch (err) {
+                console.error(err);
+                alert("Không thể kết nối đến Firebase Database!");
+                btn.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> <span>Thử lại</span>`;
+                btn.disabled = false;
+            }
         }
 
         function copyKey() {
@@ -792,7 +953,7 @@
         }
 
         function copyScript() {
-            const scriptStr = 'loadstring(game:HttpGet("https://raw.githubusercontent.com/Cachuoine/DHL/refs/heads/main/FishHub.lua"))()';
+            const scriptStr = 'loadstring(game:HttpGet("https://raw.githubusercontent.com/Cachuoine/DaoHuyLam/refs/heads/main/FishHubCollection.lua"))()';
             navigator.clipboard.writeText(scriptStr);
             alert(currentLang === 'en' ? 'Script copied to clipboard!' : 'Đã sao chép script vào bộ nhớ tạm!');
         }
