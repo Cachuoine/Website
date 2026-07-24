@@ -80,7 +80,6 @@
             box-shadow: 0 0 45px rgba(139, 92, 246, 0.4), 0 0 25px rgba(56, 189, 248, 0.3), inset 0 0 20px rgba(255, 255, 255, 0.15);
         }
 
-        /* Enhanced icon hover effect with glowing neon shadow */
         .icon-hover {
             transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.3s ease, filter 0.3s ease;
         }
@@ -359,6 +358,12 @@
             <div class="glass-panel galaxy-glow rounded-2xl p-6 sm:p-8 shadow-xl space-y-4">
                 <h3 class="text-xl font-bold text-white" data-lang="script_collection_title">FishHub Script Collection</h3>
                 <p class="text-slate-300 text-sm" data-lang="script_collection_desc">Sao chép và chạy bộ sưu tập script của bạn tại đây:</p>
+                
+                <!-- Hình ảnh được thêm vào phần My Script -->
+                <div class="rounded-xl overflow-hidden border border-purple-500/30 shadow-lg my-3">
+                    <img src="https://cdn.discordapp.com/attachments/1502521266257526904/1530168834667839609/content.png?ex=6a649847&is=6a6346c7&hm=d296728ed779dc7cede2214e4707d6aae77d98759032f17fc07dd9ac72c60d25&" alt="FishHub Content Preview" class="w-full h-auto object-cover">
+                </div>
+
                 <div class="code-box" id="scriptCode">loadstring(game:HttpGet("https://raw.githubusercontent.com/Cachuoine/DaoHuyLam/refs/heads/main/FishHubCollection.lua"))()</div>
                 <button type="button" id="btnCopyScript" class="w-full sm:w-auto px-6 py-3 rounded-xl bg-gradient-to-r from-purple-600 to-sky-600 hover:from-purple-500 hover:to-sky-500 font-bold text-white text-sm shadow-lg transition-all galaxy-glow group">
                     <i class="fa-solid fa-copy mr-2 icon-hover"></i> <span data-lang="copy_script_btn">COPY SCRIPT</span>
@@ -623,7 +628,7 @@
             </div>
         </div>
 
-        <!-- TAB 3: GET KEY (FIREBASE KEY SYSTEM 100% INTACT & UNTOUCHED) -->
+        <!-- TAB 3: GET KEY (FIREBASE KEY SYSTEM 100% INTACT + PERSISTENT KEY STORAGE) -->
         <div id="getkey" class="tab-content space-y-6">
             <div class="wave-container p-6 text-center shadow-xl">
                 <div class="relative z-10 space-y-2">
@@ -659,6 +664,12 @@
                         <p class="text-xs text-slate-300 mt-1" data-lang="step_2_desc">Create your unique 24-hour token saved securely on Firebase.</p>
                     </div>
                     <button type="button" id="btnGenerate" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-sky-600 text-white font-bold text-xs shadow-md transition-all opacity-50 cursor-not-allowed" disabled data-lang="btn_generate">GENERATE KEY</button>
+                </div>
+
+                <!-- Anti-spam Cooldown Warning Notification Box -->
+                <div id="cooldownWarning" class="hidden p-3 rounded-xl bg-amber-500/15 border border-amber-500/30 text-amber-300 text-xs font-medium flex items-center space-x-2">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    <span id="cooldownText">Vui lòng đợi trước khi tạo key tiếp theo để tránh spam!</span>
                 </div>
 
                 <!-- Output Box -->
@@ -838,7 +849,6 @@
             mouse.targetX = e.clientX;
             mouse.targetY = e.clientY;
             
-            // Spawn magic sparkling dust particles dynamically when moving mouse
             for(let i=0; i<2; i++) {
                 sparkles.push({
                     x: e.clientX + (Math.random() * 20 - 10),
@@ -896,7 +906,6 @@
         function animateCanvas() {
             ctx.clearRect(0, 0, width, height);
 
-            // Smooth mouse trailing interpolation
             if (mouse.targetX !== null) {
                 if (mouse.x === null) { mouse.x = mouse.targetX; mouse.y = mouse.targetY; }
                 else {
@@ -908,7 +917,6 @@
                 mouse.y = null;
             }
 
-            // Draw twinkling background stars
             for (let i = 0; i < stars.length; i++) {
                 let s = stars[i];
                 s.alpha += s.alphaChange;
@@ -921,7 +929,6 @@
                 ctx.fill();
             }
 
-            // Glowing cursor interactive aura (lung linh sáng ở vị trí di chuột)
             if (mouse.x !== null && mouse.y !== null) {
                 let mouseGradient = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, 220);
                 mouseGradient.addColorStop(0, 'rgba(168, 85, 247, 0.35)');
@@ -933,7 +940,6 @@
                 ctx.fill();
             }
 
-            // Draw and update sparkles (magic trail)
             for (let i = sparkles.length - 1; i >= 0; i--) {
                 let sp = sparkles[i];
                 sp.x += sp.vx;
@@ -949,10 +955,9 @@
                 ctx.beginPath();
                 ctx.arc(sp.x, sp.y, sp.radius * sp.alpha, 0, Math.PI * 2);
                 ctx.fill();
-                ctx.shadowBlur = 0; // reset shadow
+                ctx.shadowBlur = 0;
             }
 
-            // Draw network grid particles
             ctx.fillStyle = 'rgba(168, 85, 247, 0.8)';
             for (let i = 0; i < particles.length; i++) {
                 let p = particles[i];
@@ -964,7 +969,6 @@
                 if (p.y < 0) p.y = height;
                 if (p.y > height) p.y = 0;
 
-                // Gravitate slightly towards cursor if close
                 if (mouse.x !== null) {
                     let dx = mouse.x - p.x;
                     let dy = mouse.y - p.y;
@@ -995,7 +999,6 @@
                 }
             }
 
-            // Shooting stars / Meteors
             if (Math.random() < 0.04 && meteors.length < 4) {
                 createMeteor();
             }
@@ -1074,7 +1077,7 @@
         }
     </script>
 
-    <!-- FIREBASE MODULE SCRIPT (100% UNTOUCHED LOGIC) -->
+    <!-- FIREBASE MODULE SCRIPT (WITH PERSISTENT KEY STORAGE & COOLDOWN) -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
         import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
@@ -1095,9 +1098,75 @@
             return result;
         }
 
+        const COOLDOWN_TIME = 60 * 1000; // Thời gian chống spam liên tục (60 giây)
+
+        // --- TỰ ĐỘNG KHÔI PHỤC KEY CỐ ĐỊNH KHI TẢI LẠI TRANG (NẾU CHƯA HẾT HẠN 24H) ---
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedKey = localStorage.getItem('fishhub_saved_key');
+            const savedExpiry = localStorage.getItem('fishhub_key_expiry');
+            const now = Date.now();
+
+            if (savedKey && savedExpiry && now < parseInt(savedExpiry)) {
+                // Key vẫn còn hạn, giữ cố định trong ô chứa key
+                document.getElementById('keyOutput').innerText = savedKey;
+
+                const expiryDateObj = new Date(parseInt(savedExpiry));
+                const options = { 
+                    weekday: 'long', 
+                    year: 'numeric', 
+                    month: 'long', 
+                    day: 'numeric', 
+                    hour: '2-digit', 
+                    minute: '2-digit', 
+                    second: '2-digit' 
+                };
+                const localeFormat = currentLang === 'en' ? 'en-US' : 'vi-VN';
+                const formattedExpiry = expiryDateObj.toLocaleDateString(localeFormat, options);
+
+                const detailsHTML = currentLang === 'en' ? `
+                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px; background: rgba(74, 222, 128, 0.15); border: 1px solid rgba(74, 222, 128, 0.35); padding: 10px 14px; border-radius: 10px; color: #4ade80; font-weight: 600;">
+                        <i class="fa-solid fa-circle-check" style="font-size: 15px;"></i> Active key loaded securely from storage!
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;"><i class="fa-regular fa-clock" style="color: #4ade80; width: 18px;"></i> <b>Expires At:</b> <span style="color: #4ade80; font-weight: 700;">${formattedExpiry}</span></div>
+                    <div style="padding-top: 8px; border-top: 1px solid rgba(0, 242, 254, 0.2); color: #cbd5e1; font-size: 13px; display: flex; align-items: center; gap: 6px;"><i class="fa-solid fa-shield-cat" style="color: #00f2fe;"></i> Your active key is kept fixed until expiration.</div>
+                ` : `
+                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px; background: rgba(74, 222, 128, 0.15); border: 1px solid rgba(74, 222, 128, 0.35); padding: 10px 14px; border-radius: 10px; color: #4ade80; font-weight: 600;">
+                        <i class="fa-solid fa-circle-check" style="font-size: 15px;"></i> Đã tải lại key đang hoạt động từ bộ nhớ lưu trữ!
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;"><i class="fa-regular fa-clock" style="color: #4ade80; width: 18px;"></i> <b>Thời gian hết hạn:</b> <span style="color: #4ade80; font-weight: 700;">${formattedExpiry}</span></div>
+                    <div style="padding-top: 8px; border-top: 1px solid rgba(0, 242, 254, 0.2); color: #cbd5e1; font-size: 13px; display: flex; align-items: center; gap: 6px;"><i class="fa-solid fa-shield-cat" style="color: #00f2fe;"></i> Key của bạn được giữ cố định trong ô cho đến khi hết hạn.</div>
+                `;
+
+                document.getElementById('keyDetailsContent').innerHTML = detailsHTML;
+                document.getElementById('keyDetailsCard').style.display = 'block';
+            } else {
+                // Đã quá hạn 24h hoặc chưa có -> Xóa dữ liệu cũ trong localStorage để sạch sẽ
+                localStorage.removeItem('fishhub_saved_key');
+                localStorage.removeItem('fishhub_key_expiry');
+            }
+        });
+
         const btnGenKey = document.getElementById('btnGenerate');
         if (btnGenKey) {
             btnGenKey.addEventListener('click', () => {
+                // --- KIỂM TRA CHỐNG SPAM (ANTI-SPAM COOLDOWN) ---
+                const lastGenTime = localStorage.getItem('fishhub_last_gen_time');
+                const now = Date.now();
+                const warningBox = document.getElementById('cooldownWarning');
+                const warningText = document.getElementById('cooldownText');
+
+                if (lastGenTime && (now - lastGenTime < COOLDOWN_TIME)) {
+                    const remainingSeconds = Math.ceil((COOLDOWN_TIME - (now - lastGenTime)) / 1000);
+                    warningText.innerText = currentLang === 'en' 
+                        ? `Anti-spam active! Please wait ${remainingSeconds}s before generating another key.` 
+                        : `Đang bật chống spam! Vui lòng đợi ${remainingSeconds} giây trước khi tạo key tiếp theo.`;
+                    warningBox.classList.remove('hidden');
+                    return;
+                } else {
+                    warningBox.classList.add('hidden');
+                }
+                // ----------------------------------------------
+
                 const btn = document.getElementById('btnGenerate');
                 btn.innerText = "Generating...";
                 btn.disabled = true;
@@ -1106,10 +1175,16 @@
                 const currentTime = Date.now();
                 const expiryTime = currentTime + (24 * 60 * 60 * 1000);
 
+                // --- GIỮ NGUYÊN 100% HỆ THỐNG LƯU FIREBASE GỐC ---
                 set(ref(db, 'keys/' + newKey), {
                     createdAt: currentTime,
                     type: "normal"
                 }).then(() => {
+                    // Lưu mốc thời gian chống spam và CỐ ĐỊNH KEY vào localStorage
+                    localStorage.setItem('fishhub_last_gen_time', Date.now());
+                    localStorage.setItem('fishhub_saved_key', newKey);
+                    localStorage.setItem('fishhub_key_expiry', expiryTime);
+
                     document.getElementById('keyOutput').innerText = newKey;
                     
                     navigator.clipboard.writeText(newKey);
