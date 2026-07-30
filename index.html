@@ -244,9 +244,6 @@
             <button type="button" onclick="switchTab('getkey', this)" id="navGetKeyBtn" class="nav-btn">
                 <i class="fa-solid fa-key icon-hover"></i> <span data-lang="nav_getkey">Get Key</span>
             </button>
-            <button type="button" onclick="switchTab('executor', this)" id="navExecutorBtn" class="nav-btn">
-                <i class="fa-solid fa-terminal icon-hover"></i> <span data-lang="nav_executor">Executor</span>
-            </button>
         </div>
 
         <div class="flex items-center space-x-3">
@@ -276,10 +273,6 @@
         <button type="button" onclick="switchTab('getkey', this)" class="flex flex-col items-center space-y-1 text-slate-400 font-semibold text-[11px] p-2 transition-all active:scale-95 group">
             <i class="fa-solid fa-key text-lg icon-hover"></i>
             <span data-lang="nav_getkey">Get Key</span>
-        </button>
-        <button type="button" onclick="switchTab('executor', this)" class="flex flex-col items-center space-y-1 text-slate-400 font-semibold text-[11px] p-2 transition-all active:scale-95 group">
-            <i class="fa-solid fa-terminal text-lg icon-hover"></i>
-            <span data-lang="nav_executor">Executor</span>
         </button>
     </div>
 
@@ -358,11 +351,6 @@
             <div class="glass-panel galaxy-glow rounded-2xl p-6 sm:p-8 shadow-xl space-y-4">
                 <h3 class="text-xl font-bold text-white" data-lang="script_collection_title">FishHub Script Collection</h3>
                 <p class="text-slate-300 text-sm" data-lang="script_collection_desc">Sao chép và chạy bộ sưu tập script của bạn tại đây:</p>
-                
-                <!-- Hình ảnh được thêm vào phần My Script -->
-                <div class="rounded-xl overflow-hidden border border-purple-500/30 shadow-lg my-3">
-                    <img src="https://cdn.discordapp.com/attachments/1502521266257526904/1530168834667839609/content.png?ex=6a649847&is=6a6346c7&hm=d296728ed779dc7cede2214e4707d6aae77d98759032f17fc07dd9ac72c60d25&" alt="FishHub Content Preview" class="w-full h-auto object-cover">
-                </div>
 
                 <div class="code-box" id="scriptCode">loadstring(game:HttpGet("https://raw.githubusercontent.com/Cachuoine/DaoHuyLam/refs/heads/main/FishHubCollection.lua"))()</div>
                 <button type="button" id="btnCopyScript" class="w-full sm:w-auto px-6 py-3 rounded-xl bg-gradient-to-r from-purple-600 to-sky-600 hover:from-purple-500 hover:to-sky-500 font-bold text-white text-sm shadow-lg transition-all galaxy-glow group">
@@ -484,7 +472,7 @@
                 </div>
             </div>
 
-            <!-- RECOMMENDED EXECUTORS SECTION -->
+            <!-- RECOMMENDED EXECUTORS SECTION (UPDATED TO MATCH IMAGE 100%) -->
             <div class="glass-panel galaxy-glow rounded-2xl p-6 sm:p-8 shadow-xl space-y-6">
                 <div class="flex items-center space-x-4 pb-4 border-b border-purple-900/40">
                     <div class="w-12 h-12 rounded-2xl bg-purple-600/20 border border-purple-500/30 flex items-center justify-center text-purple-400 text-xl group">
@@ -688,17 +676,6 @@
             </div>
         </div>
 
-        <!-- TAB 4: EXECUTOR -->
-        <div id="executor" class="tab-content space-y-6">
-            <div class="glass-panel galaxy-glow rounded-2xl p-6 sm:p-8 shadow-xl space-y-4">
-                <h2 class="text-2xl font-bold text-white" data-lang="web_executor_title">Web Executor</h2>
-                <p class="text-slate-300 text-sm" data-lang="web_executor_desc">Môi trường thực thi script trực tuyến tích hợp sẵn.</p>
-                <div class="p-12 text-center bg-slate-900/30 border border-purple-500/20 rounded-xl">
-                    <p class="text-sky-300 text-base font-medium m-0" data-lang="web_executor_coming">🚀 Tính năng Executor đang được phát triển.</p>
-                </div>
-            </div>
-        </div>
-
         <!-- 2 NÚT TRÒN GITHUB & DISCORD Ở CHUNG TẤT CẢ CÁC TAB -->
         <div class="pt-4 pb-2 flex flex-col items-center space-y-3 mt-8 border-t border-purple-900/20">
             <p class="text-xs font-semibold text-slate-400 uppercase tracking-widest" data-lang="social_connect_title">Connect & Explore</p>
@@ -727,7 +704,6 @@
                 nav_home: "Home",
                 nav_script: "My Script",
                 nav_getkey: "Get Key",
-                nav_executor: "Executor",
                 home_badge: "🚀 UNIVERSAL SCRIPT PLATFORM",
                 home_desc: "Experience the best performance, high-end security, and smooth user interface designed for ultimate Roblox gaming.",
                 home_btn_getkey: "Get Key Now",
@@ -750,9 +726,6 @@
                 generated_key_label: "Your Generated Key:",
                 key_output_waiting: "Complete Step 1 checkpoint to unlock generation...",
                 key_details_title: "Key Details & Expiry Info",
-                web_executor_title: "Web Executor",
-                web_executor_desc: "Built-in online script execution environment.",
-                web_executor_coming: "🚀 Executor feature is currently under development.",
                 solo_dev_badge: "Solo Developer",
                 dev_role: "Lead Developer, Maintainer & Founder of FishHub",
                 dev_desc: "FishHub is developed entirely as a solo project by DaoHuyLam. Because it is managed by a single person, major feature updates, bug fixes, and new game additions may take some time to roll out. Your patience and support are greatly appreciated!",
@@ -770,7 +743,6 @@
                 nav_home: "Trang chủ",
                 nav_script: "Script Của Tôi",
                 nav_getkey: "Lấy Key",
-                nav_executor: "Trình Thực Thi",
                 home_badge: "🚀 NỀN TẢNG SCRIPT TOÀN DIỆN",
                 home_desc: "Trải nghiệm hiệu năng tuyệt vời, bảo mật cao cấp và giao diện mượt mà được thiết kế cho game Roblox đỉnh cao.",
                 home_btn_getkey: "Lấy Key Ngay",
@@ -793,9 +765,6 @@
                 generated_key_label: "Key Của Bạn:",
                 key_output_waiting: "Hoàn thành Trạm 1 để mở khóa tính năng tạo key...",
                 key_details_title: "Chi Tiết Key & Thông Tin Hết Hạn",
-                web_executor_title: "Web Executor",
-                web_executor_desc: "Môi trường thực thi script trực tuyến tích hợp sẵn.",
-                web_executor_coming: "🚀 Tính năng Executor đang được phát triển.",
                 solo_dev_badge: "Lập Trình Viên Đơn",
                 dev_role: "Lập trình viên chính, Quản trị viên & Nhà sáng lập FishHub",
                 dev_desc: "FishHub được phát triển hoàn toàn như một dự án cá nhân bởi DaoHuyLam. Do được quản lý bởi một người, các bản cập nhật tính năng lớn, sửa lỗi và thêm trò chơi mới có thể mất một thời gian. Sự kiên nhẫn và ủng hộ của bạn được đánh giá rất cao!",
@@ -1059,25 +1028,48 @@
         }
 
         const btnStep1 = document.getElementById('btnStep1');
-        if (btnStep1) {
-            btnStep1.addEventListener('click', () => {
-                btnStep1.innerText = "Verifying...";
-                btnStep1.disabled = true;
+        const btnGenKeyStep2 = document.getElementById('btnGenerate');
+        const step1Desc = document.getElementById('step1Desc');
 
+        const LINK_VUOT = "https://oii.la/Bu12SLy"; 
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const isVerified = urlParams.get('verified') === 'true';
+        const hasClickedLink = sessionStorage.getItem('fishhub_clicked_link') === 'true';
+
+        if (isVerified && hasClickedLink) {
+            if (btnStep1) {
+                btnStep1.innerText = currentLang === 'en' ? "COMPLETED ✓" : "ĐÃ HOÀN THÀNH ✓";
+                btnStep1.style.background = "#22c55e";
+                btnStep1.disabled = true;
+                
+                step1Desc.innerText = currentLang === 'en' ? "Checkpoint verified successfully! Step 2 is now unlocked." : "Đã xác thực thành công! Bước 2 đã được mở khóa.";
+                step1Desc.style.color = "#4ade80";
+                
+                btnGenKeyStep2.disabled = false;
+                btnGenKeyStep2.classList.remove('opacity-50', 'cursor-not-allowed');
+
+                window.history.replaceState({}, document.title, window.location.pathname);
+                
                 setTimeout(() => {
-                    btnStep1.innerText = "COMPLETED ✓";
-                    btnStep1.style.background = "#22c55e";
-                    document.getElementById('step1Desc').innerText = currentLang === 'en' ? "Checkpoint verified successfully! Step 2 is now unlocked." : "Đã xác thực thành công! Bước 2 đã được mở khóa.";
+                    switchTab('getkey', document.getElementById('navGetKeyBtn'));
+                }, 50);
+            }
+        } else {
+            if (btnStep1) {
+                btnStep1.addEventListener('click', () => {
+                    sessionStorage.setItem('fishhub_clicked_link', 'true');
+                    window.open(LINK_VUOT, '_self'); 
                     
-                    const btnGen = document.getElementById('btnGenerate');
-                    btnGen.disabled = false;
-                    btnGen.classList.remove('opacity-50', 'cursor-not-allowed');
-                }, 1200);
-            });
+                    btnStep1.innerText = currentLang === 'en' ? "WAITING..." : "ĐANG ĐỢI...";
+                    step1Desc.innerText = currentLang === 'en' ? "Please complete the verification link. You will be automatically redirected back here." : "Vui lòng vượt link. Trang web sẽ tự động chuyển hướng bạn về đây khi hoàn thành.";
+                    step1Desc.style.color = "#f59e0b";
+                });
+            }
         }
     </script>
 
-    <!-- FIREBASE MODULE SCRIPT (WITH PERSISTENT KEY STORAGE & COOLDOWN) -->
+    <!-- FIREBASE MODULE SCRIPT -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
         import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
@@ -1098,16 +1090,14 @@
             return result;
         }
 
-        const COOLDOWN_TIME = 60 * 1000; // Thời gian chống spam liên tục (60 giây)
+        const COOLDOWN_TIME = 60 * 1000;
 
-        // --- TỰ ĐỘNG KHÔI PHỤC KEY CỐ ĐỊNH KHI TẢI LẠI TRANG (NẾU CHƯA HẾT HẠN 24H) ---
         window.addEventListener('DOMContentLoaded', () => {
             const savedKey = localStorage.getItem('fishhub_saved_key');
             const savedExpiry = localStorage.getItem('fishhub_key_expiry');
             const now = Date.now();
 
             if (savedKey && savedExpiry && now < parseInt(savedExpiry)) {
-                // Key vẫn còn hạn, giữ cố định trong ô chứa key
                 document.getElementById('keyOutput').innerText = savedKey;
 
                 const expiryDateObj = new Date(parseInt(savedExpiry));
@@ -1140,7 +1130,6 @@
                 document.getElementById('keyDetailsContent').innerHTML = detailsHTML;
                 document.getElementById('keyDetailsCard').style.display = 'block';
             } else {
-                // Đã quá hạn 24h hoặc chưa có -> Xóa dữ liệu cũ trong localStorage để sạch sẽ
                 localStorage.removeItem('fishhub_saved_key');
                 localStorage.removeItem('fishhub_key_expiry');
             }
@@ -1149,7 +1138,6 @@
         const btnGenKey = document.getElementById('btnGenerate');
         if (btnGenKey) {
             btnGenKey.addEventListener('click', () => {
-                // --- KIỂM TRA CHỐNG SPAM (ANTI-SPAM COOLDOWN) ---
                 const lastGenTime = localStorage.getItem('fishhub_last_gen_time');
                 const now = Date.now();
                 const warningBox = document.getElementById('cooldownWarning');
@@ -1165,7 +1153,6 @@
                 } else {
                     warningBox.classList.add('hidden');
                 }
-                // ----------------------------------------------
 
                 const btn = document.getElementById('btnGenerate');
                 btn.innerText = "Generating...";
@@ -1175,18 +1162,16 @@
                 const currentTime = Date.now();
                 const expiryTime = currentTime + (24 * 60 * 60 * 1000);
 
-                // --- GIỮ NGUYÊN 100% HỆ THỐNG LƯU FIREBASE GỐC ---
                 set(ref(db, 'keys/' + newKey), {
                     createdAt: currentTime,
                     type: "normal"
                 }).then(() => {
-                    // Lưu mốc thời gian chống spam và CỐ ĐỊNH KEY vào localStorage
                     localStorage.setItem('fishhub_last_gen_time', Date.now());
                     localStorage.setItem('fishhub_saved_key', newKey);
                     localStorage.setItem('fishhub_key_expiry', expiryTime);
+                    sessionStorage.removeItem('fishhub_clicked_link');
 
                     document.getElementById('keyOutput').innerText = newKey;
-                    
                     navigator.clipboard.writeText(newKey);
                     
                     const createDateObj = new Date(currentTime);
