@@ -1,42 +1,42 @@
 {
-  "status": "🟢", --'🟢', '🟡', '🔴' 'Potassium'
+  "statusPotassium": "🟢",
   "version": "2.4.9",
   "up": "4310300497aa4917",
   "update": "<t:1789589100:f>"
-  "status1": "🟢", --'🟢', '🟡', '🔴' 'Volt'
+  "statusVolt": "🟢",
   "version1": "1.3.13.1",
   "up1": "4310300497aa4917",
   "update1": "<t:1789577640:f>"
-  "status2": "🟢", --'🟢', '🟡', '🔴' 'Wave'
+  "statusWave": "🟢",
   "version2": "1.5.3",
   "up2": "4310300497aa4917",
   "update2": "<t:1789496520:f>"
-  "status3": "🟢", --'🟢', '🟡', '🔴' 'Sirhurt'
+  "statusSirhurt": "🟢",
   "version3": "V5.469",
   "up3": "4310300497aa4917",
   "update3": "<t:1789488360:f>"
-  "status4": "🔴", --'🟢', '🟡', '🔴' 'Cosmic'
+  "statusCosmic": "🔴",
   "version4": "1.733",
   "up4": "nil",
   "update4": "nil"
-  "status5": "🟡", --'🟢', '🟡', '🔴' 'Isaeva'
+  "statusIsaeva": "🟡",
   "version5": "2.3.3",
   "up5": "c5aecda2245e4fae",
   "update5": "<t:1789358640:f>"
-  "status6": "🟡", --'🟢', '🟡', '🔴' 'Synapse'
+  "statusSynapse": "🟡",
   "version6": "1.0.3.6",
   "up6": "nil",
   "update6": "nil"
   "update6": "nil"
-  "status7": "🟢", --'🟢', '🟡', '🔴' 'Real'
+  "statusReal": "🟢",
   "version7": "2.6.4",
   "up7": "4310300497aa4917",
   "update7": "<t:1789584720:f>"
-  "status8": "🟢", --'🟢', '🟡', '🔴' 'Madium'
+  "statusMadium": "🟢",
   "version8": "2.2.6",
   "up8": "4310300497aa4917",
   "update8": "<t:1789872420:f>"
-  "status8": "🟡", --'🟢', '🟡', '🔴' 'Velocity'
+  "statusVelocity": "🟡",
   "version8": "1.3.9",
   "up8": "nil",
   "update8": "<t:1789371000:f>"
