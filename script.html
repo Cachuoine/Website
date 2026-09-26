@@ -1,1216 +1,588 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FishHub - Universal Hub & Key System</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        brand: {
-                            dark: '#030712',
-                            card: '#0f172a',
-                            blue: '#0284c7',
-                            skyblue: '#38bdf8',
-                            purple: '#8b5cf6',
-                            violet: '#a855f7'
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap');
-        
-        /* Custom Sleek Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #030712;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: linear-gradient(180deg, #8b5cf6, #0284c7);
-            border-radius: 4px;
-            border: 2px solid rgba(3, 7, 18, 0.8);
-            box-shadow: 0 0 10px rgba(139, 92, 246, 0.5);
-            transition: all 0.3s ease;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: linear-gradient(180deg, #a855f7, #38bdf8);
-            box-shadow: 0 0 15px rgba(56, 189, 248, 0.8);
-        }
-        * {
-            scrollbar-width: thin;
-            scrollbar-color: #8b5cf6 #030712;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Executor Status Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#020711;--bg2:#06162d;--panel:rgba(5,18,39,.72);--panel2:rgba(7,25,52,.62);
+  --line:rgba(108,190,255,.14);--line2:rgba(93,184,255,.28);
+  --text:#f3f8ff;--muted:#91a8c5;--blue:#229cff;--cyan:#42d9ff;--violet:#6d73ff;
+  --green:#35e6a5;--yellow:#ffd166;--red:#ff6d88;--shadow:0 22px 70px rgba(0,0,0,.42)
+}
+*{box-sizing:border-box;scrollbar-width:none;-ms-overflow-style:none}*::-webkit-scrollbar{width:0;height:0;display:none}html,body{height:100%}
+body{margin:0;padding:88px 20px 70px;overflow-x:hidden;color:var(--text);font-family:'Space Grotesk',sans-serif;background:
+radial-gradient(circle at 10% 5%,rgba(25,135,255,.16),transparent 28%),
+radial-gradient(circle at 90% 18%,rgba(46,91,255,.14),transparent 30%),
+linear-gradient(180deg,#01050e 0%,#031125 48%,#01060f 100%)}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-8;opacity:.28;background-image:linear-gradient(rgba(84,181,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(84,181,255,.035) 1px,transparent 1px);background-size:48px 48px;mask-image:linear-gradient(to bottom,#000,transparent 94%)}
+.bg-wave{position:fixed;inset:0;z-index:-7;overflow:hidden;pointer-events:none}
+.bg-wave i{position:absolute;border-radius:50%;filter:blur(45px);mix-blend-mode:screen;opacity:.36}
+.bg-wave i:nth-child(1){width:78vw;height:48vw;left:-25vw;top:-18vw;background:radial-gradient(circle,var(--blue),transparent 66%);animation:blob1 21s ease-in-out infinite}
+.bg-wave i:nth-child(2){width:70vw;height:48vw;right:-18vw;top:2vh;background:radial-gradient(circle,var(--cyan),transparent 65%);animation:blob2 25s ease-in-out infinite}
+.bg-wave i:nth-child(3){width:62vw;height:48vw;left:12vw;bottom:-25vh;background:radial-gradient(circle,var(--violet),transparent 65%);animation:blob3 29s ease-in-out infinite}
+.wave-ribbons{position:fixed;inset:-22% -12%;z-index:-6;pointer-events:none;overflow:hidden;transform:rotate(-7deg)}
+.wave-ribbons span{position:absolute;left:-8%;width:116%;height:32%;border:1px solid rgba(73,190,255,.13);border-left-color:transparent;border-right-color:transparent;border-radius:48%;animation:wave 16s ease-in-out infinite}
+.wave-ribbons span:nth-child(1){top:8%;animation-delay:-2s}.wave-ribbons span:nth-child(2){top:28%;height:36%;animation-duration:19s;animation-delay:-6s;opacity:.7}.wave-ribbons span:nth-child(3){top:50%;height:38%;animation-duration:22s;animation-delay:-10s;opacity:.48}.wave-ribbons span:nth-child(4){top:74%;height:30%;animation-duration:17s;animation-delay:-4s;opacity:.32}
+@keyframes wave{0%,100%{transform:translateX(-2%) translateY(0) scaleX(1)}50%{transform:translateX(4%) translateY(22px) scaleX(1.035)}}
+@keyframes blob1{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(8vw,8vh) scale(1.16)}}
+@keyframes blob2{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-8vw,6vh) scale(.91)}}
+@keyframes blob3{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(6vw,-8vh) scale(1.1)}}
+canvas#fx{position:fixed;inset:0;z-index:-1;pointer-events:none}
+.topbar{position:fixed;top:0;left:0;right:0;height:68px;z-index:40;display:flex;align-items:center;gap:16px;padding:0 24px;background:rgba(2,8,20,.76);backdrop-filter:blur(18px) saturate(150%);border-bottom:1px solid var(--line);box-shadow:0 10px 38px rgba(0,0,0,.2)}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:15px;white-space:nowrap}.brand svg{width:25px;height:25px;filter:drop-shadow(0 0 10px rgba(34,156,255,.55))}
+.tabs{flex:1;display:flex;justify-content:center;gap:7px}.tab{position:relative;border:1px solid transparent;background:transparent;color:var(--muted);font:700 13.5px 'Space Grotesk',sans-serif;padding:10px 15px;border-radius:12px;cursor:pointer;display:flex;align-items:center;gap:8px;transition:.2s}.tab svg{width:17px;height:17px}.tab:hover{color:var(--text);background:rgba(35,154,255,.08);border-color:rgba(71,180,255,.14)}.tab.active{color:#fff;background:linear-gradient(135deg,rgba(22,132,255,.96),rgba(96,91,255,.93));border-color:rgba(137,219,255,.26);box-shadow:0 9px 27px rgba(36,126,255,.22)}
+.chev{width:10px!important;height:10px!important;transition:transform .2s}.tab.open .chev{transform:rotate(180deg)}
+.dropdown-wrap{position:relative}.dropdown{position:absolute;top:calc(100% + 72px);left:50%;min-width:214px;transform:translateX(-50%) translateY(-7px) scale(.98);padding:7px;background:rgba(4,14,31,.95);border:1px solid var(--line2);border-radius:15px;backdrop-filter:blur(18px) saturate(150%);box-shadow:var(--shadow);opacity:0;pointer-events:none;transition:.2s}.dropdown.open{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0) scale(1)}
+.dropdown button{width:100%;display:flex;align-items:center;gap:10px;border:1px solid transparent;background:none;color:var(--text);font:600 13.5px 'Space Grotesk',sans-serif;padding:10px 11px;border-radius:9px;cursor:pointer;text-align:left}.dropdown button:hover:not(:disabled){background:rgba(40,160,255,.1);border-color:rgba(74,181,255,.13)}.dropdown button.active{background:linear-gradient(135deg,rgba(34,154,255,.2),rgba(109,115,255,.18));border-color:rgba(73,184,255,.18)}.dropdown button:disabled{opacity:.45;cursor:not-allowed}.dropdown button svg{width:17px;height:17px;flex:none}.dropdown button .mac-menu-icon{width:17px;height:17px;flex:none;display:block;overflow:visible}.dropdown button .mac-finder{filter:drop-shadow(0 0 7px rgba(55,174,255,.18))}.dropdown.open{min-height:58px}.dropdown .menu-sub{margin-left:auto;font:500 10px 'JetBrains Mono',monospace;color:var(--muted)}.dropdown-empty-slot{height:8px;margin:4px 4px 2px;border-radius:8px;background:linear-gradient(90deg,transparent,rgba(66,217,255,.16),transparent);opacity:.65}
+.executor-underpanel{position:absolute;top:calc(100% + 10px);left:50%;width:224px;height:52px;transform:translateX(-50%) translateY(-5px) scale(.97);padding:6px;border:1px solid rgba(73,184,255,.2);border-radius:14px;background:linear-gradient(135deg,rgba(5,20,42,.9),rgba(9,32,66,.72));backdrop-filter:blur(18px) saturate(150%);box-shadow:0 18px 40px rgba(0,0,0,.28),inset 0 0 24px rgba(66,217,255,.03);opacity:0;pointer-events:none;transition:.2s;z-index:45}.executor-underpanel:after{content:"";position:absolute;top:-5px;left:50%;width:9px;height:9px;transform:translateX(-50%) rotate(45deg);border-left:1px solid rgba(73,184,255,.2);border-top:1px solid rgba(73,184,255,.2);background:#071a34}.dropdown-wrap.panel-open .executor-underpanel{opacity:1;transform:translateX(-50%) translateY(0) scale(1)}
+.stats-top{display:flex;gap:11px;font:500 11px 'JetBrains Mono',monospace;white-space:nowrap}.stats-top span{display:flex;align-items:center;gap:5px}
+.wrap{max-width:1100px;margin:0 auto;position:relative}.view{display:none}.view.active{display:block}
+.hero{position:relative;overflow:hidden;margin-bottom:16px;padding:32px;border:1px solid var(--line);border-radius:22px;background:linear-gradient(135deg,rgba(8,30,62,.78),rgba(3,14,30,.67));box-shadow:var(--shadow);backdrop-filter:blur(14px)}.hero:before{content:"";position:absolute;inset:0;background:linear-gradient(120deg,rgba(58,193,255,.09),transparent 44%,rgba(109,115,255,.09));pointer-events:none}.hero-glow{position:absolute;right:3%;bottom:-12%;width:380px;height:200px;background:radial-gradient(circle,rgba(49,172,255,.2),transparent 70%);filter:blur(18px)}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;color:#9fddff;font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:700}.eyebrow:before{content:"";width:26px;height:1px;background:linear-gradient(90deg,transparent,var(--cyan))}.hero h1{margin:11px 0 9px;max-width:760px;font-size:clamp(31px,5vw,50px);line-height:1.03;letter-spacing:-.035em;background:linear-gradient(90deg,#fff 0%,#b8e7ff 55%,#93a9ff 100%);-webkit-background-clip:text;background-clip:text;color:transparent}.hero p{max-width:770px;margin:0;color:var(--muted);font-size:14px;line-height:1.7}.hero-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:22px}.live-pill,.refresh-btn{display:inline-flex;align-items:center;gap:8px;padding:9px 12px;border-radius:10px;border:1px solid var(--line);background:rgba(255,255,255,.035);color:var(--muted);font:600 11px 'JetBrains Mono',monospace}.refresh-btn{cursor:pointer;color:var(--text)}.refresh-btn:hover{border-color:var(--line2);background:rgba(34,156,255,.08)}
+.dot{width:9px;height:9px;border-radius:50%;flex:none;animation:dotPulse 1.6s ease-in-out infinite}@keyframes dotPulse{0%,100%{transform:scale(1);filter:brightness(1);box-shadow:0 0 6px currentColor,0 0 10px currentColor;opacity:.86}50%{transform:scale(1.22);filter:brightness(1.2);box-shadow:0 0 10px currentColor,0 0 20px currentColor,0 0 30px currentColor;opacity:1}}.dot.green{color:var(--green);background:var(--green)}.dot.yellow{color:var(--yellow);background:var(--yellow);animation-delay:.22s}.dot.red{color:var(--red);background:var(--red);animation-delay:.44s}
+.home-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.home-stat{padding:18px;border-radius:16px;border:1px solid var(--line);background:linear-gradient(145deg,rgba(8,25,52,.76),rgba(3,13,29,.62));backdrop-filter:blur(13px);box-shadow:0 12px 34px rgba(0,0,0,.2);transition:.2s}.home-stat:hover{transform:translateY(-2px);border-color:rgba(69,177,255,.28)}.home-stat .icon{width:34px;height:34px;display:grid;place-items:center;border-radius:10px;background:rgba(47,155,255,.1);color:#8fdcff;border:1px solid rgba(74,171,255,.13)}.home-stat .value{margin-top:13px;font-size:23px;font-weight:700}.home-stat .label{margin-top:2px;color:var(--muted);font-size:12px}
+.home-panel{margin-top:16px;padding:21px;border:1px solid var(--line);border-radius:16px;background:rgba(5,17,34,.62);backdrop-filter:blur(13px)}.panel-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}.panel-title{font-size:14px;font-weight:700}.sync-state{font:500 10px 'JetBrains Mono',monospace;color:var(--muted)}.home-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.step{padding:15px;border:1px solid var(--line);border-radius:13px;background:rgba(255,255,255,.025)}.step-num{color:#8bdcff;font:700 11px 'JetBrains Mono',monospace;margin-bottom:8px}.step strong{display:block;font-size:13px}.step span{display:block;margin-top:5px;color:var(--muted);font-size:12px;line-height:1.5}
+.filterbar{display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap}.search{flex:1;min-width:220px;padding:12px 15px;border-radius:11px;border:1px solid var(--line);background:var(--panel);color:var(--text);font:500 14px 'Space Grotesk',sans-serif;backdrop-filter:blur(12px)}.search::placeholder{color:#7890ae}.search:focus{outline:none;border-color:rgba(74,181,255,.4);box-shadow:0 0 0 3px rgba(34,156,255,.08)}.filter-chip{display:none;align-items:center;gap:8px;background:rgba(34,156,255,.13);border:1px solid rgba(73,184,255,.24);padding:9px 12px;border-radius:10px;font:600 11px 'JetBrains Mono',monospace;white-space:nowrap}.filter-chip.show{display:flex}.filter-chip button{background:none;border:none;color:var(--text);cursor:pointer}
+.all-status-bar{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;width:100%;margin:0 auto 22px;padding:4px}.status-filter{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-width:118px;border:1px solid var(--line);background:rgba(255,255,255,.025);color:var(--muted);padding:10px 16px;border-radius:12px;font:700 11px 'JetBrains Mono',monospace;cursor:pointer;transition:.18s}.status-filter:hover{color:var(--text);border-color:var(--line2);background:rgba(34,156,255,.08);transform:translateY(-1px)}.status-filter.active{color:#fff;border-color:rgba(73,184,255,.34);background:linear-gradient(135deg,rgba(34,154,255,.2),rgba(109,115,255,.18));box-shadow:0 8px 24px rgba(34,156,255,.12),inset 0 0 18px rgba(73,184,255,.04)}.platform-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:10px 0 8px;padding:0 2px;color:#b9d5f0;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.05em}.platform-title .count{color:#6f89a8;font:500 10px 'JetBrains Mono',monospace}
+.group{margin-bottom:28px}.group-title{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:#b8cae0;margin:0 0 12px;padding:0 2px}.group-title .count{color:#6f89a8;font:500 10px 'JetBrains Mono',monospace}.grid{display:grid;grid-template-columns:1fr;gap:10px}.all-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.all-grid .card{min-height:176px;display:flex;flex-direction:column;align-items:stretch;padding:20px}.all-grid .card-head{width:100%}.all-grid .card-main{width:100%}.all-grid .card-status{margin-top:auto;width:100%;justify-content:flex-start}.card{min-width:0;background:linear-gradient(135deg,rgba(7,24,49,.76),rgba(4,14,30,.65));border:1px solid var(--line);border-radius:15px;padding:15px 16px;display:flex;align-items:center;gap:13px;backdrop-filter:blur(14px);transition:transform .18s,box-shadow .18s,border-color .18s;box-shadow:0 10px 28px rgba(0,0,0,.18)}.card:hover{transform:translateY(-3px);border-color:rgba(74,181,255,.42);box-shadow:0 18px 48px rgba(18,134,255,.16),0 0 0 1px rgba(74,181,255,.08);}.avatar{width:42px;height:42px;border-radius:11px;flex:none;background:linear-gradient(135deg,rgba(34,156,255,.25),rgba(109,115,255,.28));display:grid;place-items:center;overflow:hidden;font-weight:700;color:#dff5ff}.avatar img{width:100%;height:100%;object-fit:cover}.card-main{min-width:0;flex:1}.card-line{display:flex;align-items:center;gap:8px;min-width:0}.card-title{font-size:15px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.version-badge{flex:none;padding:3px 7px;border-radius:7px;border:1px solid rgba(66,217,255,.18);background:rgba(66,217,255,.06);color:#d7f5ff;font:600 9px 'JetBrains Mono',monospace;white-space:nowrap}.card-meta{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:6px;color:var(--muted);font:500 10.5px 'JetBrains Mono',monospace}.card-meta b{font-weight:500;color:#d9e8f7}.card-status{display:flex;align-items:center;gap:8px;min-width:98px;justify-content:flex-end}.status-text{font:700 10px 'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.06em}.status-text.green{color:var(--green)}.status-text.yellow{color:var(--yellow)}.status-text.red{color:var(--red)}
+.empty,.loading,.error-box{padding:42px 20px;text-align:center;border:1px dashed var(--line);border-radius:16px;background:rgba(5,17,34,.48);color:var(--muted)}.loading strong,.error-box strong{display:block;color:var(--text);margin-bottom:7px}.error-box{border-color:rgba(255,109,136,.24)}
+.placeholder{background:var(--panel);border:1px dashed var(--line);border-radius:16px;padding:56px 20px;text-align:center;color:var(--muted);backdrop-filter:blur(14px)}.placeholder svg{width:35px;height:35px;margin-bottom:10px;opacity:.75}
 
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        body {
-            background: linear-gradient(-45deg, #030712, #0f172a, #1e1b4b, #311042);
-            background-size: 400% 400%;
-            animation: gradientBG 18s ease infinite;
-            color: #f8fafc;
-            font-family: 'Outfit', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            overflow-x: hidden;
-            margin: 0;
-        }
-        
-        .glass-panel {
-            background: rgba(15, 23, 42, 0.45);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(139, 92, 246, 0.3);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .galaxy-glow:hover {
-            transform: translateY(-4px) scale(1.01);
-            border-color: rgba(168, 85, 247, 0.9);
-            box-shadow: 0 0 45px rgba(139, 92, 246, 0.4), 0 0 25px rgba(56, 189, 248, 0.3), inset 0 0 20px rgba(255, 255, 255, 0.15);
-        }
-
-        .icon-hover {
-            transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.3s ease, filter 0.3s ease;
-        }
-        .group:hover .icon-hover, button:hover .icon-hover, a:hover .icon-hover {
-            transform: scale(1.3) rotate(12deg);
-            color: #38bdf8;
-            filter: drop-shadow(0 0 12px rgba(56, 189, 248, 0.8));
-        }
-
-        .glowing-circle {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(100px);
-            opacity: 0.25;
-            pointer-events: none;
-            animation: floatCircle 8s ease-in-out infinite alternate;
-        }
-        @keyframes floatCircle {
-            0% { transform: translateY(0px) scale(1); }
-            100% { transform: translateY(-40px) scale(1.2); }
-        }
-
-        .pulse-green {
-            width: 9px;
-            height: 9px;
-            background-color: #22c55e;
-            border-radius: 50%;
-            display: inline-block;
-            box-shadow: 0 0 0 rgba(34, 197, 94, 0.4);
-            animation: pulse-green-anim 2s infinite;
-        }
-        @keyframes pulse-green-anim {
-            0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
-            70% { box-shadow: 0 0 0 10px rgba(34, 197, 94, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
-        }
-
-        .pulse-dot-green {
-            width: 8px;
-            height: 8px;
-            background-color: #22c55e;
-            border-radius: 50%;
-            display: inline-block;
-            animation: pulse-green-anim 2s infinite;
-        }
-        .pulse-dot-red {
-            width: 8px;
-            height: 8px;
-            background-color: #ef4444;
-            border-radius: 50%;
-            display: inline-block;
-            animation: pulse-red-anim 2s infinite;
-        }
-        .pulse-dot-purple {
-            width: 8px;
-            height: 8px;
-            background-color: #a855f7;
-            border-radius: 50%;
-            display: inline-block;
-            animation: pulse-purple-anim 2s infinite;
-        }
-        @keyframes pulse-red-anim {
-            0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
-            70% { box-shadow: 0 0 0 8px rgba(239, 68, 68, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
-        }
-        @keyframes pulse-purple-anim {
-            0% { box-shadow: 0 0 0 0 rgba(168, 85, 247, 0.7); }
-            70% { box-shadow: 0 0 0 8px rgba(168, 85, 247, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(168, 85, 247, 0); }
-        }
-
-        .wave-container {
-            position: relative;
-            overflow: hidden;
-            background: linear-gradient(135deg, rgba(147, 51, 234, 0.15), rgba(2, 132, 199, 0.15), rgba(255, 255, 255, 0.02));
-            backdrop-filter: blur(10px);
-            border-radius: 1rem;
-            border: 1px solid rgba(168, 85, 247, 0.3);
-        }
-
-        .tab-content {
-            display: none;
-            animation: fadeIn 0.3s ease-out;
-        }
-        .tab-content.active {
-            display: block;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(6px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .nav-btn {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: transparent;
-            border: none;
-            color: #93c5fd;
-            padding: 8px 16px;
-            font-size: 14px;
-            font-weight: 600;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            white-space: nowrap;
-        }
-        .nav-btn:hover {
-            background: rgba(0, 242, 254, 0.15);
-            color: #ffffff;
-            text-shadow: 0 0 10px rgba(56, 189, 248, 0.8);
-        }
-        .nav-btn.active {
-            background: linear-gradient(135deg, rgba(0, 242, 254, 0.35) 0%, rgba(168, 85, 247, 0.35) 100%);
-            color: #ffffff;
-            border: 1px solid rgba(0, 242, 254, 0.7);
-            box-shadow: 0 0 15px rgba(0, 242, 254, 0.3);
-        }
-
-        .code-box {
-            background: rgba(3, 7, 18, 0.95);
-            border: 1px solid rgba(0, 242, 254, 0.4);
-            padding: 18px;
-            border-radius: 14px;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 13.5px;
-            word-break: break-all;
-            color: #a5f3fc;
-            box-shadow: inset 0 2px 8px rgba(0,0,0,0.8);
-        }
-    </style>
+.library-head{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin-bottom:18px;padding:26px;border:1px solid var(--line);border-radius:20px;background:linear-gradient(135deg,rgba(8,29,60,.8),rgba(3,14,30,.68));box-shadow:var(--shadow);backdrop-filter:blur(14px)}.library-head h2{margin:9px 0 7px;font-size:28px}.library-head p{margin:0;color:var(--muted);font-size:13px;line-height:1.6}.library-search-wrap{min-width:260px}.library-search{width:100%;padding:12px 14px;border-radius:11px;border:1px solid var(--line);background:rgba(255,255,255,.035);color:var(--text);font:500 13px 'Space Grotesk',sans-serif}.library-search:focus{outline:none;border-color:rgba(74,181,255,.4);box-shadow:0 0 0 3px rgba(34,156,255,.08)}.script-categories{display:flex;flex-direction:column;gap:9px;margin:0 auto 18px}.script-filter-row{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap}.script-filter-title{color:#6f89a8;font:600 9px 'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.09em;margin-right:4px}.script-category{border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--muted);padding:9px 13px;border-radius:10px;font:700 10px 'JetBrains Mono',monospace;cursor:pointer;transition:.18s}.script-category:hover,.script-category.active{color:#fff;background:linear-gradient(135deg,rgba(34,154,255,.18),rgba(109,115,255,.16));border-color:rgba(73,184,255,.28);box-shadow:0 8px 24px rgba(34,156,255,.1)}.script-runtime-note{display:flex;align-items:center;gap:9px;margin:0 0 14px;padding:11px 13px;border:1px solid rgba(73,184,255,.14);border-radius:12px;background:rgba(4,18,38,.5);color:#87a8c7;font:500 10px 'JetBrains Mono',monospace}.script-runtime-note .dot{width:7px;height:7px}.script-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.script-card{display:flex;flex-direction:column;min-width:0;border:1px solid var(--line);border-radius:16px;background:linear-gradient(135deg,rgba(7,24,49,.76),rgba(4,14,30,.65));backdrop-filter:blur(14px);overflow:hidden;box-shadow:0 10px 28px rgba(0,0,0,.18);transition:.18s}.script-card:hover{transform:translateY(-3px);border-color:rgba(74,181,255,.38);box-shadow:0 18px 48px rgba(18,134,255,.13)}.script-card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:16px 16px 9px}.script-card-title{font-size:15px;font-weight:700}.script-game{margin-top:4px;color:#78bce5;font:600 9px 'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.06em}.script-card-desc{padding:0 16px;color:var(--muted);font-size:11px;line-height:1.6;min-height:34px}.script-tag{flex:none;padding:4px 7px;border-radius:7px;border:1px solid rgba(66,217,255,.18);background:rgba(66,217,255,.06);color:#bfeeff;font:600 8px 'JetBrains Mono',monospace}.script-code{margin:13px 16px;padding:13px;border-radius:11px;border:1px solid rgba(108,190,255,.1);background:rgba(1,7,17,.72);color:#cfeaff;font:500 10px/1.6 'JetBrains Mono',monospace;white-space:pre-wrap;word-break:break-word;max-height:240px;overflow:auto}.script-card-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:0 16px 16px}.script-category-label{color:#7ea2c4;font:500 9px 'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.08em}.copy-script{padding:8px 11px;border-radius:9px;border:1px solid var(--line);background:rgba(255,255,255,.035);color:var(--text);font:700 10px 'JetBrains Mono',monospace;cursor:pointer}.copy-script:hover{border-color:var(--line2);background:rgba(34,156,255,.08)}
+@media (max-width:980px){.home-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.all-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.stats-top{display:none}}
+@media (max-width:760px){body{padding:82px 12px 48px}.topbar{padding:0 12px;gap:8px}.brand span{display:none}.tabs{gap:3px}.tab{padding:9px 10px;font-size:12px}.hero{padding:24px}.home-steps{grid-template-columns:1fr}.dropdown{left:0;transform:translateY(-7px) scale(.98)}.dropdown.open{transform:translateY(0) scale(1)}.executor-underpanel{left:0;transform:translateY(-5px) scale(.97)}.dropdown-wrap.panel-open .executor-underpanel{transform:translateY(0) scale(1)}.all-status-bar{gap:7px;margin-bottom:18px}.status-filter{min-width:96px;padding:9px 12px}.card{align-items:flex-start}.card-status{min-width:auto;flex-direction:column;align-items:flex-end;gap:5px}}
+@media (max-width:520px){.script-filter-row{justify-content:flex-start}.script-filter-title{width:100%;margin:0 0 2px}.library-head{flex-direction:column;align-items:stretch}.library-search-wrap{min-width:0}.script-grid{grid-template-columns:1fr}.home-grid{grid-template-columns:1fr}.all-grid{grid-template-columns:1fr}.hero h1{font-size:31px}.filterbar{align-items:stretch}.search{min-width:0;width:100%}.card{padding:13px}.card-meta{gap:7px}.avatar{width:38px;height:38px}.status-text{font-size:9px}}
+</style>
 </head>
-<body class="min-h-screen flex flex-col relative pb-24 md:pb-12">
-
-    <!-- CANVAS BACKGROUND ANIMATION WITH MAGICAL MOUSE TRAIL -->
-    <canvas id="bgCanvas" class="fixed inset-0 pointer-events-none z-0"></canvas>
-
-    <div class="glowing-circle bg-purple-600 w-96 h-96 top-10 left-10"></div>
-    <div class="glowing-circle bg-sky-400 w-96 h-96 top-1/2 right-10"></div>
-    <div class="glowing-circle bg-blue-600 w-80 h-80 bottom-10 left-1/3"></div>
-
-    <!-- HEADER NAVIGATION -->
-    <header class="w-full py-4 px-6 glass-panel sticky top-0 z-50 flex justify-between items-center border-b border-purple-900/20 shadow-xl">
-        <div class="flex items-center space-x-3 group cursor-pointer" onclick="switchTab('home', document.getElementById('navHomeBtn'))">
-            <span class="text-2xl icon-hover">⚓</span>
-            <span class="text-xl font-bold bg-gradient-to-r from-sky-400 via-purple-300 to-white bg-clip-text text-transparent">FishHub</span>
-            <div class="flex items-center space-x-1.5 ml-2">
-                <span class="pulse-green"></span>
-                <span class="text-xs text-green-400 font-medium" data-lang="online_status">ONLINE</span>
-            </div>
-        </div>
-
-        <!-- Desktop Navigation Tabs -->
-        <div class="hidden md:flex items-center space-x-1 bg-slate-900/40 backdrop-blur-md p-1 rounded-xl border border-purple-500/25 shadow-inner">
-            <button type="button" onclick="switchTab('home', this)" id="navHomeBtn" class="nav-btn active">
-                <i class="fa-solid fa-house icon-hover"></i> <span data-lang="nav_home">Home</span>
-            </button>
-            <button type="button" onclick="switchTab('myscript', this)" id="navMyScriptBtn" class="nav-btn">
-                <i class="fa-solid fa-code icon-hover"></i> <span data-lang="nav_script">My Script</span>
-            </button>
-            <button type="button" onclick="switchTab('getkey', this)" id="navGetKeyBtn" class="nav-btn">
-                <i class="fa-solid fa-key icon-hover"></i> <span data-lang="nav_getkey">Get Key</span>
-            </button>
-        </div>
-
-        <div class="flex items-center space-x-3">
-            <!-- Language Switcher Button (EN / VI) -->
-            <button type="button" id="langToggleBtn" onclick="toggleLanguage()" class="px-3 py-2 rounded-xl bg-slate-800/85 hover:bg-slate-700 text-xs font-bold text-sky-300 border border-purple-500/35 transition-all flex items-center space-x-1.5 shadow-md">
-                <i class="fa-solid fa-globe icon-hover"></i>
-                <span id="currentLangText">EN</span>
-            </button>
-
-            <a href="https://discord.gg/2tTJxRk2ct" target="_blank" class="px-4 py-2 rounded-xl bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-sm font-semibold transition-all flex items-center space-x-2 text-white group galaxy-glow shadow-lg">
-                <i class="fa-brands fa-discord icon-hover"></i>
-                <span class="hidden sm:inline">Discord</span>
-            </a>
-        </div>
-    </header>
-
-    <!-- MOBILE BOTTOM NAVIGATION -->
-    <div class="fixed bottom-0 left-0 right-0 z-50 md:hidden glass-panel py-2 px-3 flex justify-around items-center border-t border-purple-900/30 bg-slate-950/80 backdrop-blur-xl shadow-2xl">
-        <button type="button" onclick="switchTab('home', this)" class="flex flex-col items-center space-y-1 text-purple-400 font-semibold text-[11px] p-2 transition-all active:scale-95 group">
-            <i class="fa-solid fa-house text-lg icon-hover"></i>
-            <span data-lang="nav_home">Home</span>
-        </button>
-        <button type="button" onclick="switchTab('myscript', this)" class="flex flex-col items-center space-y-1 text-slate-400 font-semibold text-[11px] p-2 transition-all active:scale-95 group">
-            <i class="fa-solid fa-code text-lg icon-hover"></i>
-            <span data-lang="nav_script">Script</span>
-        </button>
-        <button type="button" onclick="switchTab('getkey', this)" class="flex flex-col items-center space-y-1 text-slate-400 font-semibold text-[11px] p-2 transition-all active:scale-95 group">
-            <i class="fa-solid fa-key text-lg icon-hover"></i>
-            <span data-lang="nav_getkey">Get Key</span>
-        </button>
+<body>
+<div class="bg-wave"><i></i><i></i><i></i></div>
+<div class="wave-ribbons"><span></span><span></span><span></span><span></span></div>
+<canvas id="fx"></canvas>
+<nav class="topbar">
+  <div class="brand">
+    <svg viewBox="0 0 24 24" fill="none" stroke="url(#brandg)" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <defs><linearGradient id="brandg" x1="4" y1="2" x2="20" y2="22"><stop offset="0" stop-color="#42D9FF"/><stop offset="1" stop-color="#6D73FF"/></linearGradient></defs>
+      <circle cx="12" cy="4.5" r="2.2"/>
+      <path d="M12 6.7v8.9"/>
+      <path d="M6.25 12.7c0 4.1 2.45 6.9 5.75 6.9s5.75-2.8 5.75-6.9"/>
+      <path d="M6.25 12.7 3.8 10.9M17.75 12.7l2.45-1.8"/>
+    </svg>
+    <span>Executor Status</span>
+  </div>
+  <div class="tabs">
+    <button class="tab active" data-tab="home"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-5v-6h-4v6H5a1 1 0 0 1-1-1z"/></svg>Home</button>
+    <div class="dropdown-wrap" id="executorWrap">
+      <button class="tab" data-tab="executor" id="execTab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6 3 12l5 6"/><path d="m16 6 5 6-5 6"/><path d="M14 4 10 20"/></svg>Executor<svg class="chev" viewBox="0 0 24 24" fill="currentColor"><path d="m7 9 5 5 5-5z"/></svg></button>
+      <div class="dropdown" id="platMenu">
+        <button data-plat="all"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z"/></svg>All Executors</button>
+        <button data-plat="Windows"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 5.5 10.5 4.4v7.1H3zM11.5 4.25 21 3v8.5h-9.5zM3 12.5h7.5v7.1L3 18.5zM11.5 12.5H21V21l-9.5-1.3z"/></svg>Windows</button>
+        <button data-plat="Android"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 9v8a1 1 0 0 0 1 1h1v3h2v-3h2v3h2v-3h1a1 1 0 0 0 1-1V9zM6 10H4v6a1 1 0 0 0 2 0zm14 0h-2v6a1 1 0 0 0 2 0zM8 8h8V6.7l1.1-1.7-1-.6-.8 1.2A6 6 0 0 0 13 5.1L13.9 3l-1.1-.4L12 4.8a6 6 0 0 0-2.8.8L8.4 6 7.3 5 6.5 6l1 1.2z"/></svg>Android</button>
+        <button data-plat="iOS"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.7 12.4c0-1.8 1.5-2.7 1.6-2.8-.9-1.2-2.2-1.4-2.7-1.4-1.1-.1-2.2.7-2.7.7-.6 0-1.5-.7-2.5-.7-1.2 0-2.4.7-3.1 1.8-1.4 2.4-.4 6 .9 7.8.6.9 1.3 1.9 2.3 1.9.9 0 1.3-.6 2.4-.6 1.1 0 1.4.6 2.4.6 1 0 1.7-.9 2.3-1.8.8-1.1 1.1-2.2 1.1-2.3-.1 0-2-.8-2-3.2ZM14.9 7c.5-.6.8-1.4.7-2.2-.8 0-1.6.5-2.1 1.1-.5.6-.9 1.4-.8 2.1.8.1 1.6-.4 2.2-1Z"/></svg>iOS</button>
+        <button data-plat="MacOS"><svg class="mac-menu-icon mac-finder" viewBox="0 0 24 24" aria-hidden="true"><defs><clipPath id="finderClip"><rect x="1.5" y="1.5" width="21" height="21" rx="6"/></clipPath><linearGradient id="finderBlue" x1="0" y1="0" x2="0" y2="24"><stop offset="0" stop-color="#22d7ff"/><stop offset="1" stop-color="#1976ff"/></linearGradient><linearGradient id="finderLight" x1="0" y1="0" x2="0" y2="24"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#dfe8f3"/></linearGradient></defs><g clip-path="url(#finderClip)"><rect x="1.5" y="1.5" width="10.5" height="21" fill="url(#finderBlue)"/><rect x="12" y="1.5" width="10.5" height="21" fill="url(#finderLight)"/><path d="M12.35 1.5c-1.35 4.35-1.9 8.2-1.25 12.3.55 3.4 1.25 5.9 2.1 8.7H12V1.5Z" fill="rgba(0,0,0,.09)"/><rect x="6.2" y="6.3" width="1.8" height="4" rx=".9" fill="#0d1624"/><rect x="16" y="6.3" width="1.8" height="4" rx=".9" fill="#303540"/><path d="M5.15 14.2c2.1 2.55 4.45 3.45 6.85 3.45s4.75-.9 6.85-3.45" fill="none" stroke="#111827" stroke-width="1.55" stroke-linecap="round"/></g><rect x="1.5" y="1.5" width="21" height="21" rx="6" fill="none" stroke="rgba(255,255,255,.18)"/></svg>MacOS</button>
+        <div class="dropdown-empty-slot" aria-hidden="true"></div>
+      </div>
+      <div class="executor-underpanel" id="executorUnderPanel" aria-hidden="true"></div>
     </div>
-
-    <!-- MAIN CONTENT CONTAINER -->
-    <main class="flex-grow container mx-auto px-4 py-6 max-w-5xl space-y-8 z-10">
-
-        <!-- TAB 1: HOME -->
-        <div id="home" class="tab-content active space-y-6">
-            <!-- Welcome Banner -->
-            <div class="glass-panel galaxy-glow rounded-3xl p-6 sm:p-10 shadow-2xl flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
-                <div class="absolute -right-16 -top-16 w-64 h-64 bg-purple-600/20 rounded-full blur-3xl pointer-events-none"></div>
-                <div class="space-y-4 text-center md:text-left z-10">
-                    <span class="px-3 py-1 rounded-full bg-purple-500/20 text-purple-300 text-xs font-bold border border-purple-500/30" data-lang="home_badge">🚀 UNIVERSAL SCRIPT PLATFORM</span>
-                    <h1 class="text-3xl sm:text-5xl font-extrabold bg-gradient-to-r from-white via-sky-300 to-purple-400 bg-clip-text text-transparent">FishHub Core</h1>
-                    <p class="text-slate-300 text-sm sm:text-base max-w-xl" data-lang="home_desc">Experience the best performance, high-end security, and smooth user interface designed for ultimate Roblox gaming.</p>
-                </div>
-                <div class="z-10 flex flex-col sm:flex-row gap-3">
-                    <button type="button" onclick="switchTab('getkey', document.getElementById('navGetKeyBtn'))" class="px-6 py-3.5 rounded-xl bg-gradient-to-r from-purple-600 to-sky-600 hover:from-purple-500 hover:to-sky-500 font-bold text-white text-sm shadow-lg transition-all galaxy-glow flex items-center justify-center space-x-2 group">
-                        <i class="fa-solid fa-key icon-hover"></i>
-                        <span data-lang="home_btn_getkey">Get Key Now</span>
-                    </button>
-                    <button type="button" onclick="switchTab('myscript', document.getElementById('navMyScriptBtn'))" class="px-6 py-3.5 rounded-xl bg-slate-900/60 hover:bg-slate-800 text-sky-300 border border-purple-500/30 font-bold text-sm transition-all flex items-center justify-center space-x-2 group">
-                        <i class="fa-solid fa-code icon-hover"></i>
-                        <span data-lang="home_btn_script">View Script</span>
-                    </button>
-                </div>
-            </div>
-
-            <!-- THÔNG TIN TÁC GIẢ DAOHUYLAM -->
-            <div class="glass-panel galaxy-glow rounded-2xl p-6 sm:p-8 shadow-xl space-y-5">
-                <div class="flex items-center space-x-4 pb-4 border-b border-purple-900/40">
-                    <div class="w-14 h-14 rounded-2xl bg-gradient-to-r from-purple-600 via-sky-600 to-blue-600 flex items-center justify-center text-white font-bold text-xl shadow-lg">
-                        DHL
-                    </div>
-                    <div>
-                        <h3 class="font-bold text-white text-lg flex items-center space-x-2">
-                            <span>DaoHuyLam</span>
-                            <span class="text-[10px] bg-purple-600 text-white px-2 py-0.5 rounded-md font-semibold" data-lang="solo_dev_badge">Solo Developer</span>
-                        </h3>
-                        <p class="text-xs text-sky-300 font-semibold mt-0.5" data-lang="dev_role">Lead Developer, Maintainer & Founder of FishHub</p>
-                    </div>
-                </div>
-                <p class="text-xs sm:text-sm text-slate-300 leading-relaxed" data-lang="dev_desc">
-                    FishHub is developed entirely as a solo project by DaoHuyLam. Because it is managed by a single person, major feature updates, bug fixes, and new game additions may take some time to roll out. Your patience and support are greatly appreciated!
-                </p>
-            </div>
-
-            <!-- Stats Grid -->
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                <div class="glass-panel p-5 rounded-2xl text-center space-y-1 galaxy-glow group">
-                    <i class="fa-solid fa-user-shield text-green-400 text-xl mb-1 icon-hover"></i>
-                    <h4 class="font-bold text-green-400 text-xl">100%</h4>
-                    <p class="text-xs text-slate-400" data-lang="stat_solo">Solo Project</p>
-                </div>
-                <div class="glass-panel p-5 rounded-2xl text-center space-y-1 galaxy-glow group">
-                    <i class="fa-solid fa-key text-sky-400 text-xl mb-1 icon-hover"></i>
-                    <h4 class="font-bold text-sky-400 text-xl" data-lang="stat_free_val">Free</h4>
-                    <p class="text-xs text-slate-400" data-lang="stat_free">Access Script</p>
-                </div>
-                <div class="glass-panel p-5 rounded-2xl text-center space-y-1 galaxy-glow group">
-                    <i class="fa-solid fa-lock text-green-400 text-xl mb-1 icon-hover"></i>
-                    <h4 class="font-bold text-green-400 text-xl" data-lang="stat_secure_val">Secure</h4>
-                    <p class="text-xs text-slate-400" data-lang="stat_secure">Environment Check</p>
-                </div>
-                <div class="glass-panel p-5 rounded-2xl text-center space-y-1 galaxy-glow group">
-                    <i class="fa-solid fa-users text-purple-400 text-xl mb-1 icon-hover"></i>
-                    <h4 class="font-bold text-purple-400 text-xl" data-lang="stat_active_val">Active</h4>
-                    <p class="text-xs text-slate-400" data-lang="stat_active">Community</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- TAB 2: MY SCRIPT -->
-        <div id="myscript" class="tab-content space-y-8">
-            <!-- Script Collection Box -->
-            <div class="glass-panel galaxy-glow rounded-2xl p-6 sm:p-8 shadow-xl space-y-4">
-                <h3 class="text-xl font-bold text-white" data-lang="script_collection_title">FishHub Script Collection</h3>
-                <p class="text-slate-300 text-sm" data-lang="script_collection_desc">Sao chép và chạy bộ sưu tập script của bạn tại đây:</p>
-
-                <div class="code-box" id="scriptCode">loadstring(game:HttpGet("https://raw.githubusercontent.com/Cachuoine/DaoHuyLam/refs/heads/main/FishHubCollection.lua"))()</div>
-                <button type="button" id="btnCopyScript" class="w-full sm:w-auto px-6 py-3 rounded-xl bg-gradient-to-r from-purple-600 to-sky-600 hover:from-purple-500 hover:to-sky-500 font-bold text-white text-sm shadow-lg transition-all galaxy-glow group">
-                    <i class="fa-solid fa-copy mr-2 icon-hover"></i> <span data-lang="copy_script_btn">COPY SCRIPT</span>
-                </button>
-            </div>
-
-            <!-- SUPPORTED ROBLOX GAMES SECTION -->
-            <div class="glass-panel galaxy-glow rounded-2xl p-6 sm:p-8 shadow-xl space-y-6">
-                <div class="flex items-center space-x-4 pb-4 border-b border-purple-900/40">
-                    <div class="w-12 h-12 rounded-2xl bg-purple-600/20 border border-purple-500/30 flex items-center justify-center text-purple-400 text-xl group">
-                        <i class="fa-solid fa-gamepad icon-hover"></i>
-                    </div>
-                    <div>
-                        <h3 class="text-xl font-bold text-white">Supported Roblox Games</h3>
-                        <p class="text-xs text-slate-300">Explore supported games categorized below.</p>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <!-- RPG & Anime -->
-                    <div class="glass-panel p-5 rounded-xl border border-purple-500/20 space-y-4">
-                        <h4 class="text-sm font-bold text-amber-400 flex items-center space-x-2 group">
-                            <i class="fa-solid fa-fire icon-hover"></i>
-                            <span>RPG & Anime</span>
-                        </h4>
-                        <div class="space-y-2.5">
-                            <div class="bg-slate-900/50 p-3 rounded-lg border border-purple-500/15 flex items-center justify-between">
-                                <div class="flex items-center space-x-2.5">
-                                    <span class="pulse-dot-green"></span>
-                                    <span class="text-xs font-medium text-white">Blox Fruits</span>
-                                </div>
-                                <span class="text-[11px] text-green-400 font-semibold">Working</span>
-                            </div>
-                            <div class="bg-slate-900/50 p-3 rounded-lg border border-purple-500/15 flex items-center justify-between">
-                                <div class="flex items-center space-x-2.5">
-                                    <span class="pulse-dot-green"></span>
-                                    <span class="text-xs font-medium text-white">Evomon</span>
-                                </div>
-                                <span class="text-[11px] text-green-400 font-semibold">Working</span>
-                            </div>
-                            <div class="bg-slate-900/50 p-3 rounded-lg border border-purple-500/15 flex items-center justify-between">
-                                <div class="flex items-center space-x-2.5">
-                                    <span class="pulse-dot-purple"></span>
-                                    <span class="text-xs font-medium text-white">Haze</span>
-                                </div>
-                                <span class="px-3 py-1 rounded-full bg-purple-950/60 border border-purple-500/30 text-[10px] text-purple-300 font-semibold">Coming Soon</span>
-                            </div>
-                            <div class="bg-slate-900/50 p-3 rounded-lg border border-purple-500/15 flex items-center justify-between">
-                                <div class="flex items-center space-x-2.5">
-                                    <span class="pulse-dot-purple"></span>
-                                    <span class="text-xs font-medium text-white">Anime Expeditions</span>
-                                </div>
-                                <span class="px-3 py-1 rounded-full bg-purple-950/60 border border-purple-500/30 text-[10px] text-purple-300 font-semibold">Coming Soon</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Farming Games -->
-                    <div class="glass-panel p-5 rounded-xl border border-purple-500/20 space-y-4">
-                        <h4 class="text-sm font-bold text-emerald-400 flex items-center space-x-2 group">
-                            <i class="fa-solid fa-seedling icon-hover"></i>
-                            <span>Farming Games</span>
-                        </h4>
-                        <div class="space-y-2.5">
-                            <div class="bg-slate-900/50 p-3 rounded-lg border border-purple-500/15 flex items-center justify-between">
-                                <div class="flex items-center space-x-2.5">
-                                    <span class="pulse-dot-purple"></span>
-                                    <span class="text-xs font-medium text-white">Grow a Garden 2</span>
-                                </div>
-                                <span class="px-3 py-1 rounded-full bg-purple-950/60 border border-purple-500/30 text-[10px] text-purple-300 font-semibold">Coming Soon</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Survival & Tycoon -->
-                    <div class="glass-panel p-5 rounded-xl border border-purple-500/20 space-y-4">
-                        <h4 class="text-sm font-bold text-teal-400 flex items-center space-x-2 group">
-                            <i class="fa-solid fa-cube icon-hover"></i>
-                            <span>Survival & Tycoon</span>
-                        </h4>
-                        <div class="space-y-2.5">
-                            <div class="bg-slate-900/50 p-3 rounded-lg border border-purple-500/15 flex items-center justify-between">
-                                <div class="flex items-center space-x-2.5">
-                                    <span class="pulse-dot-purple"></span>
-                                    <span class="text-xs font-medium text-white">99 night in the forest</span>
-                                </div>
-                                <span class="px-3 py-1 rounded-full bg-purple-950/60 border border-purple-500/30 text-[10px] text-purple-300 font-semibold">Coming Soon</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Fishing Games -->
-                    <div class="glass-panel p-5 rounded-xl border border-purple-500/20 space-y-4">
-                        <h4 class="text-sm font-bold text-sky-400 flex items-center space-x-2 group">
-                            <i class="fa-solid fa-fish icon-hover"></i>
-                            <span>Fishing Games</span>
-                        </h4>
-                        <div class="space-y-2.5">
-                            <div class="bg-slate-900/50 p-3 rounded-lg border border-purple-500/15 flex items-center justify-between">
-                                <div class="flex items-center space-x-2.5">
-                                    <span class="pulse-dot-purple"></span>
-                                    <span class="text-xs font-medium text-white">Fish</span>
-                                </div>
-                                <span class="px-3 py-1 rounded-full bg-purple-950/60 border border-purple-500/30 text-[10px] text-purple-300 font-semibold">Coming Soon</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Shooting Games -->
-                    <div class="glass-panel p-5 rounded-xl border border-purple-500/20 space-y-4">
-                        <h4 class="text-sm font-bold text-rose-400 flex items-center space-x-2 group">
-                            <i class="fa-solid fa-crosshairs icon-hover"></i>
-                            <span>Shooting Games</span>
-                        </h4>
-                        <div class="space-y-2.5">
-                            <div class="bg-slate-900/50 p-3 rounded-lg border border-purple-500/15 flex items-center justify-between">
-                                <div class="flex items-center space-x-2.5">
-                                    <span class="pulse-dot-purple"></span>
-                                    <span class="text-xs font-medium text-white">Rivals</span>
-                                </div>
-                                <span class="px-3 py-1 rounded-full bg-purple-950/60 border border-purple-500/30 text-[10px] text-purple-300 font-semibold">Coming Soon</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- RECOMMENDED EXECUTORS SECTION -->
-            <div class="glass-panel galaxy-glow rounded-2xl p-6 sm:p-8 shadow-xl space-y-6">
-                <div class="flex items-center space-x-4 pb-4 border-b border-purple-900/40">
-                    <div class="w-12 h-12 rounded-2xl bg-purple-600/20 border border-purple-500/30 flex items-center justify-center text-purple-400 text-xl group">
-                        <i class="fa-solid fa-terminal icon-hover"></i>
-                    </div>
-                    <div>
-                        <h3 class="text-xl font-bold text-white">Recommended Executors</h3>
-                        <p class="text-xs text-slate-300">Tested and verified executors across platforms.</p>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <!-- Windows Paid -->
-                    <div class="glass-panel p-5 rounded-xl border border-purple-500/20 space-y-4">
-                        <h4 class="text-sm font-bold text-amber-400 flex items-center space-x-2 group">
-                            <i class="fa-solid fa-crown icon-hover"></i>
-                            <span>Windows Paid</span>
-                        </h4>
-                        <div class="space-y-2.5">
-                            <div class="bg-slate-900/50 p-3 rounded-lg border border-purple-500/15 flex items-center justify-between">
-                                <span class="text-xs font-medium text-white">Wave</span>
-                                <div class="flex items-center space-x-1.5"><span class="pulse-dot-green"></span><span class="text-[11px] text-green-400 font-semibold">Working</span></div>
-                            </div>
-                            <div class="bg-slate-900/50 p-3 rounded-lg border border-purple-500/15 flex items-center justify-between">
-                                <span class="text-xs font-medium text-white">Potassium</span>
-                                <div class="flex items-center space-x-1.5"><span class="pulse-dot-green"></span><span class="text-[11px] text-green-400 font-semibold">Working</span></div>
-                            </div>
-                            <div class="bg-slate-900/50 p-3 rounded-lg border border-purple-500/15 flex items-center justify-between">
-                                <span class="text-xs font-medium text-white">Volt</span>
-                                <div class="flex items-center space-x-1.5"><span class="pulse-dot-green"></span><span class="text-[11px] text-green-400 font-semibold">Working</span></div>
-                            </div>
-                            <div class="bg-slate-900/50 p-3 rounded-lg border border-purple-500/15 flex items-center justify-between">
-                                <span class="text-xs font-medium text-white">Cosmic</span>
-                                <div class="flex items-center space-x-1.5"><span class="pulse-dot-green"></span><span class="text-[11px] text-green-400 font-semibold">Working</span></div>
-                            </div>
-                            <div class="bg-slate-900/50 p-3 rounded-lg border border-purple-500/15 flex items-center justify-between">
-                                <span class="text-xs font-medium text-white">Sirhurt</span>
-                                <div class="flex items-center space-x-1.5"><span class="pulse-dot-green"></span><span class="text-[11px] text-green-400 font-semibold">Working</span></div>
-                            </div>
-                            <div class="bg-slate-900/50 p-3 rounded-lg border border-purple-500/15 flex items-center justify-between">
-                                <span class="text-xs font-medium text-white">Seliware</span>
-                                <div class="flex items-center space-x-1.5"><span class="pulse-dot-green"></span><span class="text-[11px] text-green-400 font-semibold">Working</span></div>
-                            </div>
-                            <div class="bg-slate-900/50 p-3 rounded-lg border border-purple-500/15 flex items-center justify-between">
-                                <span class="text-xs font-medium text-white">Synapse Z</span>
-                                <div class="flex items-center space-x-1.5"><span class="pulse-dot-green"></span><span class="text-[11px] text-green-400 font-semibold">Working</span></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Windows Free -->
-                    <div class="glass-panel p-5 rounded-xl border border-purple-500/20 space-y-4">
-                        <h4 class="text-sm font-bold text-sky-400 flex items-center space-x-2 group">
-                            <i class="fa-solid fa-gift icon-hover"></i>
-                            <span>Windows Free</span>
-                        </h4>
-                        <div class="space-y-2.5">
-                            <div class="bg-slate-900/50 p-3 rounded-lg border border-purple-500/15 flex items-center justify-between">
-                                <span class="text-xs font-medium text-white">Vortex</span>
-                                <div class="flex items-center space-x-1.5"><span class="pulse-dot-green"></span><span class="text-[11px] text-green-400 font-semibold">Working</span></div>
-                            </div>
-                            <div class="bg-slate-900/50 p-3 rounded-lg border border-purple-500/15 flex items-center justify-between">
-                                <span class="text-xs font-medium text-white">Velocity</span>
-                                <div class="flex items-center space-x-1.5"><span class="pulse-dot-green"></span><span class="text-[11px] text-green-400 font-semibold">Working</span></div>
-                            </div>
-                            <div class="bg-slate-900/50 p-3 rounded-lg border border-purple-500/15 flex items-center justify-between">
-                                <span class="text-xs font-medium text-white">Medium</span>
-                                <div class="flex items-center space-x-1.5"><span class="pulse-dot-green"></span><span class="text-[11px] text-green-400 font-semibold">Working</span></div>
-                            </div>
-                            <div class="bg-slate-900/50 p-3 rounded-lg border border-purple-500/15 flex items-center justify-between">
-                                <span class="text-xs font-medium text-white">Real</span>
-                                <div class="flex items-center space-x-1.5"><span class="pulse-dot-green"></span><span class="text-[11px] text-green-400 font-semibold">Working</span></div>
-                            </div>
-                            <div class="bg-slate-900/50 p-3 rounded-lg border border-purple-500/15 flex items-center justify-between">
-                                <span class="text-xs font-medium text-white">Ronix</span>
-                                <div class="flex items-center space-x-1.5"><span class="pulse-dot-green"></span><span class="text-[11px] text-green-400 font-semibold">Working</span></div>
-                            </div>
-                            <div class="bg-slate-900/50 p-3 rounded-lg border border-purple-500/15 flex items-center justify-between">
-                                <span class="text-xs font-medium text-white">Xeno</span>
-                                <div class="flex items-center space-x-1.5"><span class="pulse-dot-red"></span><span class="text-[11px] text-red-400 font-semibold">Not Working</span></div>
-                            </div>
-                            <div class="bg-slate-900/50 p-3 rounded-lg border border-purple-500/15 flex items-center justify-between">
-                                <span class="text-xs font-medium text-white">Solara</span>
-                                <div class="flex items-center space-x-1.5"><span class="pulse-dot-red"></span><span class="text-[11px] text-red-400 font-semibold">Not Working</span></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- macOS Executors -->
-                    <div class="glass-panel p-5 rounded-xl border border-purple-500/20 space-y-4">
-                        <h4 class="text-sm font-bold text-purple-400 flex items-center space-x-2 group">
-                            <i class="fa-brands fa-apple icon-hover"></i>
-                            <span>macOS Executors</span>
-                        </h4>
-                        <div class="space-y-2.5">
-                            <div class="bg-slate-900/50 p-3 rounded-lg border border-purple-500/15 flex items-center justify-between">
-                                <span class="text-xs font-medium text-white">Macsploit</span>
-                                <div class="flex items-center space-x-1.5"><span class="pulse-dot-green"></span><span class="text-[11px] text-green-400 font-semibold">Working</span></div>
-                            </div>
-                            <div class="bg-slate-900/50 p-3 rounded-lg border border-purple-500/15 flex items-center justify-between">
-                                <span class="text-xs font-medium text-white">Opiumware</span>
-                                <div class="flex items-center space-x-1.5"><span class="pulse-dot-green"></span><span class="text-[11px] text-green-400 font-semibold">Working</span></div>
-                            </div>
-                            <div class="bg-slate-900/50 p-3 rounded-lg border border-purple-500/15 flex items-center justify-between">
-                                <span class="text-xs font-medium text-white">Ronix</span>
-                                <div class="flex items-center space-x-1.5"><span class="pulse-dot-green"></span><span class="text-[11px] text-green-400 font-semibold">Working</span></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Mobile Executors -->
-                    <div class="glass-panel p-5 rounded-xl border border-purple-500/20 space-y-4">
-                        <h4 class="text-sm font-bold text-emerald-400 flex items-center space-x-2 group">
-                            <i class="fa-solid fa-mobile-screen icon-hover"></i>
-                            <span>Mobile Executors</span>
-                        </h4>
-                        <div class="space-y-2.5">
-                            <div class="bg-slate-900/50 p-3 rounded-lg border border-purple-500/15 flex items-center justify-between">
-                                <span class="text-xs font-medium text-white">Delta (Mobile)</span>
-                                <div class="flex items-center space-x-1.5"><span class="pulse-dot-green"></span><span class="text-[11px] text-green-400 font-semibold">Working</span></div>
-                            </div>
-                            <div class="bg-slate-900/50 p-3 rounded-lg border border-purple-500/15 flex items-center justify-between">
-                                <span class="text-xs font-medium text-white">Codex (Mobile)</span>
-                                <div class="flex items-center space-x-1.5"><span class="pulse-dot-green"></span><span class="text-[11px] text-green-400 font-semibold">Working</span></div>
-                            </div>
-                            <div class="bg-slate-900/50 p-3 rounded-lg border border-purple-500/15 flex items-center justify-between">
-                                <span class="text-xs font-medium text-white">Arceus X</span>
-                                <div class="flex items-center space-x-1.5"><span class="pulse-dot-green"></span><span class="text-[11px] text-green-400 font-semibold">Working</span></div>
-                            </div>
-                            <div class="bg-slate-900/50 p-3 rounded-lg border border-purple-500/15 flex items-center justify-between">
-                                <span class="text-xs font-medium text-white">Ronix</span>
-                                <div class="flex items-center space-x-1.5"><span class="pulse-dot-green"></span><span class="text-[11px] text-green-400 font-semibold">Working</span></div>
-                            </div>
-                            <div class="bg-slate-900/50 p-3 rounded-lg border border-purple-500/15 flex items-center justify-between">
-                                <span class="text-xs font-medium text-white">Vega X</span>
-                                <div class="flex items-center space-x-1.5"><span class="pulse-dot-green"></span><span class="text-[11px] text-green-400 font-semibold">Working</span></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- TAB 3: GET KEY (FIREBASE KEY SYSTEM 100% INTACT + PERSISTENT KEY STORAGE) -->
-        <div id="getkey" class="tab-content space-y-6">
-            <div class="wave-container p-6 text-center shadow-xl">
-                <div class="relative z-10 space-y-2">
-                    <h2 class="text-2xl sm:text-3xl font-extrabold text-white" data-lang="key_system_title">FishHub Key System</h2>
-                    <p class="text-xs sm:text-sm text-sky-100" data-lang="key_system_desc">Complete checkpoint verification steps below to generate your 24h key.</p>
-                </div>
-            </div>
-
-            <div class="glass-panel galaxy-glow rounded-2xl p-6 sm:p-8 shadow-xl space-y-6">
-                <div class="flex items-center space-x-3">
-                    <div class="p-3 rounded-xl bg-purple-950/40 text-purple-400 border border-purple-500/30 text-xl group"><i class="fa-solid fa-key icon-hover"></i></div>
-                    <div>
-                        <h3 class="text-xl font-bold text-white" data-lang="checkpoint_title">Key Generation Checkpoint</h3>
-                        <p class="text-xs text-slate-300" data-lang="checkpoint_desc">Follow the steps sequentially to unlock your key.</p>
-                    </div>
-                </div>
-
-                <!-- Step 1 -->
-                <div class="bg-slate-900/40 border border-purple-500/20 p-4 sm:p-5 rounded-xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-                    <div>
-                        <span class="px-2.5 py-1 rounded-md bg-sky-500/20 text-sky-300 text-xs font-bold border border-sky-500/30" data-lang="step_1_badge">STEP 1</span>
-                        <h4 class="text-base font-bold text-white mt-2" data-lang="step_1_title">Complete Verification Checkpoint</h4>
-                        <p class="text-xs text-slate-300 mt-1" id="step1Desc" data-lang="step_1_desc">Click to verify session and proceed to key generation.</p>
-                    </div>
-                    <button type="button" id="btnStep1" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-sky-600 text-white font-bold text-xs shadow-md transition-all" data-lang="btn_go_link">GO TO LINK</button>
-                </div>
-
-                <!-- Step 2 -->
-                <div class="bg-slate-900/40 border border-purple-500/20 p-4 sm:p-5 rounded-xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-                    <div>
-                        <span class="px-2.5 py-1 rounded-md bg-purple-500/20 text-purple-300 text-xs font-bold border border-purple-500/30" data-lang="step_2_badge">STEP 2</span>
-                        <h4 class="text-base font-bold text-white mt-2" data-lang="step_2_title">Generate Access Key</h4>
-                        <p class="text-xs text-slate-300 mt-1" data-lang="step_2_desc">Create your unique 24-hour token saved securely on Firebase.</p>
-                    </div>
-                    <button type="button" id="btnGenerate" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-sky-600 text-white font-bold text-xs shadow-md transition-all opacity-50 cursor-not-allowed" disabled data-lang="btn_generate">GENERATE KEY</button>
-                </div>
-
-                <!-- Anti-spam Cooldown Warning Notification Box -->
-                <div id="cooldownWarning" class="hidden p-3 rounded-xl bg-amber-500/15 border border-amber-500/30 text-amber-300 text-xs font-medium flex items-center space-x-2">
-                    <i class="fa-solid fa-triangle-exclamation"></i>
-                    <span id="cooldownText">Vui lòng đợi trước khi tạo key tiếp theo để tránh spam!</span>
-                </div>
-
-                <!-- Output Box -->
-                <div class="space-y-2">
-                    <label class="text-xs font-semibold text-sky-300 flex items-center space-x-2 group"><i class="fa-solid fa-terminal icon-hover"></i> <span data-lang="generated_key_label">Your Generated Key:</span></label>
-                    <div id="keyOutput" class="code-box" data-lang="key_output_waiting">Complete Step 1 checkpoint to unlock generation...</div>
-                </div>
-
-                <div id="keyDetailsCard" class="glass-panel p-5 rounded-xl border border-purple-500/30" style="display: none;">
-                    <h4 class="text-sky-300 font-bold text-base mb-3 flex items-center space-x-2 group">
-                        <i class="fa-solid fa-shield-halved text-sky-400 icon-hover"></i>
-                        <span data-lang="key_details_title">Key Details & Expiry Info</span>
-                    </h4>
-                    <div id="keyDetailsContent" class="text-xs sm:text-sm text-sky-100 space-y-2"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 2 NÚT TRÒN GITHUB & DISCORD Ở CHUNG TẤT CẢ CÁC TAB -->
-        <div class="pt-4 pb-2 flex flex-col items-center space-y-3 mt-8 border-t border-purple-900/20">
-            <p class="text-xs font-semibold text-slate-400 uppercase tracking-widest" data-lang="social_connect_title">Connect & Explore</p>
-            <div class="flex items-center justify-center space-x-5">
-                <a href="https://github.com/Cachuoine" target="_blank" class="w-14 h-14 rounded-full glass-panel flex items-center justify-center text-white text-2xl hover:text-sky-300 hover:border-sky-400 transition-all galaxy-glow shadow-xl group" title="GitHub">
-                    <i class="fa-brands fa-github icon-hover"></i>
-                </a>
-                <a href="https://discord.gg/2tTJxRk2ct" target="_blank" class="w-14 h-14 rounded-full glass-panel flex items-center justify-center text-white text-2xl hover:text-purple-300 hover:border-purple-400 transition-all galaxy-glow shadow-xl group" title="Discord">
-                    <i class="fa-brands fa-discord icon-hover"></i>
-                </a>
-            </div>
-        </div>
-
-    </main>
-
-    <!-- FOOTER -->
-    <footer class="w-full py-6 text-center text-xs text-slate-400 border-t border-purple-900/25 glass-panel z-15 mt-10">
-        <p>&copy; 2026 FishHub Online. Created by DaoHuyLam. All rights reserved.</p>
-    </footer>
-
-    <!-- LANGUAGE DICTIONARY SCRIPT -->
-    <script>
-        const translations = {
-            en: {
-                online_status: "ONLINE",
-                nav_home: "Home",
-                nav_script: "My Script",
-                nav_getkey: "Get Key",
-                home_badge: "🚀 UNIVERSAL SCRIPT PLATFORM",
-                home_desc: "Experience the best performance, high-end security, and smooth user interface designed for ultimate Roblox gaming.",
-                home_btn_getkey: "Get Key Now",
-                home_btn_script: "View Script",
-                script_collection_title: "FishHub Script Collection",
-                script_collection_desc: "Copy and run your script collection here:",
-                copy_script_btn: "COPY SCRIPT",
-                key_system_title: "FishHub Key System",
-                key_system_desc: "Complete checkpoint verification steps below to generate your 24h key.",
-                checkpoint_title: "Key Generation Checkpoint",
-                checkpoint_desc: "Follow the steps sequentially to unlock your key.",
-                step_1_badge: "STEP 1",
-                step_1_title: "Complete Verification Checkpoint",
-                step_1_desc: "Click to verify session and proceed to key generation.",
-                btn_go_link: "GO TO LINK",
-                step_2_badge: "STEP 2",
-                step_2_title: "Generate Access Key",
-                step_2_desc: "Create your unique 24-hour token saved securely on Firebase.",
-                btn_generate: "GENERATE KEY",
-                generated_key_label: "Your Generated Key:",
-                key_output_waiting: "Complete Step 1 checkpoint to unlock generation...",
-                key_details_title: "Key Details & Expiry Info",
-                solo_dev_badge: "Solo Developer",
-                dev_role: "Lead Developer, Maintainer & Founder of FishHub",
-                dev_desc: "FishHub is developed entirely as a solo project by DaoHuyLam. Because it is managed by a single person, major feature updates, bug fixes, and new game additions may take some time to roll out. Your patience and support are greatly appreciated!",
-                stat_solo: "Solo Project",
-                stat_free: "Access Script",
-                stat_free_val: "Free",
-                stat_secure: "Environment Check",
-                stat_secure_val: "Secure",
-                stat_active: "Community",
-                stat_active_val: "Active",
-                social_connect_title: "Connect & Explore"
-            },
-            vi: {
-                online_status: "TRỰC TUYẾN",
-                nav_home: "Trang chủ",
-                nav_script: "Script Của Tôi",
-                nav_getkey: "Lấy Key",
-                home_badge: "🚀 NỀN TẢNG SCRIPT TOÀN DIỆN",
-                home_desc: "Trải nghiệm hiệu năng tuyệt vời, bảo mật cao cấp và giao diện mượt mà được thiết kế cho game Roblox đỉnh cao.",
-                home_btn_getkey: "Lấy Key Ngay",
-                home_btn_script: "Xem Script",
-                script_collection_title: "Bộ Sưu Tập Script FishHub",
-                script_collection_desc: "Sao chép và chạy bộ sưu tập script của bạn tại đây:",
-                copy_script_btn: "SAO CHÉP SCRIPT",
-                key_system_title: "Hệ Thống Key FishHub",
-                key_system_desc: "Hoàn thành các bước xác thực bên dưới để tạo key 24h của bạn.",
-                checkpoint_title: "Trạm Kiểm Tra Tạo Key",
-                checkpoint_desc: "Thực hiện theo các bước tuần tự để mở khóa key của bạn.",
-                step_1_badge: "BƯỚC 1",
-                step_1_title: "Hoàn Thành Trạm Xác Thực",
-                step_1_desc: "Nhấp để xác thực phiên làm việc và tiến hành tạo key.",
-                btn_go_link: "ĐẾN LIÊN KẾT",
-                step_2_badge: "BƯỚC 2",
-                step_2_title: "Tạo Key Truy Cập",
-                step_2_desc: "Tạo token 24 giờ độc quyền của bạn được lưu trữ an toàn trên Firebase.",
-                btn_generate: "TẠO KEY",
-                generated_key_label: "Key Của Bạn:",
-                key_output_waiting: "Hoàn thành Trạm 1 để mở khóa tính năng tạo key...",
-                key_details_title: "Chi Tiết Key & Thông Tin Hết Hạn",
-                solo_dev_badge: "Lập Trình Viên Đơn",
-                dev_role: "Lập trình viên chính, Quản trị viên & Nhà sáng lập FishHub",
-                dev_desc: "FishHub được phát triển hoàn toàn như một dự án cá nhân bởi DaoHuyLam. Do được quản lý bởi một người, các bản cập nhật tính năng lớn, sửa lỗi và thêm trò chơi mới có thể mất một thời gian. Sự kiên nhẫn và ủng hộ của bạn được đánh giá rất cao!",
-                stat_solo: "Dự Án Cá Nhân",
-                stat_free: "Truy Cập Script",
-                stat_free_val: "Miễn Phí",
-                stat_secure: "Kiểm Tra Môi Trường",
-                stat_secure_val: "Bảo Mật",
-                stat_active: "Cộng Đồng",
-                stat_active_val: "Sôi Nổi",
-                social_connect_title: "Kết Nối & Khám Phá"
-            }
-        };
-
-        let currentLang = 'en';
-
-        function toggleLanguage() {
-            currentLang = currentLang === 'en' ? 'vi' : 'en';
-            applyLanguage(currentLang);
-        }
-
-        function applyLanguage(lang) {
-            document.getElementById('currentLangText').innerText = lang.toUpperCase();
-            document.documentElement.setAttribute('lang', lang);
-
-            const elements = document.querySelectorAll('[data-lang]');
-            elements.forEach(el => {
-                const key = el.getAttribute('data-lang');
-                if (translations[lang] && translations[lang][key]) {
-                    el.innerText = translations[lang][key];
-                }
-            });
-        }
-    </script>
-
-    <!-- ENHANCED MAGICAL CANVAS BACKGROUND ANIMATION WITH MOUSE TRAIL & SPARKLES -->
-    <script>
-        const canvas = document.getElementById('bgCanvas');
-        const ctx = canvas.getContext('2d');
-        
-        let width = canvas.width = window.innerWidth;
-        let height = canvas.height = window.innerHeight;
-
-        window.addEventListener('resize', () => {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
-        });
-
-        let mouse = { x: null, y: null, targetX: null, targetY: null };
-        window.addEventListener('mousemove', (e) => {
-            mouse.targetX = e.clientX;
-            mouse.targetY = e.clientY;
-            
-            for(let i=0; i<2; i++) {
-                sparkles.push({
-                    x: e.clientX + (Math.random() * 20 - 10),
-                    y: e.clientY + (Math.random() * 20 - 10),
-                    vx: (Math.random() - 0.5) * 2,
-                    vy: (Math.random() - 0.5) * 2,
-                    radius: Math.random() * 2.5 + 1,
-                    alpha: 1,
-                    color: Math.random() > 0.5 ? '#38bdf8' : '#a855f7'
-                });
-            }
-        });
-        window.addEventListener('mouseout', () => {
-            mouse.targetX = null;
-            mouse.targetY = null;
-        });
-
-        const stars = [];
-        const starCount = Math.floor((width * height) / 10000);
-        for (let i = 0; i < starCount; i++) {
-            stars.push({
-                x: Math.random() * width,
-                y: Math.random() * height,
-                radius: Math.random() * 1.5 + 0.5,
-                alpha: Math.random(),
-                alphaChange: (Math.random() * 0.02 + 0.005) * (Math.random() < 0.5 ? 1 : -1)
-            });
-        }
-
-        const particles = [];
-        const particleCount = Math.floor((width * height) / 15000);
-        for (let i = 0; i < particleCount; i++) {
-            particles.push({
-                x: Math.random() * width,
-                y: Math.random() * height,
-                vx: (Math.random() - 0.5) * 0.6,
-                vy: (Math.random() - 0.5) * 0.6,
-                radius: Math.random() * 2 + 1
-            });
-        }
-
-        const sparkles = [];
-        const meteors = [];
-
-        function createMeteor() {
-            meteors.push({
-                x: Math.random() * width * 1.5,
-                y: -50,
-                length: Math.random() * 100 + 50,
-                speed: Math.random() * 7 + 4,
-                opacity: Math.random() * 0.7 + 0.3
-            });
-        }
-
-        function animateCanvas() {
-            ctx.clearRect(0, 0, width, height);
-
-            if (mouse.targetX !== null) {
-                if (mouse.x === null) { mouse.x = mouse.targetX; mouse.y = mouse.targetY; }
-                else {
-                    mouse.x += (mouse.targetX - mouse.x) * 0.15;
-                    mouse.y += (mouse.targetY - mouse.y) * 0.15;
-                }
-            } else {
-                mouse.x = null;
-                mouse.y = null;
-            }
-
-            for (let i = 0; i < stars.length; i++) {
-                let s = stars[i];
-                s.alpha += s.alphaChange;
-                if (s.alpha <= 0.1 || s.alpha >= 1) {
-                    s.alphaChange *= -1;
-                }
-                ctx.fillStyle = `rgba(255, 255, 255, ${s.alpha})`;
-                ctx.beginPath();
-                ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
-                ctx.fill();
-            }
-
-            if (mouse.x !== null && mouse.y !== null) {
-                let mouseGradient = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, 220);
-                mouseGradient.addColorStop(0, 'rgba(168, 85, 247, 0.35)');
-                mouseGradient.addColorStop(0.5, 'rgba(56, 189, 248, 0.15)');
-                mouseGradient.addColorStop(1, 'rgba(3, 7, 18, 0)');
-                ctx.fillStyle = mouseGradient;
-                ctx.beginPath();
-                ctx.arc(mouse.x, mouse.y, 220, 0, Math.PI * 2);
-                ctx.fill();
-            }
-
-            for (let i = sparkles.length - 1; i >= 0; i--) {
-                let sp = sparkles[i];
-                sp.x += sp.vx;
-                sp.y += sp.vy;
-                sp.alpha -= 0.025;
-                if (sp.alpha <= 0) {
-                    sparkles.splice(i, 1);
-                    continue;
-                }
-                ctx.fillStyle = sp.color === '#38bdf8' ? `rgba(56, 189, 248, ${sp.alpha})` : `rgba(168, 85, 247, ${sp.alpha})`;
-                ctx.shadowBlur = 12;
-                ctx.shadowColor = sp.color;
-                ctx.beginPath();
-                ctx.arc(sp.x, sp.y, sp.radius * sp.alpha, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.shadowBlur = 0;
-            }
-
-            ctx.fillStyle = 'rgba(168, 85, 247, 0.8)';
-            for (let i = 0; i < particles.length; i++) {
-                let p = particles[i];
-                p.x += p.vx;
-                p.y += p.vy;
-
-                if (p.x < 0) p.x = width;
-                if (p.x > width) p.x = 0;
-                if (p.y < 0) p.y = height;
-                if (p.y > height) p.y = 0;
-
-                if (mouse.x !== null) {
-                    let dx = mouse.x - p.x;
-                    let dy = mouse.y - p.y;
-                    let dist = Math.sqrt(dx * dx + dy * dy);
-                    if (dist < 150) {
-                        p.x += dx * 0.02;
-                        p.y += dy * 0.02;
-                    }
-                }
-
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-                ctx.fill();
-
-                for (let j = i + 1; j < particles.length; j++) {
-                    let p2 = particles[j];
-                    let dx = p.x - p2.x;
-                    let dy = p.y - p2.y;
-                    let dist = Math.sqrt(dx * dx + dy * dy);
-                    if (dist < 130) {
-                        ctx.strokeStyle = `rgba(139, 92, 246, ${0.3 * (1 - dist / 130)})`;
-                        ctx.lineWidth = 1;
-                        ctx.beginPath();
-                        ctx.moveTo(p.x, p.y);
-                        ctx.lineTo(p2.x, p2.y);
-                        ctx.stroke();
-                    }
-                }
-            }
-
-            if (Math.random() < 0.04 && meteors.length < 4) {
-                createMeteor();
-            }
-
-            for (let i = meteors.length - 1; i >= 0; i--) {
-                let m = meteors[i];
-                m.x -= m.speed;
-                m.y += m.speed;
-                m.opacity -= 0.006;
-
-                if (m.opacity <= 0 || m.y > height + 100) {
-                    meteors.splice(i, 1);
-                    continue;
-                }
-
-                ctx.save();
-                let gradient = ctx.createLinearGradient(m.x, m.y, m.x + m.length, m.y - m.length);
-                gradient.addColorStop(0, `rgba(255, 255, 255, ${m.opacity})`);
-                gradient.addColorStop(1, 'rgba(56, 189, 248, 0)');
-                ctx.strokeStyle = gradient;
-                ctx.lineWidth = 2;
-                ctx.beginPath();
-                ctx.moveTo(m.x, m.y);
-                ctx.lineTo(m.x + m.length, m.y - m.length);
-                ctx.stroke();
-                ctx.restore();
-            }
-
-            requestAnimationFrame(animateCanvas);
-        }
-        animateCanvas();
-    </script>
-
-    <!-- APP INTERACTION SCRIPT -->
-    <script>
-        function switchTab(tabId, btn) {
-            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
-            
-            const targetTab = document.getElementById(tabId);
-            if (targetTab) targetTab.classList.add('active');
-            if (btn) btn.classList.add('active');
-            
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        const copyBtn = document.getElementById('btnCopyScript');
-        if (copyBtn) {
-            copyBtn.addEventListener('click', () => {
-                const scriptText = document.getElementById('scriptCode').innerText;
-                navigator.clipboard.writeText(scriptText).then(() => {
-                    copyBtn.innerHTML = `<i class="fa-solid fa-check mr-2 icon-hover"></i> COPIED!`;
-                    setTimeout(() => { 
-                        copyBtn.innerHTML = `<i class="fa-solid fa-copy mr-2 icon-hover"></i> ${translations[currentLang].copy_script_btn}`; 
-                    }, 1500);
-                });
-            });
-        }
-
-        const btnStep1 = document.getElementById('btnStep1');
-        if (btnStep1) {
-            btnStep1.addEventListener('click', () => {
-                btnStep1.innerText = "Verifying...";
-                btnStep1.disabled = true;
-
-                setTimeout(() => {
-                    btnStep1.innerText = "COMPLETED ✓";
-                    btnStep1.style.background = "#22c55e";
-                    document.getElementById('step1Desc').innerText = currentLang === 'en' ? "Checkpoint verified successfully! Step 2 is now unlocked." : "Đã xác thực thành công! Bước 2 đã được mở khóa.";
-                    
-                    const btnGen = document.getElementById('btnGenerate');
-                    btnGen.disabled = false;
-                    btnGen.classList.remove('opacity-50', 'cursor-not-allowed');
-                }, 1200);
-            });
-        }
-    </script>
-
-    <!-- FIREBASE MODULE SCRIPT (WITH PERSISTENT KEY STORAGE & COOLDOWN) -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-        import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
-
-        const firebaseConfig = {
-            databaseURL: "https://fishhub-35d18-default-rtdb.firebaseio.com/"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getDatabase(app);
-
-        function generateRandomChars(length) {
-            const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-            let result = "";
-            for (let i = 0; i < length; i++) {
-                result += chars.charAt(Math.floor(Math.random() * chars.length));
-            }
-            return result;
-        }
-
-        const COOLDOWN_TIME = 60 * 1000; // Thời gian chống spam liên tục (60 giây)
-
-        // --- TỰ ĐỘNG KHÔI PHỤC KEY CỐ ĐỊNH KHI TẢI LẠI TRANG (NẾU CHƯA HẾT HẠN 24H) ---
-        window.addEventListener('DOMContentLoaded', () => {
-            const savedKey = localStorage.getItem('fishhub_saved_key');
-            const savedExpiry = localStorage.getItem('fishhub_key_expiry');
-            const now = Date.now();
-
-            if (savedKey && savedExpiry && now < parseInt(savedExpiry)) {
-                // Key vẫn còn hạn, giữ cố định trong ô chứa key
-                document.getElementById('keyOutput').innerText = savedKey;
-
-                const expiryDateObj = new Date(parseInt(savedExpiry));
-                const options = { 
-                    weekday: 'long', 
-                    year: 'numeric', 
-                    month: 'long', 
-                    day: 'numeric', 
-                    hour: '2-digit', 
-                    minute: '2-digit', 
-                    second: '2-digit' 
-                };
-                const localeFormat = currentLang === 'en' ? 'en-US' : 'vi-VN';
-                const formattedExpiry = expiryDateObj.toLocaleDateString(localeFormat, options);
-
-                const detailsHTML = currentLang === 'en' ? `
-                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px; background: rgba(74, 222, 128, 0.15); border: 1px solid rgba(74, 222, 128, 0.35); padding: 10px 14px; border-radius: 10px; color: #4ade80; font-weight: 600;">
-                        <i class="fa-solid fa-circle-check" style="font-size: 15px;"></i> Active key loaded securely from storage!
-                    </div>
-                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;"><i class="fa-regular fa-clock" style="color: #4ade80; width: 18px;"></i> <b>Expires At:</b> <span style="color: #4ade80; font-weight: 700;">${formattedExpiry}</span></div>
-                    <div style="padding-top: 8px; border-top: 1px solid rgba(0, 242, 254, 0.2); color: #cbd5e1; font-size: 13px; display: flex; align-items: center; gap: 6px;"><i class="fa-solid fa-shield-cat" style="color: #00f2fe;"></i> Your active key is kept fixed until expiration.</div>
-                ` : `
-                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px; background: rgba(74, 222, 128, 0.15); border: 1px solid rgba(74, 222, 128, 0.35); padding: 10px 14px; border-radius: 10px; color: #4ade80; font-weight: 600;">
-                        <i class="fa-solid fa-circle-check" style="font-size: 15px;"></i> Đã tải lại key đang hoạt động từ bộ nhớ lưu trữ!
-                    </div>
-                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;"><i class="fa-regular fa-clock" style="color: #4ade80; width: 18px;"></i> <b>Thời gian hết hạn:</b> <span style="color: #4ade80; font-weight: 700;">${formattedExpiry}</span></div>
-                    <div style="padding-top: 8px; border-top: 1px solid rgba(0, 242, 254, 0.2); color: #cbd5e1; font-size: 13px; display: flex; align-items: center; gap: 6px;"><i class="fa-solid fa-shield-cat" style="color: #00f2fe;"></i> Key của bạn được giữ cố định trong ô cho đến khi hết hạn.</div>
-                `;
-
-                document.getElementById('keyDetailsContent').innerHTML = detailsHTML;
-                document.getElementById('keyDetailsCard').style.display = 'block';
-            } else {
-                // Đã quá hạn 24h hoặc chưa có -> Xóa dữ liệu cũ trong localStorage để sạch sẽ
-                localStorage.removeItem('fishhub_saved_key');
-                localStorage.removeItem('fishhub_key_expiry');
-            }
-        });
-
-        const btnGenKey = document.getElementById('btnGenerate');
-        if (btnGenKey) {
-            btnGenKey.addEventListener('click', () => {
-                // --- KIỂM TRA CHỐNG SPAM (ANTI-SPAM COOLDOWN) ---
-                const lastGenTime = localStorage.getItem('fishhub_last_gen_time');
-                const now = Date.now();
-                const warningBox = document.getElementById('cooldownWarning');
-                const warningText = document.getElementById('cooldownText');
-
-                if (lastGenTime && (now - lastGenTime < COOLDOWN_TIME)) {
-                    const remainingSeconds = Math.ceil((COOLDOWN_TIME - (now - lastGenTime)) / 1000);
-                    warningText.innerText = currentLang === 'en' 
-                        ? `Anti-spam active! Please wait ${remainingSeconds}s before generating another key.` 
-                        : `Đang bật chống spam! Vui lòng đợi ${remainingSeconds} giây trước khi tạo key tiếp theo.`;
-                    warningBox.classList.remove('hidden');
-                    return;
-                } else {
-                    warningBox.classList.add('hidden');
-                }
-                // ----------------------------------------------
-
-                const btn = document.getElementById('btnGenerate');
-                btn.innerText = "Generating...";
-                btn.disabled = true;
-
-                const newKey = "FishHub-" + generateRandomChars(22);
-                const currentTime = Date.now();
-                const expiryTime = currentTime + (24 * 60 * 60 * 1000);
-
-                // --- GIỮ NGUYÊN 100% HỆ THỐNG LƯU FIREBASE GỐC ---
-                set(ref(db, 'keys/' + newKey), {
-                    createdAt: currentTime,
-                    type: "normal"
-                }).then(() => {
-                    // Lưu mốc thời gian chống spam và CỐ ĐỊNH KEY vào localStorage
-                    localStorage.setItem('fishhub_last_gen_time', Date.now());
-                    localStorage.setItem('fishhub_saved_key', newKey);
-                    localStorage.setItem('fishhub_key_expiry', expiryTime);
-
-                    document.getElementById('keyOutput').innerText = newKey;
-                    
-                    navigator.clipboard.writeText(newKey);
-                    
-                    const createDateObj = new Date(currentTime);
-                    const expiryDateObj = new Date(expiryTime);
-
-                    const options = { 
-                        weekday: 'long', 
-                        year: 'numeric', 
-                        month: 'long', 
-                        day: 'numeric', 
-                        hour: '2-digit', 
-                        minute: '2-digit', 
-                        second: '2-digit' 
-                    };
-
-                    const localeFormat = currentLang === 'en' ? 'en-US' : 'vi-VN';
-                    const formattedCreated = createDateObj.toLocaleDateString(localeFormat, options);
-                    const formattedExpiry = expiryDateObj.toLocaleDateString(localeFormat, options);
-
-                    const detailsHTML = currentLang === 'en' ? `
-                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px; background: rgba(74, 222, 128, 0.15); border: 1px solid rgba(74, 222, 128, 0.35); padding: 10px 14px; border-radius: 10px; color: #4ade80; font-weight: 600;">
-                            <i class="fa-solid fa-circle-check" style="font-size: 15px;"></i> Successfully generated and copied key to clipboard!
-                        </div>
-                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-regular fa-calendar-plus" style="color: #38bdf8; width: 18px;"></i> <b>Created At:</b> ${formattedCreated}</div>
-                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;"><i class="fa-regular fa-clock" style="color: #4ade80; width: 18px;"></i> <b>Expires At:</b> <span style="color: #4ade80; font-weight: 700;">${formattedExpiry}</span></div>
-                        <div style="padding-top: 8px; border-top: 1px solid rgba(0, 242, 254, 0.2); color: #cbd5e1; font-size: 13px; display: flex; align-items: center; gap: 6px;"><i class="fa-solid fa-shield-cat" style="color: #00f2fe;"></i> Exclusive key is valid for <b style="color: #ffffff;">24 hours</b>.</div>
-                    ` : `
-                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px; background: rgba(74, 222, 128, 0.15); border: 1px solid rgba(74, 222, 128, 0.35); padding: 10px 14px; border-radius: 10px; color: #4ade80; font-weight: 600;">
-                            <i class="fa-solid fa-circle-check" style="font-size: 15px;"></i> Đã tự động tạo và sao chép key vào bộ nhớ tạm thành công!
-                        </div>
-                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-regular fa-calendar-plus" style="color: #38bdf8; width: 18px;"></i> <b>Thời gian khởi tạo:</b> ${formattedCreated}</div>
-                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;"><i class="fa-regular fa-clock" style="color: #4ade80; width: 18px;"></i> <b>Thời gian hết hạn:</b> <span style="color: #4ade80; font-weight: 700;">${formattedExpiry}</span></div>
-                        <div style="padding-top: 8px; border-top: 1px solid rgba(0, 242, 254, 0.2); color: #cbd5e1; font-size: 13px; display: flex; align-items: center; gap: 6px;"><i class="fa-solid fa-shield-cat" style="color: #00f2fe;"></i> Key độc quyền có hiệu lực trong vòng <b style="color: #ffffff;">24 giờ</b>.</div>
-                    `;
-
-                    document.getElementById('keyDetailsContent').innerHTML = detailsHTML;
-                    document.getElementById('keyDetailsCard').style.display = 'block';
-
-                    btn.innerText = currentLang === 'en' ? "GENERATE KEY" : "TẠO KEY";
-                    btn.disabled = false;
-                }).catch((error) => {
-                    document.getElementById('keyOutput').innerText = "Error generating key!";
-                    document.getElementById('keyDetailsCard').style.display = 'none';
-                    btn.innerText = currentLang === 'en' ? "GENERATE KEY" : "TẠO KEY";
-                    btn.disabled = false;
-                });
-            });
-        }
-    </script>
+    <button class="tab" data-tab="script"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 3h8l5 5v13H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Zm7 1.8V9h4.2ZM8 12h8v1.4H8zm0 3h8v1.4H8z"/></svg>Scripts</button>
+  </div>
+  <div class="stats-top" id="statsTop"></div>
+</nav>
+<div class="wrap">
+  <section class="view active" id="view-home">
+    <div class="hero">
+      <div class="hero-glow"></div>
+      <div class="eyebrow">LIVE EXECUTOR DATABASE</div>
+      <h1>Track executor status from one clean dashboard.</h1>
+      <p>The website reads the latest data directly from the remote JSON source. You no longer need to edit the page whenever an executor version or status changes.</p>
+      <div class="hero-actions"><div class="live-pill"><span class="dot green"></span><span id="connectionText">Connecting to data source</span></div><button class="refresh-btn" id="refreshBtn">↻ Refresh now</button></div>
+    </div>
+    <div class="home-grid">
+      <div class="home-stat"><div class="icon">◈</div><div class="value" id="homeTotal">0</div><div class="label">Executors tracked</div></div>
+            <div class="home-stat"><div class="icon">◆</div><div class="value" id="homePaid">0</div><div class="label">Windows paid</div></div>
+      <div class="home-stat"><div class="icon">◇</div><div class="value" id="homeFree">0</div><div class="label">Windows free</div></div>
+    </div>
+    <div class="home-panel"><div class="panel-head"><div class="panel-title">Dashboard guide</div><div class="sync-state" id="syncState">Waiting for first sync...</div></div><div class="home-steps"><div class="step"><div class="step-num">01</div><strong>Open Executor</strong><span>The Executor button opens the platform menu without changing the page.</span></div><div class="step"><div class="step-num">02</div><strong>Choose a platform</strong><span>Select All Executors, Windows, Android, iOS, or macOS.</span></div><div class="step"><div class="step-num">03</div><strong>Data stays automatic</strong><span>Executor data refreshes automatically from the remote JSON every 30 seconds.</span></div></div></div>
+  </section>
+  <section class="view" id="view-executor">
+    <div class="filterbar"><input class="search" id="search" placeholder="Search executor..." autocomplete="off"></div>
+    <div class="all-status-bar" id="allStatusBar">
+      <button class="status-filter" data-status="green"><span class="dot green"></span>Online</button>
+      <button class="status-filter" data-status="yellow"><span class="dot yellow"></span>Update</button>
+      <button class="status-filter" data-status="red"><span class="dot red"></span>Offline</button>
+    </div>
+    <div id="groups"><div class="loading"><strong>Loading executor data</strong>Connecting to the remote JSON source...</div></div>
+  </section>
+  <section class="view" id="view-script">
+  <div class="library-head">
+    <div><div class="eyebrow">ROBLOX GAME SCRIPT LIBRARY</div><h2>Game Script Library</h2><p>Browse scripts by game. These are runtime-oriented Roblox Lua examples rather than Explorer/Studio utility snippets.</p></div>
+    <div class="library-search-wrap"><input class="library-search" id="scriptSearch" placeholder="Search scripts..." autocomplete="off"></div>
+  </div>
+  <div class="script-runtime-note"><span class="dot green"></span><span>Runtime game scripts · copy a script and use it in the appropriate Roblox game script context.</span></div>
+  <div class="script-categories" id="scriptCategories"></div>
+  <div class="script-grid" id="scriptGrid"></div>
+</section>
+</div>
+<script>
+const DATA_URL='https://raw.githubusercontent.com/Cachuoine/Website/refs/heads/main/executor.json';
+const REFRESH_MS=30000;
+const SCRIPT_LIBRARY=[
+  {title:'Infinite Jump',game:'Universal',category:'Movement',description:'Runtime movement script for a Roblox game character.',code:String.raw`local Players = game:GetService("Players")
+local UserInputService = game:GetService("UserInputService")
+local player = Players.LocalPlayer
+
+UserInputService.JumpRequest:Connect(function()
+    local character = player.Character
+    local humanoid = character and character:FindFirstChildOfClass("Humanoid")
+    if humanoid then
+        humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+    end
+end)`},
+  {title:'Sprint Toggle',game:'Universal',category:'Movement',description:'Runtime sprint toggle for a Roblox game character.',code:String.raw`local Players = game:GetService("Players")
+local UIS = game:GetService("UserInputService")
+local player = Players.LocalPlayer
+local normalSpeed = 16
+local sprintSpeed = 26
+
+local function humanoid()
+    local character = player.Character or player.CharacterAdded:Wait()
+    return character:WaitForChild("Humanoid")
+end
+
+UIS.InputBegan:Connect(function(input, processed)
+    if processed or input.KeyCode ~= Enum.KeyCode.LeftShift then return end
+    humanoid().WalkSpeed = sprintSpeed
+end)
+
+UIS.InputEnded:Connect(function(input)
+    if input.KeyCode == Enum.KeyCode.LeftShift then
+        humanoid().WalkSpeed = normalSpeed
+    end
+end)`},
+  {title:'FPS Counter',game:'Universal',category:'Interface',description:'Compact FPS counter for local performance testing.',code:String.raw`local RunService = game:GetService("RunService")
+local Players = game:GetService("Players")
+local gui = Instance.new("ScreenGui")
+gui.Name = "FPSCounter"
+gui.ResetOnSpawn = false
+gui.Parent = Players.LocalPlayer:WaitForChild("PlayerGui")
+
+local label = Instance.new("TextLabel")
+label.Size = UDim2.fromOffset(120, 28)
+label.Position = UDim2.fromOffset(12, 12)
+label.BackgroundTransparency = 0.35
+label.TextColor3 = Color3.new(1, 1, 1)
+label.Font = Enum.Font.GothamBold
+label.TextSize = 13
+label.Text = "FPS: 0"
+label.Parent = gui
+
+local frames, elapsed = 0, 0
+RunService.RenderStepped:Connect(function(dt)
+    frames += 1
+    elapsed += dt
+    if elapsed >= 0.5 then
+        label.Text = "FPS: " .. math.floor(frames / elapsed)
+        frames, elapsed = 0, 0
+    end
+end)`},
+  {title:'Player List Logger',game:'Universal',category:'Gameplay',description:'Shows player join/leave information during a game session.',code:String.raw`local Players = game:GetService("Players")
+
+for _, player in ipairs(Players:GetPlayers()) do
+    print("Player:", player.Name)
+end
+
+Players.PlayerAdded:Connect(function(player)
+    print("Joined:", player.Name)
+end)
+
+Players.PlayerRemoving:Connect(function(player)
+    print("Left:", player.Name)
+end)`},
+  {title:'Respawn Helper',game:'Universal',category:'Gameplay',description:'Respawns the local player during a game session.',code:String.raw`local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:FindFirstChildOfClass("Humanoid")
+if humanoid then
+    humanoid.Health = 0
+end`},
+  {title:'Daylight Environment',game:'Universal',category:'Environment',description:'Applies a daytime environment during the game session.',code:String.raw`local Lighting = game:GetService("Lighting")
+Lighting.ClockTime = 14
+Lighting.Brightness = 2
+Lighting.ExposureCompensation = 0`},
+  {title:'Blox Fruits HUD',game:'Blox Fruits',category:'Interface',description:'Runtime HUD starter for a Blox Fruits game session.',code:String.raw`local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local gui = Instance.new("ScreenGui")
+gui.Name = "BloxFruitsHUD"
+gui.ResetOnSpawn = false
+gui.Parent = player:WaitForChild("PlayerGui")
+
+local frame = Instance.new("Frame")
+frame.Size = UDim2.fromOffset(250, 86)
+frame.Position = UDim2.fromOffset(18, 110)
+frame.BackgroundColor3 = Color3.fromRGB(6, 18, 36)
+frame.BorderSizePixel = 0
+frame.Parent = gui
+
+local corner = Instance.new("UICorner")
+corner.CornerRadius = UDim.new(0, 14)
+corner.Parent = frame
+
+local label = Instance.new("TextLabel")
+label.Size = UDim2.new(1, -24, 0, 30)
+label.Position = UDim2.fromOffset(12, 10)
+label.BackgroundTransparency = 1
+label.Text = "Blox Fruits"
+label.TextColor3 = Color3.new(1, 1, 1)
+label.Font = Enum.Font.GothamBold
+label.TextSize = 16
+label.TextXAlignment = Enum.TextXAlignment.Left
+label.Parent = frame`},
+  {title:'Brookhaven Player Panel',game:'Brookhaven RP',category:'Interface',description:'Simple roleplay status panel shell for a custom experience.',code:String.raw`local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local gui = Instance.new("ScreenGui")
+gui.Name = "BrookhavenPanel"
+gui.ResetOnSpawn = false
+gui.Parent = player:WaitForChild("PlayerGui")
+
+local label = Instance.new("TextLabel")
+label.Size = UDim2.fromOffset(260, 42)
+label.Position = UDim2.new(0.5, -130, 0, 18)
+label.BackgroundTransparency = 0.22
+label.BackgroundColor3 = Color3.fromRGB(12, 24, 45)
+label.TextColor3 = Color3.new(1, 1, 1)
+label.Font = Enum.Font.GothamMedium
+label.TextSize = 14
+label.Text = "Roleplay Status"
+label.Parent = gui`},
+  {title:'Blade Ball Cooldown HUD',game:'Blade Ball',category:'Interface',description:'Runtime ability cooldown HUD for an arena game.',code:String.raw`local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local gui = Instance.new("ScreenGui")
+gui.Parent = Players.LocalPlayer:WaitForChild("PlayerGui")
+
+local label = Instance.new("TextLabel")
+label.Size = UDim2.fromOffset(180, 34)
+label.Position = UDim2.new(0.5, -90, 1, -60)
+label.BackgroundTransparency = 0.25
+label.TextColor3 = Color3.new(1, 1, 1)
+label.Font = Enum.Font.GothamBold
+label.TextSize = 13
+label.Text = "Ability Ready"
+label.Parent = gui
+
+local t = 0
+RunService.Heartbeat:Connect(function(dt)
+    t += dt
+    label.Text = string.format("Arena Timer: %02d", math.floor(t))
+end)`},
+  {title:'BedWars Team HUD',game:'BedWars',category:'Interface',description:'Runtime team information HUD for a BedWars-style game.',code:String.raw`local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local gui = Instance.new("ScreenGui")
+gui.Parent = player:WaitForChild("PlayerGui")
+
+local label = Instance.new("TextLabel")
+label.Size = UDim2.fromOffset(220, 34)
+label.Position = UDim2.fromOffset(18, 60)
+label.BackgroundTransparency = 0.25
+label.TextColor3 = Color3.new(1, 1, 1)
+label.Font = Enum.Font.GothamBold
+label.TextSize = 13
+label.Text = player.Team and ("Team: " .. player.Team.Name) or "Team: None"
+label.Parent = gui
+
+player:GetPropertyChangedSignal("Team"):Connect(function()
+    label.Text = player.Team and ("Team: " .. player.Team.Name) or "Team: None"
+end)`},
+  {title:'DOORS Timer HUD',game:'DOORS',category:'Interface',description:'Runtime timer overlay for a horror game session.',code:String.raw`local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local player = Players.LocalPlayer
+local gui = Instance.new("ScreenGui")
+gui.Parent = player:WaitForChild("PlayerGui")
+
+local label = Instance.new("TextLabel")
+label.Size = UDim2.fromOffset(170, 32)
+label.Position = UDim2.new(0.5, -85, 0, 20)
+label.BackgroundTransparency = 1
+label.TextColor3 = Color3.new(1, 1, 1)
+label.Font = Enum.Font.GothamBold
+label.TextSize = 14
+label.Parent = gui
+
+local elapsed = 0
+RunService.Heartbeat:Connect(function(dt)
+    elapsed += dt
+    label.Text = "Run Time: " .. math.floor(elapsed) .. "s"
+end)`},
+  {title:'MM2 Match Timer',game:'Murder Mystery 2',category:'Interface',description:'Runtime match timer for a round-based game.',code:String.raw`local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local gui = Instance.new("ScreenGui")
+gui.Parent = Players.LocalPlayer:WaitForChild("PlayerGui")
+
+local label = Instance.new("TextLabel")
+label.Size = UDim2.fromOffset(190, 34)
+label.Position = UDim2.new(0.5, -95, 1, -64)
+label.BackgroundTransparency = 0.22
+label.TextColor3 = Color3.new(1, 1, 1)
+label.Font = Enum.Font.GothamBold
+label.TextSize = 13
+label.Parent = gui
+
+local elapsed = 0
+RunService.Heartbeat:Connect(function(dt)
+    elapsed += dt
+    label.Text = string.format("Round: %02d", math.floor(elapsed))
+end)`},
+  {title:'Arsenal Score HUD',game:'Arsenal',category:'Interface',description:'Runtime score HUD starter for an FPS game.',code:String.raw`local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local gui = Instance.new("ScreenGui")
+gui.Parent = player:WaitForChild("PlayerGui")
+
+local label = Instance.new("TextLabel")
+label.Size = UDim2.fromOffset(180, 36)
+label.Position = UDim2.new(1, -198, 0, 20)
+label.BackgroundTransparency = 0.25
+label.TextColor3 = Color3.new(1, 1, 1)
+label.Font = Enum.Font.GothamBold
+label.TextSize = 13
+label.Text = "Score: 0"
+label.Parent = gui`},
+  {title:'Pet Simulator Counter',game:'Pet Simulator 99',category:'Interface',description:'Runtime pet counter HUD for a pet-collection game.',code:String.raw`local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local gui = Instance.new("ScreenGui")
+gui.Parent = player:WaitForChild("PlayerGui")
+
+local label = Instance.new("TextLabel")
+label.Size = UDim2.fromOffset(220, 36)
+label.Position = UDim2.fromOffset(18, 60)
+label.BackgroundTransparency = 0.25
+label.TextColor3 = Color3.new(1, 1, 1)
+label.Font = Enum.Font.GothamBold
+label.TextSize = 13
+label.Text = "Pets: 0"
+label.Parent = gui`},
+  {title:'Adopt Me Needs Panel',game:'Adopt Me!',category:'Interface',description:'Runtime needs panel for a pet-care game.',code:String.raw`local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local gui = Instance.new("ScreenGui")
+gui.Parent = player:WaitForChild("PlayerGui")
+
+local label = Instance.new("TextLabel")
+label.Size = UDim2.fromOffset(240, 36)
+label.Position = UDim2.fromOffset(18, 106)
+label.BackgroundTransparency = 0.2
+label.TextColor3 = Color3.new(1, 1, 1)
+label.Font = Enum.Font.GothamMedium
+label.TextSize = 13
+label.Text = "Pet Needs: None"
+label.Parent = gui`},
+  {title:'King Legacy Quest HUD',game:'King Legacy',category:'Interface',description:'Runtime quest tracking HUD for an adventure game.',code:String.raw`local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local gui = Instance.new("ScreenGui")
+gui.Parent = player:WaitForChild("PlayerGui")
+
+local label = Instance.new("TextLabel")
+label.Size = UDim2.fromOffset(280, 42)
+label.Position = UDim2.fromOffset(18, 60)
+label.BackgroundTransparency = 0.2
+label.TextColor3 = Color3.new(1, 1, 1)
+label.Font = Enum.Font.GothamBold
+label.TextSize = 13
+label.Text = "Quest: Waiting for objective"
+label.Parent = gui`},
+  {title:'Character Speed Reset',game:'Universal',category:'Player',description:'Restores the default Humanoid WalkSpeed during a game session.',code:String.raw`local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+humanoid.WalkSpeed = 16`},
+  {title:'Server Time HUD',game:'Universal',category:'Interface',description:'Runtime clock widget for a game UI.',code:String.raw`local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local gui = Instance.new("ScreenGui")
+gui.Parent = Players.LocalPlayer:WaitForChild("PlayerGui")
+
+local label = Instance.new("TextLabel")
+label.Size = UDim2.fromOffset(180, 30)
+label.Position = UDim2.new(1, -192, 0, 12)
+label.BackgroundTransparency = 0.3
+label.TextColor3 = Color3.new(1, 1, 1)
+label.Font = Enum.Font.GothamMedium
+label.TextSize = 13
+label.Parent = gui
+
+RunService.Heartbeat:Connect(function()
+    label.Text = os.date("%H:%M:%S")
+end)`}
+];
+let scriptCategory='All Categories';
+let scriptGame='All';
+function renderScriptLibrary(){
+  const q=(document.getElementById('scriptSearch')?.value||'').trim().toLowerCase();
+  const categoryList=['All Categories',...new Set(SCRIPT_LIBRARY.map(s=>s.category))];
+  const gameList=['All Games',...new Set(SCRIPT_LIBRARY.map(s=>s.game))];
+  const cats=document.getElementById('scriptCategories');
+  const grid=document.getElementById('scriptGrid');
+  if(!cats||!grid)return;
+  cats.innerHTML=`<div class="script-filter-row"><div class="script-filter-title">Games</div>${gameList.map(g=>`<button class="script-category game-filter ${scriptGame===(g==='All Games'?'All':g)?'active':''}" data-script-game="${esc(g)}">${esc(g)}</button>`).join('')}</div><div class="script-filter-row"><div class="script-filter-title">Category</div>${categoryList.map(c=>`<button class="script-category ${scriptCategory===c?'active':''}" data-script-cat="${esc(c)}">${esc(c)}</button>`).join('')}</div>`;
+  const list=SCRIPT_LIBRARY.filter(s=>(scriptCategory==='All Categories'||s.category===scriptCategory)&&(scriptGame==='All'||s.game===scriptGame)&&(!q||s.title.toLowerCase().includes(q)||s.game.toLowerCase().includes(q)||s.category.toLowerCase().includes(q)||s.description.toLowerCase().includes(q)||s.code.toLowerCase().includes(q)));
+  grid.innerHTML=list.length?list.map(s=>`<article class="script-card"><div class="script-card-head"><div><div class="script-card-title">${esc(s.title)}</div><div class="script-game">${esc(s.game)}</div></div><span class="script-tag">GAME</span></div><div class="script-card-desc">${esc(s.description)}</div><pre class="script-code">${esc(s.code)}</pre><div class="script-card-foot"><span class="script-category-label">${esc(s.category)}</span><button class="copy-script" data-script-index="${SCRIPT_LIBRARY.indexOf(s)}">Copy</button></div></article>`).join(''):'<div class="empty" style="grid-column:1/-1">No scripts found.</div>';
+  cats.querySelectorAll('[data-script-cat]').forEach(btn=>btn.addEventListener('click',()=>{scriptCategory=btn.dataset.scriptCat;renderScriptLibrary();}));
+  cats.querySelectorAll('[data-script-game]').forEach(btn=>btn.addEventListener('click',()=>{scriptGame=btn.dataset.scriptGame==='All Games'?'All':btn.dataset.scriptGame;renderScriptLibrary();}));
+  grid.querySelectorAll('[data-script-index]').forEach(btn=>btn.addEventListener('click',async()=>{const script=SCRIPT_LIBRARY[Number(btn.dataset.scriptIndex)];try{await navigator.clipboard.writeText(script.code);btn.textContent='Copied';setTimeout(()=>btn.textContent='Copy',900);}catch{btn.textContent='Copy failed';setTimeout(()=>btn.textContent='Copy',900);}}));
+}
+const WINDOWS_PAID=new Set(['Potassium','Volt','Wave','Sirhurt','Isaeva','Seliware','Cosmic']);
+const WINDOWS_PAID_ORDER=['Potassium','Volt','Wave','Sirhurt','Isaeva','Seliware','Cosmic'];
+const WINDOWS_FREE_ORDER=['Madium','Real','Vortex','Ronix'];
+const WINDOWS_ORDER=[...WINDOWS_PAID_ORDER,...WINDOWS_FREE_ORDER];
+const STATUS_TEXT={green:'Online',yellow:'Update',red:'Offline'};
+const GROUP_LABEL={green:'Online',yellow:'Update',red:'Offline'};
+const PLAT_MAP={ADR:'Android',IOS:'iOS',MAC:'MacOS',PC:'Windows'};
+const PLATFORM_ORDER=['Windows','Android','iOS','MacOS'];
+let cards=[];
+let platformFilter='all';
+let statusFilter='all';
+let lastSuccessfulSync=null;
+let avatarCacheKey=Date.now();
+
+function esc(v){return String(v??'').replace(/[&<>'"]/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[ch]));}
+function normalizeName(name){return String(name||'').trim().toLowerCase().replace(/\b\w/g,m=>m.toUpperCase());}
+function parseTitle(str){
+  const iconMatch=String(str||'').match(/<a?:(\w+):(\d+)>/);
+  const segs=[...String(str||'').matchAll(/`([^`]+)`/g)].map(m=>{const parts=m[1].split('┊');return {label:(parts[0]||'').trim(),version:(parts.slice(1).join('┊')||'idk').trim()};});
+  return {icon:iconMatch?{slug:iconMatch[1],id:iconMatch[2]}:null,segs};
+}
+function parseStatus(str){
+  const x=String(str||'');
+  let color='green';
+  if(x.includes('red_dot'))color='red';
+  else if(x.includes('yellow_dot'))color='yellow';
+  const vm=x.match(/Version[^:]*:\s*`([^`]*)`/i);
+  const tm=x.match(/UpdateLast:\s*(?:<t:(\d+):f>|([^\s]+))/i);
+  return {color,version:vm?vm[1]:'idk',updated:tm&&tm[1]?new Date(Number(tm[1])*1000):null};
+}
+function platformName(label,productSlug){
+  const base=String(productSlug||'').toLowerCase();
+  if(base==='arceus'||base==='vega')return 'Android';
+  const upper=String(label||'').toUpperCase();
+  for(const key of Object.keys(PLAT_MAP)){if(upper.endsWith(key))return PLAT_MAP[key];}
+  const suffix=upper.replace(base.toUpperCase(),'').trim();
+  return PLAT_MAP[suffix]||'Windows';
+}
+function fmtDate(d){return d?d.toLocaleDateString('en-US',{day:'2-digit',month:'short',year:'numeric'}):'Unknown';}
+function fmtTime(d){return d?d.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit',second:'2-digit'}):'Unknown';}
+function parseData(data){
+  const raw=[];let current=null;
+  for(const [key,val] of Object.entries(data||{})){
+    if(key.startsWith('Status')){if(current)current.statuses.push(parseStatus(val));}
+    else{const {icon,segs}=parseTitle(val);current={key,icon,segs,statuses:[]};raw.push(current);}
+  }
+  const merged=new Map();
+  for(const c of raw){
+    const slug=(c.icon&&c.icon.slug)||c.key;
+    const displayName=normalizeName(slug);
+    if(!merged.has(slug))merged.set(slug,{slug,icon:c.icon,name:displayName,platforms:[]});
+    const target=merged.get(slug);const n=Math.max(c.segs.length,c.statuses.length);
+    for(let i=0;i<n;i++){
+      const seg=c.segs[i]||c.segs[0]||{label:slug,version:'idk'};
+      const st=c.statuses[i]||c.statuses[c.statuses.length-1]||{color:'red',version:'idk',updated:null};
+      target.platforms.push({name:platformName(seg.label,slug),version:seg.version||'idk',color:st.color,updated:st.updated});
+    }
+  }
+  return [...merged.values()].flatMap(c=>c.platforms.map((p,index)=>({...p,executor:c.name,slug:c.slug,icon:c.icon,index}))).map(x=>({...x,paid:WINDOWS_PAID.has(x.executor)&&x.name==='Windows'}));
+}
+function filteredEntries(){
+  const q=document.getElementById('search').value.trim().toLowerCase();
+  let list=cards.filter(c=>c.executor.toLowerCase().includes(q));
+  if(platformFilter!=='all')list=list.filter(c=>c.name===platformFilter);
+  return list;
+}
+function avatarHtml(item){
+  if(!item.icon)return esc(item.executor.charAt(0));
+  const id=esc(item.icon.id);
+  const name=esc(item.executor);
+  return `<img src="https://cdn.discordapp.com/emojis/${id}.png?size=64&quality=lossless&cb=${avatarCacheKey}" alt="${name}" onerror="this.onerror=null;this.src='https://cdn.discordapp.com/emojis/${id}.webp?size=64&quality=lossless&cb=${avatarCacheKey}'">`;
+}
+function cardHtml(item){
+  const status=STATUS_TEXT[item.color]||'Offline';
+  return `<div class="card"><div class="avatar">${avatarHtml(item)}</div><div class="card-main"><div class="card-line"><div class="card-title">${esc(item.executor)}</div><span class="version-badge">${esc(item.version)}</span></div><div class="card-meta"><span>Update <b>${esc(fmtDate(item.updated))}</b></span></div></div><div class="card-status"><span class="dot ${item.color}"></span><span class="status-text ${item.color}">${status}</span></div></div>`;
+}
+function render(){
+  const el=document.getElementById('groups');
+  const statusBar=document.getElementById('allStatusBar');
+  const list=filteredEntries();
+  statusBar.classList.add('show');
+  document.querySelectorAll('.status-filter').forEach(b=>b.classList.toggle('active',statusFilter===b.dataset.status));
+  if(!list.length){el.innerHTML='<div class="empty">No executors found.</div>';return;}
+  const visible=statusFilter==='all'?list:list.filter(x=>x.color===statusFilter);
+  if(platformFilter==='Windows'){
+    const rank=(arr,name)=>{const i=arr.indexOf(name);return i<0?999:i;};
+    const paid=visible.filter(x=>x.paid).sort((a,b)=>rank(WINDOWS_PAID_ORDER,a.executor)-rank(WINDOWS_PAID_ORDER,b.executor));
+    const free=visible.filter(x=>!x.paid).sort((a,b)=>rank(WINDOWS_FREE_ORDER,a.executor)-rank(WINDOWS_FREE_ORDER,b.executor));
+    const section=(title,items,tone)=>items.length?`<div class="group"><div class="group-title"><span class="dot ${tone}"></span>${title}<span class="count">${items.length}</span></div><div class="grid">${items.map(cardHtml).join('')}</div></div>`:'';
+    el.innerHTML=section('Paid',paid,'green')+section('Free',free,'yellow')||'<div class="empty">No executors match this status.</div>';return;
+  }
+  if(platformFilter==='all'){
+    const statuses=statusFilter==='all'?['green','yellow','red']:[statusFilter];
+    const html=statuses.map(color=>{
+      const byStatus=list.filter(x=>x.color===color);
+      if(!byStatus.length)return '';
+      const platforms=PLATFORM_ORDER.map(platform=>{
+        const items=byStatus.filter(x=>x.name===platform).sort((a,b)=>a.executor.localeCompare(b.executor));
+        if(!items.length)return '';
+        return `<div class="platform-title"><span>${platform}</span><span class="count">${items.length}</span></div><div class="all-grid">${items.map(cardHtml).join('')}</div>`;
+      }).join('');
+      return `<div class="group"><div class="group-title"><span class="dot ${color}"></span>${GROUP_LABEL[color]}<span class="count">${byStatus.length}</span></div>${platforms}</div>`;
+    }).join('');
+    el.innerHTML=html||'<div class="empty">No executors match this status.</div>';
+    return;
+  }
+  const ordered=[...visible].sort((a,b)=>a.executor.localeCompare(b.executor));
+  el.innerHTML=ordered.length?`<div class="group"><div class="group-title"><span class="dot ${statusFilter==='green'?'green':statusFilter==='yellow'?'yellow':statusFilter==='red'?'red':'green'}"></span>${esc(platformFilter)}<span class="count">${ordered.length}</span></div><div class="grid">${ordered.map(cardHtml).join('')}</div></div>`:'<div class="empty">No executors match this status.</div>';
+}
+function renderStats(){
+  const unique=new Set(cards.map(x=>x.executor));
+  const count={green:cards.filter(x=>x.color==='green').length,yellow:cards.filter(x=>x.color==='yellow').length,red:cards.filter(x=>x.color==='red').length};
+  document.getElementById('statsTop').innerHTML=`<span><span class="dot green"></span>${count.green}</span><span><span class="dot yellow"></span>${count.yellow}</span><span><span class="dot red"></span>${count.red}</span>`;
+  document.getElementById('homeTotal').textContent=unique.size;
+  document.getElementById('homePaid').textContent=cards.filter(x=>x.paid).length;
+  document.getElementById('homeFree').textContent=cards.filter(x=>x.name==='Windows'&&!x.paid).length;
+}
+function setConnection(ok,msg){
+  const el=document.getElementById('connectionText');el.textContent=msg;
+  el.parentElement.querySelector('.dot').className=`dot ${ok?'green':'red'}`;
+}
+async function loadData(){
+  try{
+    const url=`${DATA_URL}?_=${Date.now()}`;
+    const response=await fetch(url,{cache:'no-store',headers:{'Accept':'application/json'}});
+    if(!response.ok)throw new Error(`HTTP ${response.status}`);
+    const data=await response.json();
+    cards=parseData(data);
+    avatarCacheKey=Date.now();
+    lastSuccessfulSync=new Date();
+    renderStats();render();
+    document.getElementById('syncState').textContent=`Last sync: ${fmtTime(lastSuccessfulSync)} · auto refresh 30s`;
+    setConnection(true,`Live · ${cards.length} entries loaded`);
+  }catch(err){
+    setConnection(false,lastSuccessfulSync?'Using last successful data':'Data source unavailable');
+    document.getElementById('syncState').textContent=lastSuccessfulSync?`Last successful sync: ${fmtTime(lastSuccessfulSync)}`:'Waiting for a successful sync';
+    if(!cards.length)document.getElementById('groups').innerHTML=`<div class="error-box"><strong>Unable to load executor data</strong>The remote JSON request failed. ${esc(err.message)}<br>Use Refresh now to try again.</div>`;
+  }
+}
+
+/* tabs */
+const tabs=document.querySelectorAll('.tab'),views=document.querySelectorAll('.view'),execTab=document.getElementById('execTab'),platMenu=document.getElementById('platMenu');
+function setView(name){tabs.forEach(t=>t.classList.toggle('active',t.dataset.tab===name&&t!==execTab));views.forEach(v=>v.classList.toggle('active',v.id===`view-${name}`));}
+const executorWrap=document.getElementById('executorWrap'),executorUnderPanel=document.getElementById('executorUnderPanel');
+function closeExecutorMenu(){platMenu.classList.remove('open');execTab.classList.remove('open');executorWrap.classList.remove('panel-open');executorUnderPanel.setAttribute('aria-hidden','true');}
+function openExecutorMenu(){platMenu.classList.add('open');execTab.classList.add('open');executorWrap.classList.add('panel-open');executorUnderPanel.setAttribute('aria-hidden','false');}
+tabs.forEach(t=>t.addEventListener('click',()=>{if(t===execTab){const open=!platMenu.classList.contains('open');if(open)openExecutorMenu();else closeExecutorMenu();return;}setView(t.dataset.tab);closeExecutorMenu();}));
+document.addEventListener('click',e=>{if(!e.target.closest('#executorWrap'))closeExecutorMenu();});
+platMenu.querySelectorAll('button[data-plat]').forEach(btn=>btn.addEventListener('click',e=>{e.stopPropagation();if(btn.disabled)return;platformFilter=btn.dataset.plat;statusFilter='all';platMenu.querySelectorAll('button[data-plat]').forEach(b=>b.classList.toggle('active',b.dataset.plat===platformFilter));closeExecutorMenu();setView('executor');render();}));
+document.querySelectorAll('.status-filter').forEach(btn=>btn.addEventListener('click',()=>{statusFilter=statusFilter===btn.dataset.status?'all':btn.dataset.status;render();}));
+document.getElementById('search').addEventListener('input',render);document.getElementById('scriptSearch').addEventListener('input',renderScriptLibrary);document.getElementById('refreshBtn').addEventListener('click',loadData);setInterval(loadData,REFRESH_MS);renderScriptLibrary();loadData();
+
+/* particles */
+const cv=document.getElementById('fx'),ctx=cv.getContext('2d');let W=0,H=0,orbs=[],ripples=[],mouse={x:-9999,y:-9999};function resize(){W=cv.width=innerWidth;H=cv.height=innerHeight}resize();addEventListener('resize',resize);for(let i=0;i<32;i++)orbs.push({x:Math.random()*W,y:Math.random()*H,r:1+Math.random()*2.4,vx:(Math.random()-.5)*.13,vy:(Math.random()-.5)*.13});addEventListener('mousemove',e=>{mouse.x=e.clientX;mouse.y=e.clientY;if(ripples.length<4||Math.random()<.14)ripples.push({x:e.clientX,y:e.clientY,r:0,a:.24})});addEventListener('mouseleave',()=>{mouse.x=-9999;mouse.y=-9999});function tick(){ctx.clearRect(0,0,W,H);const grad=ctx.createRadialGradient(mouse.x,mouse.y,0,mouse.x,mouse.y,210);grad.addColorStop(0,'rgba(66,217,255,.16)');grad.addColorStop(.38,'rgba(47,156,255,.07)');grad.addColorStop(1,'rgba(0,0,0,0)');ctx.fillStyle=grad;ctx.fillRect(0,0,W,H);ripples.forEach(r=>{r.r+=5;r.a-=.0045});ripples=ripples.filter(r=>r.a>0);for(const r of ripples){ctx.beginPath();ctx.arc(r.x,r.y,r.r,0,Math.PI*2);ctx.strokeStyle=`rgba(66,217,255,${r.a})`;ctx.lineWidth=1.4;ctx.stroke();ctx.beginPath();ctx.arc(r.x,r.y,r.r*.78,0,Math.PI*2);ctx.strokeStyle=`rgba(109,115,255,${r.a*.55})`;ctx.lineWidth=1;ctx.stroke()}for(const o of orbs){let dx=o.x-mouse.x,dy=o.y-mouse.y,d=Math.hypot(dx,dy),rad=170;if(d<rad){const f=(rad-d)/rad*.72/(d||1);o.vx+=dx*f*.012;o.vy+=dy*f*.012}o.vx*=.992;o.vy*=.992;o.x+=o.vx;o.y+=o.vy;if(o.x<0)o.x=W;if(o.x>W)o.x=0;if(o.y<0)o.y=H;if(o.y>H)o.y=0;ctx.beginPath();ctx.arc(o.x,o.y,o.r,0,Math.PI*2);ctx.fillStyle='#51bfff';ctx.globalAlpha=.38;ctx.fill();ctx.globalAlpha=1}requestAnimationFrame(tick)}tick();
+</script>
 </body>
 </html>
